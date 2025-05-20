@@ -5,7 +5,8 @@ import {
   SafeAreaView,
   StyleSheet,
   ToastAndroid,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -19,6 +20,7 @@ import navigationService from '../navigationService';
 import { setUserToken } from '../Store/slices/auth';
 import { setUserData } from '../Store/slices/common';
 import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
+import CustomImage from '../Components/CustomImage';
 
 const LoginScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -49,12 +51,11 @@ const LoginScreen = ({ navigation, route }) => {
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({ token: response?.data?.token }));
     }
-
   }
 
   return (
     <SafeAreaView style={[styles.container, {
-      backgroundColor: user_type === 'Company' ? Color.darkBlue : Color.white
+      backgroundColor: user_type === 'Company' ? Color.themeBlue : Color.white
     }]}>
       {fromSignup && <Icon
         onPress={() => {
@@ -70,16 +71,15 @@ const LoginScreen = ({ navigation, route }) => {
           left: moderateScale(10, 0.3),
         }}
       />}
-      <CustomText isBold style={[styles.welcomeText, {
-        color: user_type === 'Company' ? Color.white : Color.darkbrown
-      }]}>
-        Welcome!
-      </CustomText>
-      <CustomText isBold style={[styles.subtextStyle, {
-        color: user_type === 'Company' ? Color.white : '#333333'
-      }]}>
-        Log in to your Approvedocx
-      </CustomText>
+      <View style={{
+        width: windowWidth * 0.35,
+        height: windowWidth * 0.35,
+      }}>
+        <CustomImage source={require('../Assets/Images/logo.png')} style={{
+          width: '100%',
+          height: '100%'
+        }} />
+      </View>
       <TextInputWithTitle
         iconName={'mail'}
         iconType={Ionicons}
@@ -132,13 +132,11 @@ const LoginScreen = ({ navigation, route }) => {
         width={windowWidth * 0.7}
         height={windowHeight * 0.060}
         borderRadius={moderateScale(20, 0.3)}
-        bgColor={user_type === 'Company' ? Color.white : Color.darkBlue}
+        textColor={user_type === 'Company' ? Color.themeBlue : Color.white}
+        bgColor={user_type === 'Company' ? Color.white : Color.themeBlue}
         marginTop={moderateScale(20, 0.6)}
         onPress={() => {
           Login()
-          // dispatch(setUserToken({token:'abcdef'}))
-          // navigation.navigate('SignupScreen')
-
         }}
       />
       <CustomText style={{

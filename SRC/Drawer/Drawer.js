@@ -1,236 +1,151 @@
-import {DrawerActions, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
 import CustomText from '../Components/CustomText';
 import ScreenBoiler from '../Components/ScreenBoiler';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import { windowHeight, windowWidth } from '../Utillity/utils';
 import navigationService from '../navigationService';
-import {useDispatch, useSelector} from 'react-redux';
-import {setUserLogOut} from '../Store/slices/common';
-import {setUserLogoutAuth, SetUserRole} from '../Store/slices/auth';
-import {setUserToken} from '../Store/slices/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserLogOut } from '../Store/slices/common';
+import { setUserLogoutAuth, SetUserRole } from '../Store/slices/auth';
+import { setUserToken } from '../Store/slices/auth';
 // import ReferFriendModal from '../Screens/ReferFriendScreen'
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
+import Foundation from 'react-native-vector-icons/Foundation'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Icon } from 'native-base';
 
 const Drawer = React.memo(() => {
   const dispatch = useDispatch();
-  const {user_type} = useSelector(state => state.authReducer);
+  const { user_type } = useSelector(state => state.authReducer);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigation = useNavigation();
   const adminData = [
     {
       id: 1,
-      name: 'Inbox',
+      name: 'Dashboard',
       onPress: () => {
         navigation.navigate('HomeScreen');
       },
+      iconName: 'table-cells-large',
+      iconType: FontAwesome6
     },
     {
       id: 2,
-      name: 'Refer Friends',
+      name: 'Company Details',
       onPress: () => {
         // setIsModalVisible(true);
         navigation.navigate('ReferFriendScreen');
       },
+      iconName: 'building',
+      iconType: FontAwesome6
     },
     {
       id: 3,
-      name: 'Oppurtunities',
+      name: 'Department',
       onPress: () => {
         navigation.navigate('MyJourneys');
       },
+      iconName: 'graph-horizontal',
+      iconType: Foundation
     },
-    user_type == 'Customer'
-      ? {
-          id: 4,
-          name: 'wallet',
-          onPress: () => {
-            navigation.navigate('MyWallet');
-          },
-        }
-      : {
-          id: 4,
-          name: 'Earnings',
-          onPress: () => {
-            navigation.navigate('Earningsscreen');
-          },
-        },
     {
       id: 4,
-      name: 'History',
+      name: 'Categories',
       onPress: () => {
         navigation.navigate('History');
       },
+      iconName: 'folder',
+      iconType: Foundation
     },
     {
       id: 4,
-      name: 'Update vehicle',
+      name: 'Document',
       onPress: () => {
         navigation.navigate('AddYourCar');
       },
-    },
-
-    {
-      id: 5,
-      name: 'Accounts ',
-      onPress: () => {
-        navigation.navigate('Profile');
-      },
-    },
-    {
-      id: 6,
-      name: 'Change password ',
-      onPress: () => {
-        navigation.navigate('ChangePassword');
-      },
-    },
-    {
-      id: 6,
-      name: 'privacy policy ',
-      onPress: () => {
-        navigation.navigate('PrivacyPolicy');
-      },
-    },
-    {
-      id: 6,
-      name: 'terms & conditions',
-      onPress: () => {
-        navigation.navigate('TermsAndConditions');
-      },
+      iconName: 'document',
+      iconType: Ionicons
     },
   ];
 
   return (
     <ScreenBoiler
-      statusBarBackgroundColor={'white'}
+      statusBarBackgroundColor={Color.themeBlue}
       statusBarContentStyle={'dark-content'}>
+      <View style={styles.Profile}>
+        <View style={{
+          width: windowWidth * 0.3,
+          height: windowWidth * 0.3,
+          backgroundColor: 'red',
+          borderRadius: windowWidth,
+          marginTop: moderateScale(16, 0.6)
+        }}>
+          <CustomImage source={require('../Assets/Images/dummyman5.png')} style={styles.image} />
+        </View>
+        <CustomText style={styles.heading_text}>Username</CustomText>
+        <CustomText style={styles.heading_text}>Username@gmail.com</CustomText>
+      </View>
+
       <View
         style={{
-          height: windowHeight,
-          backgroundColor: Color.white,
-          borderTopRightRadius: moderateScale(120, 0.6),
-          borderBottomRightRadius: moderateScale(120, 0.6),
-          paddingVertical: moderateScale(60, 0.6),
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          height: '60%',
+          marginTop: moderateScale(30, 0.6)
         }}>
-        <View style={styles.profile_view}>
-          <View style={styles.image_view}>
-            <CustomImage
-              style={styles.image}
-              source={require('../Assets/Images/logo.png')}
-            />
-          </View>
-          <View
-            style={{
-              width: moderateScale(15, 0.6),
-              height: moderateScale(15, 0.6),
-              backgroundColor: '#04FF3F',
-              borderRadius: windowWidth,
-              top: -12,
-              left: 10,
-            }}
-          />
-          <CustomText isBold style={styles.heading_text}>
-            PAT H. JHONSON
-          </CustomText>
-          <CustomText style={styles.text}>Diver : Car Name</CustomText>
-        </View>
-        <View
-          style={{
-            height: '60%',
-          }}>
-          {adminData.map((item, index) => (
-            <>
-              <TouchableOpacity
-                key={item.id}
-                onPress={item.onPress}
+        {adminData.map((item, index) => (
+          <>
+            <TouchableOpacity
+              key={item.id}
+              onPress={item.onPress}
+              style={{
+                width: windowWidth * 0.7,
+                borderColor: Color.black,
+                margin: moderateScale(16, 0.3),
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+              }}>
+              <Icon name={item?.iconName} as={item?.iconType} size={moderateScale(20, 0.6)} color={Color.themeBlue} />
+              <CustomText
                 style={{
-                  width: windowWidth * 0.7,
-                  borderColor: Color.black,
-                  margin: moderateScale(10, 0.3),
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
+                  fontSize: moderateScale(14, 0.6),
+                  color: Color.grey,
+                  marginLeft: moderateScale(10, 0.6)
                 }}>
-                <CustomText
-                  style={{
-                    fontSize: moderateScale(14, 0.6),
-                    color: Color.black,
-                  }}>
-                  {item.name}
-                </CustomText>
-              </TouchableOpacity>
-            </>
-          ))}
-        </View>
-        <View style={styles.end_view}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('HelpAndSupport');
-            }}
-            style={{
-              width: windowWidth * 0.7,
-              borderColor: Color.black,
-              margin: moderateScale(5, 0.3),
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <CustomText
-              style={{
-                fontSize: moderateScale(14, 0.6),
-                color: Color.black,
-              }}>
-              Help
-            </CustomText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('LearningCenter');
-            }}
-            style={{
-              width: windowWidth * 0.7,
-              borderColor: Color.black,
-              margin: moderateScale(5, 0.3),
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <CustomText
-              style={{
-                fontSize: moderateScale(14, 0.6),
-                color: Color.black,
-              }}>
-              Learning Center
-            </CustomText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              dispatch(setUserToken(''));
-              dispatch(SetUserRole(''));
-              dispatch(setUserLogOut());
-            }}
-            style={{
-              width: windowWidth * 0.7,
-              borderColor: Color.black,
-              margin: moderateScale(5, 0.3),
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <CustomText
-              style={{
-                fontSize: moderateScale(14, 0.6),
-                color: Color.veryLightGray,
-              }}>
-              Logout
-            </CustomText>
-          </TouchableOpacity>
-        </View>
+                {item.name}
+              </CustomText>
+            </TouchableOpacity>
+          </>
+        ))}
       </View>
+      <TouchableOpacity
+        // onPress={item.onPress}
+        style={{
+          width: windowWidth * 0.7,
+          borderColor: Color.black,
+          margin: moderateScale(16, 0.3),
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}>
+        <Icon name={"logout"}
+          as={MaterialCommunityIcons}
+          size={moderateScale(20, 0.6)}
+          color={Color.themeBlue}
+        />
+        <CustomText
+          style={{
+            fontSize: moderateScale(14, 0.6),
+            color: Color.grey,
+            marginLeft: moderateScale(10, 0.6)
+          }}>
+          {'Logout'}
+        </CustomText>
+      </TouchableOpacity>
     </ScreenBoiler>
   );
 });
@@ -239,12 +154,12 @@ export default Drawer;
 
 const styles = StyleSheet.create({
   Profile: {
-    width: windowWidth * 0.15,
-    height: windowWidth * 0.15,
-    borderRadius: (windowWidth * 0.2) / 1,
-    borderWidth: 1,
-    borderColor: Color.white,
-    overflow: 'hidden',
+    width: '100%',
+    height: windowWidth * 0.6,
+    // borderRadius: (windowWidth * 0.2) / 1,
+    backgroundColor: Color.themeBlue,
+    justifyContent: 'center',
+    alignItems: 'center', paddingHorizontal: moderateScale(10, 0.6)
   },
   menu_text: {
     color: Color.darkGray,
@@ -265,8 +180,9 @@ const styles = StyleSheet.create({
     borderRadius: windowHeight,
   },
   heading_text: {
-    fontSize: moderateScale(14, 0.6),
-    textTransform: 'uppercase',
+    fontSize: moderateScale(12, 0.6),
+    // textTransform: 'uppercase',
+    color: Color.white
   },
   text: {
     fontSize: moderateScale(11, 0.6),

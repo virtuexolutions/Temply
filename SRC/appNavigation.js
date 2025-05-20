@@ -37,6 +37,9 @@ import EditEmailTamplate2 from './Screens/EditEmailTamplate2';
 import SavedTemplates from './Screens/SavedTemplates';
 import StartScreen from './Screens/StartScreen';
 import Dashboard from './Screens/Dashboard';
+import AddEmployees from './Screens/AddEmployees';
+import Department from './Screens/Department';
+import AddEmployeeDetails from './Screens/AddEmployeeDetails';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -44,7 +47,7 @@ enableScreens();
 const AppNavigator = () => {
   const token = useSelector(state => state.authReducer.token);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
-
+  const user_type = useSelector(state => state.authReducer.role)
   const RootNav = createNativeStackNavigator();
   const RootNavLogged = createNativeStackNavigator();
 
@@ -54,14 +57,14 @@ const AppNavigator = () => {
         ? 'WalkthroughScreen'
         : token == null
           ? 'StartScreen'
-          : // ? 'Start'
-          'Home';
+          : user_type === 'Company' ? 'MyDrawer' :
+            'Home';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
-          // initialRouteName={'Dashboard'}
+          // initialRouteName={'AddEmployeeDetails'}
           screenOptions={{ headerShown: false }}>
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen
@@ -96,6 +99,9 @@ const AppNavigator = () => {
           {/* <RootNav.Screen name="SurvaryForm" component={SurvaryForm} /> */}
           <RootNav.Screen name="EditSurveyForm" component={EditSurveyForm} />
           <RootNav.Screen name="EmailTamplate2" component={EmailTamplate2} />
+          <RootNav.Screen name="AddEmployees" component={AddEmployees} />
+          <RootNav.Screen name="Department" component={Department} />
+          <RootNav.Screen name="AddEmployeeDetails" component={AddEmployeeDetails} />
           <RootNav.Screen
             name="CustomerSurveyForm"
             component={CustomerSurveyForm}
@@ -124,125 +130,20 @@ const AppNavigator = () => {
   return <AppNavigatorContainer />;
 };
 
-// export const TabNavigation = () => {
-//   const Tabs = createBottomTabNavigator();
-//   return (
-//     <Tabs.Navigator
-//       // tabBar={(props) => {
-//       //   return (
-//       //     <LinearGradient
-//       //       colors={['red', 'blue']}
-
-//       //       start={[1, 0]}
-//       //       end={[0, 0]}
-//       //     >
-//       //       <BottomTabBar
-//       //         {...props}
-//       //         style={{ backgroundColor: 'transparent' }}
-//       //       />
-//       //     </LinearGradient>
-//       //   );
-//       // }}
-//       screenOptions={({route}) => ({
-//         headerShown: false,
-//         tabBarShowLabel: false,
-//         tabBarStyle: {
-//           // backgroundColor:'pink',
-//           // backgroundColor: Color.red,
-//           // borderTopLeftRadius:15,
-//           // borderTopRightRadius:15,
-//           // paddingVertical:5
-//         },
-//         tabBarIcon: ({focused}) => {
-//           let iconName;
-//           let color = Color.theme2;
-//           let size = moderateScale(20, 0.3);
-//           let type = Ionicons;
-
-//           // if (route.name === 'HomeScreen') {
-//           //   iconName = focused ? 'home' : 'home-outline';
-
-//           //   color = focused ? Color.theme2 : Color.white;
-//           //   size = focused ? moderateScale(30, 0.3) : moderateScale(20, 0.3);
-//           // } else
-//           if (route.name === 'Donation') {
-//             iconName = focused ? 'donate' : 'donate';
-//             type = FontAwesome5;
-//             color = focused ? Color.theme2 : Color.white;
-//             size = focused ? moderateScale(30, 0.3) : moderateScale(20, 0.3);
-//           } else if (route.name === 'StoreScreen') {
-//             iconName = focused ? 'cart' : 'cart';
-//             color = focused ? Color.theme2 : Color.white;
-//             size = focused ? moderateScale(30, 0.3) : moderateScale(20, 0.3);
-//           } else if (route?.name == 'Campaigns') {
-//             size = focused ? moderateScale(30, 0.3) : moderateScale(20, 0.3);
-//           } else {
-//             iconName = focused ? 'settings-sharp' : 'settings-outline';
-//             color = focused ? Color.theme2 : Color.white;
-//             size = focused ? moderateScale(30, 0.3) : moderateScale(20, 0.3);
-//           }
-//           return route.name == 'Campaigns' ? (
-//             <View
-//               style={{
-//                 borderWidth: 5,
-//                 borderColor: Color.lightGrey,
-//                 height: moderateScale(60, 0.3),
-//                 width: moderateScale(60, 0.3),
-//                 borderRadius: moderateScale(30, 0.3),
-//                 backgroundColor: Color.theme2,
-//                 justifyContent: 'center',
-//                 alignItems: 'center',
-//                 marginTop: moderateScale(-30, 0.3),
-//               }}>
-//               <Icon
-//                 name={'search'}
-//                 as={Feather}
-//                 color={Color.white}
-//                 size={size}
-//               />
-//             </View>
-//           ) : (
-//             <Icon name={iconName} as={type} color={color} size={size} />
-//           );
-//         },
-//         tabBarShowLabel: false,
-//         tabBarBackground: () => (
-//           <View style={{flex: 1}}>
-//             <LinearGradient
-//               start={{x: 0, y: 0}}
-//               end={{x: 0, y: 1}}
-//               colors={Color.tabBarGradient}
-//               style={{height: windowHeight * 0.1}}
-//             />
-//           </View>
-//         ),
-//       })}>
-//       {/* <Tabs.Screen name={'HomeScreen'} component={HomeScreen} /> */}
-//       {/* <Tabs.Screen name={'Donation'} component={Donation} />
-//       <Tabs.Screen name={'Campaigns'} component={Campaigns} />
-//       {/* <Tabs.Screen name={'BibleCategories'} component={BibleCategories} /> */}
-//       {/* <Tabs.Screen name={'StoreScreen'} component={StoreScreen} /> */}
-//       <Tabs.Screen name={'Settings'} component={Settings} />
-//     </Tabs.Navigator>
-//   );
-// };
-
 export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
   const firstScreen = 'HomeScreen';
   return (
     <DrawerNavigation.Navigator
       drawerContent={props => <Drawer {...props} />}
-      initialRouteName={'Home'}
+      initialRouteName={'Dashboard'}
       screenOptions={{
         headerShown: false,
         drawerStyle: {
-          width: '80%',
-          borderTopRightRadius: moderateScale(120, 0.6),
-          borderBottomRightRadius: moderateScale(120, 0.6),
+          width: '70%',
         },
       }}>
-      <DrawerNavigation.Screen name="Home" component={Home} />
+      <DrawerNavigation.Screen name="Dashboard" component={Dashboard} />
     </DrawerNavigation.Navigator>
   );
 };

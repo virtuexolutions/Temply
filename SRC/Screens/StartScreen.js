@@ -24,6 +24,7 @@ import { SetUserRole, setUserToken } from '../Store/slices/auth';
 import { useDispatch } from 'react-redux';
 import { setUserData, setUserType } from '../Store/slices/common';
 import { Post } from '../Axios/AxiosInterceptorFunction';
+import CustomImage from '../Components/CustomImage';
 
 const StartScreen = ({ navigation, route }) => {
 
@@ -36,13 +37,18 @@ const StartScreen = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={{
+                width: windowWidth * 0.35,
+                height: windowWidth * 0.35,
+            }}>
+                <CustomImage source={require('../Assets/Images/logo.png')} style={{
+                    width: '100%',
+                    height: '100%'
+                }} />
+            </View>
             <CustomText isBold style={styles.welcomeText}>
                 Welcome!
             </CustomText>
-            <CustomText isBold style={styles.subtextStyle}>
-                Log in to your Approvedocx
-            </CustomText>
-
             <CustomButton
                 text={isLoading ? <ActivityIndicator color={'white'} size={moderateScale(12, 0.2)} /> : 'Company'}
                 textColor={Color.white}
@@ -51,8 +57,8 @@ const StartScreen = ({ navigation, route }) => {
                 style={{
                     height: moderateScale(50, 0.3),
                     borderRadius: moderateScale(20, 0.3),
-                    backgroundColor: Color.darkBlue,
-                    marginTop: windowHeight * 0.05,
+                    backgroundColor: Color.themeBlue,
+                    marginTop: windowHeight * 0.01,
                     width: windowWidth * 0.6
                 }}
                 onPress={() => {
@@ -62,17 +68,17 @@ const StartScreen = ({ navigation, route }) => {
             />
             <CustomButton
                 text={isLoading ? <ActivityIndicator color={'white'} size={moderateScale(12, 0.2)} /> : 'Employee'}
-                textColor={Color.darkBlue}
+                textColor={Color.themeBlue}
                 isBold
                 width={windowWidth * 0.35}
                 style={{
                     height: moderateScale(50, 0.3),
                     borderRadius: moderateScale(20, 0.3),
-                    // backgroundColor: Color.darkBlue,
+                    // backgroundColor: Color.themeBlue,
                     marginTop: windowHeight * 0.02,
                     width: windowWidth * 0.6,
                     borderWidth: 1.5,
-                    borderColor: Color.darkBlue
+                    borderColor: Color.themeBlue
                 }}
                 onPress={() => {
                     dispatch(SetUserRole('Employee'))
@@ -97,7 +103,8 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         fontSize: moderateScale(40, 0.3),
-        color: Color.darkbrown,
+        color: Color.themeBlue,
+        marginTop: moderateScale(20, 0.6)
     },
     subtextStyle: {
         fontSize: moderateScale(12, 0.3),

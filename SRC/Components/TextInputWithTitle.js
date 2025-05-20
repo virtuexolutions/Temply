@@ -24,17 +24,18 @@ const TextInputWithTitle = props => {
   return (
     <>
       {props?.title && (
-        <CustomText
+        <CustomText isBold
           style={[
             {
-              color: Color.black,
-              fontSize: moderateScale(12, 0.3),
-              // marginBottom: moderateScale(5, 0.3),
+              color: Color.themeBlue,
+              fontSize: moderateScale(15, 0.3),
+              marginBottom: moderateScale(5, 0.3),
               width: windowWidth * props.viewWidth,
-              paddingHorizontal: moderateScale(20, 0.6),
+              paddingHorizontal: moderateScale(10, 0.6),
               marginTop: props.marginTop
                 ? props.marginTop
                 : moderateScale(10, 0.3),
+              textAlign: 'left'
             },
             props?.titleStlye,
           ]}>
@@ -150,6 +151,7 @@ const TextInputWithTitle = props => {
                         ? props?.fontSize
                         : moderateScale(12, 0.6),
                       fontWeight: '400',
+                      fontFamily: "KdamThmorPro-Regular"
                     },
                   ]
                   : [
@@ -201,6 +203,10 @@ const TextInputWithTitle = props => {
               style={[
                 {
                   width: windowWidth * props.inputWidth,
+                  fontFamily: "KdamThmorPro-Regular",
+                  fontSize: props?.fontSize
+                    ? props?.fontSize
+                    : moderateScale(12, 0.6),
                 },
                 Platform.OS === 'android'
                   ? styles.inputBox
@@ -218,7 +224,7 @@ const TextInputWithTitle = props => {
                   paddingTop: moderateScale(10, 0.5),
                   textAlignVertical: 'top',
                   marginLeft: moderateScale(15, 0.3),
-                  height :  props.inputHeight ,
+                  height: props.inputHeight,
                   // backgroundColor :'red'
                 },
                 props.color && {

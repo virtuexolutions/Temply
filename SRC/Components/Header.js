@@ -25,12 +25,14 @@ import { setUserLogout, setUserLogoutAuth } from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
 import { setUserLogOut } from '../Store/slices/common';
 import navigationService from '../navigationService';
+import CustomStatusBar from './CustomStatusBar';
 
 const Header = props => {
   const dispatch = useDispatch();
   const notification = useSelector(state => state.commonReducer.notification);
   const cartData = useSelector(state => state.commonReducer.cart);
   const navigationN = useNavigation();
+  console.log("🚀 ~ navigationN:", navigationN?.dispatch)
   const [isModalVisible, setModalVisible] = useState(false);
   const {
     title,
@@ -81,204 +83,81 @@ const Header = props => {
   };
 
   return (
-    <View
-      style={[
-        styles.header2,
-        {
-          backgroundColor: headerColor ? headerColor : 'transparent',
-        }.style && style,
-        height && {
-          height: height,
-        },
-      ]}
-    // start={{x: 0, y: 0}}
-    // end={{x: 1, y: 1}}
-    // colors={headerColor ? headerColor : Color.themeBgColor}
-    >
+    <>
+      <CustomStatusBar />
       <View
-        style={{
-          height: moderateScale(20, 0.3),
-          width: moderateScale(30, 0.3),
-          borderRadius: moderateScale(5, 0.3),
-          justifyContent: 'center',
-          alignItems: 'center',
-          // backgroundColor: showBack || showList ? 'white' : 'transparent',
-        }}>
-        {showBack ? (
-          <Icon
-            name={'arrow-back'}
-            as={Ionicons}
-            size={moderateScale(25, 0.3)}
-            color={backBtnStyle ? backBtnStyle : Color.white}
-            onPress={() => {
-              navigationN.goBack();
-            }}
-          />
-        ) : (
-          // <View
-          //   style={{
-          //     textAlign: 'center',
-          //     height: windowHeight * 0.025,
-          //     width: windowHeight * 0.02,
-          //     // borderRadius: (windowHeight * 0.05) / 2,
-          //     // backgroundColor :Color.white,
-          //     paddingTop: moderateScale(6.6),
-          //     // marginTop :moderateScale
-          //   }}>
-          //   <CustomImage
-          //     source={require('../Assets/Images/menu.png')}
-          //     style={{
-          //       height: '100%',
-          //       width: '100%',
-          //     }}
-          //   />
-          // </View>
-          <Icon
-            style={{
-              textAlign: 'center',
-              height: windowHeight * 0.05,
-              width: windowHeight * 0.05,
-              borderRadius: (windowHeight * 0.05) / 2,
-              // backgroundColor :Color.white,
-              paddingTop: moderateScale(6.6),
-              // marginTop :moderateScale
-            }}
-            name={'menu'}
-            as={Feather}
-            size={moderateScale(25, 0.3)}
-            color={Color.black}
-            onPress={() => {
-              // navigationN.toggleDrawer();
-
-              // navigationN.dispatch(DrawerActions.toggleDrawer())
-            }}
-          />
-        )}
-      </View>
-      {title ? (
-        <CustomText
-          style={{
-            fontSize: moderateScale(18, 0.6),
-            color: color ? Color.black : Color.white,
-          }}
-          isBold>
-          {title}
-        </CustomText>
-      ) : (
-        <></>
-        // <CustomImage
-        //   resizeMode={'contain'}
-        //   style={{
-        //     width: windowWidth * 0.21,
-        //     // backgroundColor : 'red' ,
-        //     height: windowHeight * 0.05,
-        //   }}
-        //   source={require('../Assets/Images/logo.png')}
-        // />
-      )}
-
-      {/* <CustomText isBold style={{color : Color.white , fontSize : moderateScale(20,0.6)}} >Hola!!</CustomText> */}
-      <Icon
-        name={"logout"}
-        as={MaterialCommunityIcons}
-        size={moderateScale(24, 0.2)}
-        color={Color.black}
-        style={{ right: -135, top: 2 }}
-        onPress={() => {
-          dispatch(setUserLogoutAuth())
-        }}
-      />
-      {/* {!hideUser && cart ? (
+        style={[
+          styles.header2,
+          {
+            backgroundColor: headerColor ? headerColor : 'transparent',
+          }.style && style,
+          height && {
+            height: height,
+          },
+        ]}
+      >
         <View
           style={{
-            // backgroundColor: 'red',
-            flexDirection: 'row',
+            height: moderateScale(20, 0.3),
+            width: moderateScale(30, 0.3),
+            borderRadius: moderateScale(5, 0.3),
             justifyContent: 'center',
-            paddingTop: moderateScale(6, 0.6),
+            alignItems: 'center',
           }}>
-          {cartData?.length > 0 && (
-            <View
+          {showBack ? (
+            <Icon
+              name={'arrow-back'}
+              as={Ionicons}
+              size={moderateScale(25, 0.3)}
+              color={backBtnStyle ? backBtnStyle : Color.themeBlue}
+              onPress={() => {
+                navigationN.goBack();
+              }}
+            />
+          ) : (
+            <Icon
               style={{
-                width: moderateScale(17, 0.6),
-                height: moderateScale(17, 0.6),
-                borderRadius: moderateScale(9, 0.6),
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'red',
-                position: 'absolute',
-                right: -4,
-                zIndex: 1,
-                top: 0,
-              }}>
-              <CustomText
-                isBold
-                style={{
-                  fontSize: moderateScale(10, 0.2),
-                  color: Color.white,
-                  textAlign: 'center',
-                }}>
-                {cartData?.length < 10 ? cartData?.length : '9+'}
-              </CustomText>
-            </View>
+                textAlign: 'center',
+                height: windowHeight * 0.05,
+                width: windowHeight * 0.05,
+                borderRadius: (windowHeight * 0.05) / 2,
+                paddingTop: moderateScale(6.6),
+              }}
+              name={'menu'}
+              as={Feather}
+              size={moderateScale(25, 0.3)}
+              color={Color.themeBlue}
+              onPress={() => {
+                navigationN.toggleDrawer();
+                // navigationN.dispatch(DrawerActions.toggleDrawer())
+              }}
+            />
           )}
-
-          <Icon
-            name={'shopping-cart'}
-            as={Feather}
-            size={moderateScale(25, 0.3)}
-            color={Color.white}
-            onPress={() => {
-              if (token == null) {
-                Confirm();
-                // navigationService.navigate('LoginScreen')
-              } else if (cartData?.length > 0) {
-                navigationService.navigate('CheckoutScreen');
-              } else {
-                return Platform.OS == 'android'
-                  ? ToastAndroid.show('No Item in cart', ToastAndroid.SHORT)
-                  : Alert('No Item in cart');
-              }
-            }}
-          />
         </View>
-      ) : (
-        <View
-          style={{
-            width: windowWidth * 0.1,
-            height: windowWidth * 0.1,
-            borderRadius: (windowWidth * 0.1) / 2,
-            backgroundColor: 'red',
-            overflow: 'hidden',
-          }}>
-          <CustomImage
-            source={require('../Assets/Images/dummyman5.png')}
+        {title ? (
+          <CustomText
             style={{
-              height: '100%',
-              width: '100%',
+              fontSize: moderateScale(18, 0.6),
+              color: color ? Color.black : Color.themeBlue,
             }}
-          />
-        </View>
-       )} */}
-      {!hideUser &&
-        <View
-          style={{
-            width: windowWidth * 0.1,
-            height: windowWidth * 0.1,
-            borderRadius: (windowWidth * 0.1) / 2,
-            backgroundColor: 'red',
-            overflow: 'hidden',
-          }}>
-          <CustomImage
-            source={require('../Assets/Images/dummyman5.png')}
-            style={{
-              height: '100%',
-              width: '100%',
-            }}
-          />
-        </View>
-      }
-
-    </View>
+            isBold>
+            {title}
+          </CustomText>
+        ) : (
+          <></>
+        )}
+        <Icon
+          name={"logout"}
+          as={MaterialCommunityIcons}
+          size={moderateScale(24, 0.2)}
+          color={Color.black}
+          style={{ right: -135, top: 2 }}
+          onPress={() => {
+            dispatch(setUserLogoutAuth())
+          }}
+        />
+      </View>
+    </>
   );
 };
 const styles = ScaledSheet.create({
@@ -320,7 +199,7 @@ const styles = ScaledSheet.create({
   header2: {
     width: windowWidth,
     // height: windowHeight * 0.13,
-    backgroundColor: 'transparent',
+    backgroundColor: '#F9F9F9',
     // justifyContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -328,6 +207,15 @@ const styles = ScaledSheet.create({
     paddingVertical: moderateScale(20, 0.3),
     alignItems: 'center',
     // backgroundColor: 'red',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 11,
+    },
+    shadowOpacity: 0.55,
+    shadowRadius: 14.78,
+
+    elevation: 22,
   },
   notificationCircle: {
     position: 'absolute',

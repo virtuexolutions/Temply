@@ -48,12 +48,25 @@ const Dashboard = ({ navigation, route }) => {
                         <CustomText style={styles.subtextStyle}>Status</CustomText>
                     </View>
                 </View>
+                <View style={{
+                    width: windowWidth,
+                    height: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.23,
+                    shadowRadius: 2.62,
+                    elevation: 4,
+                    marginTop: moderateScale(10, 0.6)
+                }} />
                 <View style={styles.sub_view}>
-                    <TouchableOpacity style={styles.btn_view}>
+                    <TouchableOpacity onPress={() => navigationService.navigate('AddEmployees')} style={styles.btn_view}>
                         <CustomText isBold style={styles.heading}>100</CustomText>
                         <CustomText style={styles.text}>Employees</CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.btn_view, {
+                    <TouchableOpacity onPress={() => navigationService.navigate('Department')} style={[styles.btn_view, {
                         backgroundColor: '#31C3BB'
                     }]}>
                         <CustomText isBold style={styles.heading}>100</CustomText>
@@ -61,7 +74,7 @@ const Dashboard = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.sub_view, {
-                    marginTop: moderateScale(10, 0.6)
+                    marginTop: moderateScale(15, 0.6)
                 }]}>
                     <TouchableOpacity style={[styles.btn_view, {
                         backgroundColor: '#557AFF'
@@ -94,6 +107,10 @@ const styles = StyleSheet.create({
         paddingTop: moderateScale(10, 0.6),
         // justifyContent : 'center'
     },
+    main_view: {
+        paddingVertical: moderateScale(10, 0.6),
+        paddingHorizontal: moderateScale(15, 0.6)
+    },
     welcomeText: {
         fontSize: moderateScale(40, 0.3),
         color: Color.darkbrown,
@@ -101,10 +118,6 @@ const styles = StyleSheet.create({
     subtextStyle: {
         fontSize: moderateScale(16, 0.3),
         color: Color.themeBlue,
-    },
-    main_view: {
-        paddingVertical: moderateScale(10, 0.6),
-        paddingHorizontal: moderateScale(15, 0.6)
     },
     tab_view: {
         width: windowWidth * 0.95,
@@ -143,7 +156,16 @@ const styles = StyleSheet.create({
         backgroundColor: "#C4C4C4",
         borderRadius: moderateScale(15, 0.6),
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+
+        elevation: 7,
     },
     heading: {
         fontSize: moderateScale(20, 0.6),

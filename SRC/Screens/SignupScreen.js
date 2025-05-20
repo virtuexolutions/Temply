@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserToken } from '../Store/slices/auth';
 import { Post } from '../Axios/AxiosInterceptorFunction';
 import { setUserData } from '../Store/slices/common';
+import CustomImage from '../Components/CustomImage';
 
 const SignupScreen = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -60,7 +61,7 @@ const SignupScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <SafeAreaView style={[styles.container, {
-        backgroundColor: user_type === 'Company' ? Color.darkBlue : Color.white
+        backgroundColor: user_type === 'Company' ? Color.themeBlue : Color.white
       }]}>
         <Icon
           onPress={() => {
@@ -76,16 +77,15 @@ const SignupScreen = ({ navigation }) => {
             left: moderateScale(10, 0.3),
           }}
         />
-        <CustomText isBold style={[styles.welcomeText, {
-          color: user_type === 'Company' ? Color.white : Color.darkbrown
-        }]}>
-          Sign Up!
-        </CustomText>
-        <CustomText isBold style={[styles.subtextStyle, {
-          color: user_type === 'Company' ? Color.white : Color.darkbrown
-        }]}>
-          Create a New Account
-        </CustomText>
+        <View style={{
+          width: windowWidth * 0.35,
+          height: windowWidth * 0.35,
+        }}>
+          <CustomImage source={require('../Assets/Images/logo.png')} style={{
+            width: '100%',
+            height: '100%'
+          }} />
+        </View>
         <TextInputWithTitle
           iconName={'user'}
           iconType={FontAwesome}
@@ -153,13 +153,13 @@ const SignupScreen = ({ navigation }) => {
             width: windowWidth * 0.55,
             height: moderateScale(45, 0.3),
             borderRadius: moderateScale(20, 0.3),
-            backgroundColor: Color.darkBlue,
+            backgroundColor: Color.themeBlue,
             top: windowHeight * 0.055
           }}
         /> */}
         <CustomButton
           text={'Create'}
-          textColor={user_type === 'Company' ? Color.darkBlue : Color.white}
+          textColor={user_type === 'Company' ? Color.themeBlue : Color.white}
           onPress={() => {
             signUp()
           }}
@@ -167,7 +167,7 @@ const SignupScreen = ({ navigation }) => {
           width={windowWidth * 0.7}
           height={windowHeight * 0.060}
           borderRadius={moderateScale(20, 0.3)}
-          bgColor={user_type === 'Company' ? Color.white : Color.darkBlue}
+          bgColor={user_type === 'Company' ? Color.white : Color.themeBlue}
           marginTop={moderateScale(20, 0.6)}
         />
         <CustomText style={{
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(15, 0.3),
     // paddingVertical: moderateScale(20, 0.6),
     alignItems: 'center',
-    paddingTop: windowHeight * 0.2,
+    paddingTop: windowHeight * 0.15,
     // justifyContent : 'center'
   },
   welcomeText: {

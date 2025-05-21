@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Dimensions,
@@ -9,27 +9,27 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import {ScaledSheet, moderateScale} from 'react-native-size-matters';
+import { ScaledSheet, moderateScale } from 'react-native-size-matters';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useDispatch, useSelector} from 'react-redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { useDispatch, useSelector } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import Color from '../Assets/Utilities/Color';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Components/CustomText';
-import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
+import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
 import CustomButton from '../Components/CustomButton';
 
-import {Icon} from 'native-base';
-import {useNavigation} from '@react-navigation/native';
-import {Post} from '../Axios/AxiosInterceptorFunction';
-import {Formik} from 'formik';
-import {forgotpassword} from '../Constant/schema';
+import { Icon } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { Post } from '../Axios/AxiosInterceptorFunction';
+import { Formik } from 'formik';
+import { forgotpassword } from '../Constant/schema';
 
 const ResetPassword = props => {
   const dispatch = useDispatch();
-  const {user_type} = useSelector(state => state.authReducer);
+  const { user_type } = useSelector(state => state.authReducer);
   const email = props?.route?.params?.email;
   console.log('🚀 ~ ResetPassword ~ email===================:', email);
 
@@ -85,61 +85,59 @@ const ResetPassword = props => {
             Forgot your password ? don't worry, jsut take a simple step and
             create your new password!
           </CustomText>
-
-             
           <View style={styles.text_input}>
-          <TextInputWithTitle
-      iconSize={moderateScale(20,0.3)}
-        iconName={'key'}
-        iconType={Ionicons}
-        color={Color.blue}
-        secureText={true}
-        setText={setPassword}
-        value={password}
-        placeholder={'Password'}
-        placeholderColor={Color.grey}
-        viewWidth={0.7}
-        borderBottomWidth={2}
-        borderColor={Color.blue}
-        marginTop={moderateScale(30, 0.3)}
-      />
-                 
-                 <TextInputWithTitle
-      iconSize={moderateScale(20,0.3)}
-        iconName={'key'}
-        iconType={Ionicons}
-        color={Color.blue}
-        secureText={true}
-        setText={setConfirmPassword}
-        value={confirmPassword}
-        placeholder={'Confirm New Password'}
-        placeholderColor={Color.grey}
-        viewWidth={0.7}
-        borderBottomWidth={2}
-        borderColor={Color.blue}
-        marginTop={moderateScale(30, 0.3)}
-      />
-                 
-                  <CustomButton
-                    text={
-                      isLoading ? (
-                        <ActivityIndicator size={'small'} color={Color.white} />
-                      ) : (
-                        'Reset'
-                      )
-                    }
-                    textColor={Color.white}
-                    width={windowWidth * 0.65}
-                    height={windowHeight * 0.065}
-                    marginTop={moderateScale(20, 0.3)}
-                    onPress={resetPassword}
-                    borderRadius={30}
-                    bgColor={
-                      Color.darkBlue
-                    }
-                  />
-                </View>
-     
+            <TextInputWithTitle
+              iconSize={moderateScale(20, 0.3)}
+              iconName={'key'}
+              iconType={Ionicons}
+              color={Color.blue}
+              secureText={true}
+              setText={setPassword}
+              value={password}
+              placeholder={'Password'}
+              placeholderColor={Color.grey}
+              viewWidth={0.7}
+              borderBottomWidth={2}
+              borderColor={Color.blue}
+              marginTop={moderateScale(30, 0.3)}
+            />
+
+            <TextInputWithTitle
+              iconSize={moderateScale(20, 0.3)}
+              iconName={'key'}
+              iconType={Ionicons}
+              color={Color.blue}
+              secureText={true}
+              setText={setConfirmPassword}
+              value={confirmPassword}
+              placeholder={'Confirm New Password'}
+              placeholderColor={Color.grey}
+              viewWidth={0.7}
+              borderBottomWidth={2}
+              borderColor={Color.blue}
+              marginTop={moderateScale(30, 0.3)}
+            />
+
+            <CustomButton
+              text={
+                isLoading ? (
+                  <ActivityIndicator size={'small'} color={Color.white} />
+                ) : (
+                  'Reset'
+                )
+              }
+              textColor={Color.white}
+              width={windowWidth * 0.65}
+              height={windowHeight * 0.065}
+              marginTop={moderateScale(20, 0.3)}
+              onPress={resetPassword}
+              borderRadius={30}
+              bgColor={
+                Color.darkBlue
+              }
+            />
+          </View>
+
         </KeyboardAwareScrollView>
       </View>
     </>
@@ -150,7 +148,7 @@ const styles = ScaledSheet.create({
   main_container: {
     height: windowHeight,
     width: windowWidth,
-    backgroundColor:Color.white,
+    backgroundColor: Color.white,
   },
   txt2: {
     color: Color.black,
@@ -181,13 +179,13 @@ const styles = ScaledSheet.create({
     borderWidth: 0.45,
     width: windowWidth * 0.9,
     borderColor: Color.lightGrey,
-    elevation:3,
+    elevation: 3,
     paddingVertical: moderateScale(10, 0.6),
     // height: windowHeight * 0.36,
     shadowRadius: 25,
     shadowColor: "grey",
-    shadowOpacity:0.6,
-    shadowOffset:{width:0, height:1},
+    shadowOpacity: 0.6,
+    shadowOffset: { width: 0, height: 1 },
     borderRadius: 25,
     paddingTop: windowHeight * 0.03,
     paddingHorizontal: moderateScale(30, 0.6),

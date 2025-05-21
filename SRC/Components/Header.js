@@ -26,6 +26,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { setUserLogOut } from '../Store/slices/common';
 import navigationService from '../navigationService';
 import CustomStatusBar from './CustomStatusBar';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Header = props => {
   const dispatch = useDispatch();
@@ -106,8 +107,8 @@ const Header = props => {
           }}>
           {showBack ? (
             <Icon
-              name={'arrow-back'}
-              as={Ionicons}
+              name={'left'}
+              as={AntDesign}
               size={moderateScale(25, 0.3)}
               color={backBtnStyle ? backBtnStyle : Color.themeBlue}
               onPress={() => {
@@ -115,30 +116,37 @@ const Header = props => {
               }}
             />
           ) : (
-            <Icon
-              style={{
-                textAlign: 'center',
-                height: windowHeight * 0.05,
-                width: windowHeight * 0.05,
-                borderRadius: (windowHeight * 0.05) / 2,
-                paddingTop: moderateScale(6.6),
-              }}
-              name={'menu'}
-              as={Feather}
-              size={moderateScale(25, 0.3)}
-              color={Color.themeBlue}
-              onPress={() => {
-                navigationN.toggleDrawer();
-                // navigationN.dispatch(DrawerActions.toggleDrawer())
-              }}
-            />
+            <TouchableOpacity onPress={() => {
+              navigationN.toggleDrawer();
+            }} style={{
+              width: windowWidth * 0.1,
+              height: windowWidth * 0.1,
+            }}>
+              <Icon
+                style={{
+                  textAlign: 'center',
+                  height: windowHeight * 0.05,
+                  width: windowHeight * 0.05,
+                  borderRadius: (windowHeight * 0.05) / 2,
+                  paddingTop: moderateScale(6.6),
+                }}
+                name={'menu'}
+                as={Feather}
+                size={moderateScale(25, 0.3)}
+                color={Color.themeBlue}
+                onPress={() => {
+                  navigationN.toggleDrawer();
+                  // navigationN.dispatch(DrawerActions.toggleDrawer())
+                }}
+              />
+            </TouchableOpacity>
           )}
         </View>
         {title ? (
           <CustomText
             style={{
               fontSize: moderateScale(18, 0.6),
-              color: color ? Color.black : Color.themeBlue,
+              color: color ? Color.black : Color.black,
             }}
             isBold>
             {title}

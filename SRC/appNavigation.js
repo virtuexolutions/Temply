@@ -40,6 +40,7 @@ import Dashboard from './Screens/Dashboard';
 import AddEmployees from './Screens/AddEmployees';
 import Department from './Screens/Department';
 import AddEmployeeDetails from './Screens/AddEmployeeDetails';
+import CompanyDetails from './Screens/CompanyDetails';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -64,7 +65,7 @@ const AppNavigator = () => {
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
-          // initialRouteName={'AddEmployeeDetails'}
+          // initialRouteName={'CompanyDetails'}
           screenOptions={{ headerShown: false }}>
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen
@@ -101,6 +102,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="EmailTamplate2" component={EmailTamplate2} />
           <RootNav.Screen name="AddEmployees" component={AddEmployees} />
           <RootNav.Screen name="Department" component={Department} />
+          <RootNav.Screen name="CompanyDetails" component={CompanyDetails} />
           <RootNav.Screen name="AddEmployeeDetails" component={AddEmployeeDetails} />
           <RootNav.Screen
             name="CustomerSurveyForm"

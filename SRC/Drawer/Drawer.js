@@ -22,7 +22,10 @@ import { Icon } from 'native-base';
 const Drawer = React.memo(() => {
   const dispatch = useDispatch();
   const { user_type } = useSelector(state => state.authReducer);
+  console.log("🚀 ~ Drawer ~ user_type:", user_type)
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const userData = useSelector(state => state.commonReducer.userData);
+
   const navigation = useNavigation();
   const adminData = [
     {
@@ -39,7 +42,7 @@ const Drawer = React.memo(() => {
       name: 'Company Details',
       onPress: () => {
         // setIsModalVisible(true);
-        navigation.navigate('ReferFriendScreen');
+        navigation.navigate('CompanyDetails');
       },
       iconName: 'building',
       iconType: FontAwesome6
@@ -87,8 +90,8 @@ const Drawer = React.memo(() => {
         }}>
           <CustomImage source={require('../Assets/Images/dummyman5.png')} style={styles.image} />
         </View>
-        <CustomText style={styles.heading_text}>Username</CustomText>
-        <CustomText style={styles.heading_text}>Username@gmail.com</CustomText>
+        <CustomText style={styles.heading_text}>{userData?.name}</CustomText>
+        <CustomText style={styles.heading_text}>{userData?.email}</CustomText>
       </View>
 
       <View
@@ -123,7 +126,8 @@ const Drawer = React.memo(() => {
         ))}
       </View>
       <TouchableOpacity
-        // onPress={item.onPress}
+        onPress={() => dispatch(setUserLogoutAuth())
+        }
         style={{
           width: windowWidth * 0.7,
           borderColor: Color.black,

@@ -10,11 +10,8 @@ import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import CustomButton from '../Components/CustomButton'
-import CardComponent from '../Components/CardComponent'
 
 const AddEmployeeDetails = () => {
-
-
     return (
         <SafeAreaView style={styles.container}>
             <Header showBack hideUser={false} title={'Add Employee'} />

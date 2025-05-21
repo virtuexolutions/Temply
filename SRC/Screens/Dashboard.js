@@ -20,7 +20,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { color } from 'native-base/lib/typescript/theme/styled-system';
 import CustomButton from '../Components/CustomButton';
 import { SetUserRole, setUserToken } from '../Store/slices/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserData, setUserType } from '../Store/slices/common';
 import { Post } from '../Axios/AxiosInterceptorFunction';
 import Header from '../Components/Header';
@@ -32,21 +32,31 @@ const Dashboard = ({ navigation, route }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState('Dashboard')
+    console.log("🚀 ~ Dashboard ~ status:", status)
+    const userData = useSelector(state => state.commonReducer.userData);
+    console.log("🚀 ~ Dashboard ~ userData:", userData)
 
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header hideUser={false} showBack={false} />
+            <Header title={'Dashboard'} hideUser={false} showBack={false} />
             <View style={styles.main_view}>
                 <View style={styles.tab_view}>
-                    <View style={styles.tab_sub_view}>
+                    <TouchableOpacity onPress={() => setStatus('Dashboard')} style={[styles.tab_sub_view, {
+                        borderBottomWidth: 2,
+                        borderBottomColor: status === 'Dashboard' ? Color.themeBlue : Color.veryLightGray,
+                    }]}>
                         <Icon name='document-text' as={Ionicons} size={moderateScale(40, 0.6)} color={Color.themeBlue} />
                         <CustomText style={styles.subtextStyle}>Dashboard</CustomText>
-                    </View>
-                    <View style={styles.tab_sub_view}>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setStatus('Status')} style={[styles.tab_sub_view, {
+                        borderBottomWidth: 2,
+                        borderBottomColor: status === 'Status' ? Color.themeBlue : Color.veryLightGray
+                    }]}>
                         <Icon name='circular-graph' as={Entypo} size={moderateScale(40, 0.6)} color={Color.themeBlue} />
                         <CustomText style={styles.subtextStyle}>Status</CustomText>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={{
                     width: windowWidth,
@@ -138,11 +148,12 @@ const styles = StyleSheet.create({
         // borderBottomWidth: 1
     },
     tab_sub_view: {
-        width: '48%',
+        width: '55%',
         height: '100%',
         // backgroundColor: 'blue',
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginTop: moderateScale(20, 0.6)
     },
     sub_view: {
         flexDirection: 'row',

@@ -42,6 +42,7 @@ const SignupScreen = ({ navigation }) => {
       email: email,
       password: password,
       confirm_password: confirmPassword,
+      role: user_type === 'Employee' ? 'user' : 'company'
     };
     for (let key in body) {
       if (body[key] == "") {
@@ -61,7 +62,7 @@ const SignupScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <SafeAreaView style={[styles.container, {
-        backgroundColor: user_type === 'Company' ? Color.themeBlue : Color.white
+        backgroundColor: Color.white
       }]}>
         <Icon
           onPress={() => {
@@ -78,7 +79,7 @@ const SignupScreen = ({ navigation }) => {
           }}
         />
         <View style={{
-          width: windowWidth * 0.35,
+          width: windowWidth * 0.6,
           height: windowWidth * 0.35,
         }}>
           <CustomImage source={require('../Assets/Images/logo.png')} style={{
@@ -91,12 +92,12 @@ const SignupScreen = ({ navigation }) => {
           iconType={FontAwesome}
           setText={setUserName}
           value={userName}
-          placeholder={'Type your Email'}
+          placeholder={user_type === 'Company' ? 'Type your company' : 'Type your Name'}
           viewWidth={0.75}
           borderBottomWidth={2}
-          color={user_type === 'Company' ? Color.white : Color.blue}
-          placeholderColor={user_type === 'Company' ? Color.white : Color.grey}
-          borderColor={user_type === 'Company' ? Color.white : Color.blue}
+          color={Color.blue}
+          placeholderColor={Color.grey}
+          borderColor={Color.blue}
           marginTop={moderateScale(30, 0.3)}
         />
         <TextInputWithTitle
@@ -107,9 +108,9 @@ const SignupScreen = ({ navigation }) => {
           placeholder={'Type your Email'}
           viewWidth={0.75}
           borderBottomWidth={2}
-          color={user_type === 'Company' ? Color.white : Color.blue}
-          placeholderColor={user_type === 'Company' ? Color.white : Color.grey}
-          borderColor={user_type === 'Company' ? Color.white : Color.blue}
+          color={Color.blue}
+          placeholderColor={Color.grey}
+          borderColor={Color.blue}
           marginTop={moderateScale(30, 0.3)}
         />
         <TextInputWithTitle
@@ -122,9 +123,9 @@ const SignupScreen = ({ navigation }) => {
           placeholder={'Type your password'}
           viewWidth={0.75}
           borderBottomWidth={2}
-          color={user_type === 'Company' ? Color.white : Color.blue}
-          placeholderColor={user_type === 'Company' ? Color.white : Color.grey}
-          borderColor={user_type === 'Company' ? Color.white : Color.blue}
+          color={Color.blue}
+          placeholderColor={Color.grey}
+          borderColor={Color.blue}
           marginTop={moderateScale(30, 0.3)}
         />
         <TextInputWithTitle
@@ -137,9 +138,9 @@ const SignupScreen = ({ navigation }) => {
           placeholder={'Confirm Your Password'}
           viewWidth={0.75}
           borderBottomWidth={2}
-          color={user_type === 'Company' ? Color.white : Color.blue}
-          placeholderColor={user_type === 'Company' ? Color.white : Color.grey}
-          borderColor={user_type === 'Company' ? Color.white : Color.blue}
+          color={Color.blue}
+          placeholderColor={Color.grey}
+          borderColor={Color.blue}
           marginTop={moderateScale(30, 0.3)}
         />
         {/* <CustomButton
@@ -159,7 +160,7 @@ const SignupScreen = ({ navigation }) => {
         /> */}
         <CustomButton
           text={'Create'}
-          textColor={user_type === 'Company' ? Color.themeBlue : Color.white}
+          textColor={Color.white}
           onPress={() => {
             signUp()
           }}
@@ -167,12 +168,12 @@ const SignupScreen = ({ navigation }) => {
           width={windowWidth * 0.7}
           height={windowHeight * 0.060}
           borderRadius={moderateScale(20, 0.3)}
-          bgColor={user_type === 'Company' ? Color.white : Color.themeBlue}
+          bgColor={Color.themeBlue}
           marginTop={moderateScale(20, 0.6)}
         />
         <CustomText style={{
           fontSize: moderateScale(11, 0.3),
-          color: user_type === 'Company' ? Color.white : Color.darkbrown,
+          color: Color.darkbrown,
           paddingTop: windowHeight * 0.09,
 
         }}>Do You Have An Account ?</CustomText>
@@ -184,7 +185,7 @@ const SignupScreen = ({ navigation }) => {
           <CustomText
             isBold style={{
               fontSize: moderateScale(18, 0.3),
-              color: user_type === 'Company' ? Color.white : Color.blue,
+              color: Color.blue,
             }}>Log in</CustomText>
         </TouchableOpacity>
 

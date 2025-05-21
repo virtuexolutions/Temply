@@ -37,6 +37,7 @@ const LoginScreen = ({ navigation, route }) => {
       email: email,
       password: password,
       // photo:null,
+      role: user_type === 'Employee' ? 'user' : 'company'
     };
     console.log("🚀 ~ Login ~ body:", body)
     for (let key in body) {
@@ -55,7 +56,7 @@ const LoginScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={[styles.container, {
-      backgroundColor: user_type === 'Company' ? Color.themeBlue : Color.white
+      backgroundColor: Color.white
     }]}>
       {fromSignup && <Icon
         onPress={() => {
@@ -72,7 +73,7 @@ const LoginScreen = ({ navigation, route }) => {
         }}
       />}
       <View style={{
-        width: windowWidth * 0.35,
+        width: windowWidth * 0.6,
         height: windowWidth * 0.35,
       }}>
         <CustomImage source={require('../Assets/Images/logo.png')} style={{
@@ -83,29 +84,29 @@ const LoginScreen = ({ navigation, route }) => {
       <TextInputWithTitle
         iconName={'mail'}
         iconType={Ionicons}
-        color={user_type === 'Company' ? Color.white : Color.blue}
+        color={Color.blue}
         setText={setEmail}
         value={email}
         placeholder={'Type your Email'}
-        placeholderColor={user_type === 'Company' ? Color.white : Color.grey}
+        placeholderColor={Color.grey}
         viewWidth={0.75}
         borderBottomWidth={2}
-        borderColor={user_type === 'Company' ? Color.white : Color.blue}
+        borderColor={Color.blue}
         marginTop={moderateScale(30, 0.3)}
       />
       <TextInputWithTitle
         iconSize={moderateScale(20, 0.3)}
         iconName={'key'}
         iconType={Ionicons}
-        color={user_type === 'Company' ? Color.white : Color.blue}
+        color={Color.blue}
         secureText={true}
         setText={setPassword}
         value={password}
         placeholder={'Password'}
-        placeholderColor={user_type === 'Company' ? Color.white : Color.grey}
+        placeholderColor={Color.grey}
         viewWidth={0.75}
         borderBottomWidth={2}
-        borderColor={user_type === 'Company' ? Color.white : Color.blue}
+        borderColor={Color.blue}
         marginTop={moderateScale(30, 0.3)}
       />
       <TouchableOpacity
@@ -121,8 +122,8 @@ const LoginScreen = ({ navigation, route }) => {
         <CustomText
           style={{
             fontSize: moderateScale(11, 0.3),
-            color: user_type === 'Company' ? Color.white : Color.darkbrown,
-
+            color: Color.darkbrown,
+            textDecorationLine: 'underline',
           }}>
           Forgot password
         </CustomText>
@@ -132,8 +133,8 @@ const LoginScreen = ({ navigation, route }) => {
         width={windowWidth * 0.7}
         height={windowHeight * 0.060}
         borderRadius={moderateScale(20, 0.3)}
-        textColor={user_type === 'Company' ? Color.themeBlue : Color.white}
-        bgColor={user_type === 'Company' ? Color.white : Color.themeBlue}
+        textColor={Color.white}
+        bgColor={Color.themeBlue}
         marginTop={moderateScale(20, 0.6)}
         onPress={() => {
           Login()
@@ -141,7 +142,7 @@ const LoginScreen = ({ navigation, route }) => {
       />
       <CustomText style={{
         fontSize: moderateScale(11, 0.3),
-        color: user_type === 'Company' ? Color.white : Color.darkbrown,
+        color: Color.darkbrown,
         paddingTop: windowHeight * 0.05,
 
       }}>Don’t have an accout ?</CustomText>
@@ -151,7 +152,7 @@ const LoginScreen = ({ navigation, route }) => {
         }}
           isBold style={{
             fontSize: moderateScale(18, 0.3),
-            color: user_type === 'Company' ? Color.white : Color.blue,
+            color: Color.blue,
           }}>Sign Up</CustomText>
       </TouchableOpacity>
     </SafeAreaView>

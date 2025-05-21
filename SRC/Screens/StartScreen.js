@@ -38,7 +38,7 @@ const StartScreen = ({ navigation, route }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={{
-                width: windowWidth * 0.35,
+                width: windowWidth * 0.6,
                 height: windowWidth * 0.35,
             }}>
                 <CustomImage source={require('../Assets/Images/logo.png')} style={{

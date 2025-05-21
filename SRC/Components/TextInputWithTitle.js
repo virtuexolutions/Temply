@@ -27,7 +27,7 @@ const TextInputWithTitle = props => {
         <CustomText isBold
           style={[
             {
-              color: Color.themeBlue,
+              color: Color.black,
               fontSize: moderateScale(15, 0.3),
               marginBottom: moderateScale(5, 0.3),
               width: windowWidth * props.viewWidth,

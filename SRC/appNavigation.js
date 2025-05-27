@@ -41,6 +41,9 @@ import AddEmployees from './Screens/AddEmployees';
 import Department from './Screens/Department';
 import AddEmployeeDetails from './Screens/AddEmployeeDetails';
 import CompanyDetails from './Screens/CompanyDetails';
+import AddDepartment from './Screens/AddDepartment';
+import HomeScreen from './Screens/HomeScreen';
+import Tamplates from './Screens/Tamplates';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -58,8 +61,7 @@ const AppNavigator = () => {
         ? 'WalkthroughScreen'
         : token == null
           ? 'StartScreen'
-          : user_type === 'Company' ? 'MyDrawer' :
-            'Home';
+          : 'MyDrawer'
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
@@ -114,6 +116,7 @@ const AppNavigator = () => {
             component={ProgressFeedback}
           />
           <RootNav.Screen name="ChecklistScreen" component={ChecklistScreen} />
+          <RootNav.Screen name="AddDepartment" component={AddDepartment} />
 
           <RootNav.Screen
             name="FinalCoverLetter"
@@ -135,10 +138,13 @@ const AppNavigator = () => {
 export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
   const firstScreen = 'HomeScreen';
+  const user_type = useSelector(state => state.authReducer.role)
+  console.log("🚀 ~ MyDrawer ~ user_type:", user_type)
   return (
     <DrawerNavigation.Navigator
       drawerContent={props => <Drawer {...props} />}
-      initialRouteName={'Dashboard'}
+      initialRouteName={user_type === 'Company' ? 'Dashboard' : 'HomeScreen'}
+      // initialRouteName='Tamplates'
       screenOptions={{
         headerShown: false,
         drawerStyle: {
@@ -146,6 +152,8 @@ export const MyDrawer = () => {
         },
       }}>
       <DrawerNavigation.Screen name="Dashboard" component={Dashboard} />
+      <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
+      <DrawerNavigation.Screen name="Tamplates" component={Tamplates} />
     </DrawerNavigation.Navigator>
   );
 };

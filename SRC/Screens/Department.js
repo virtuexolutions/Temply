@@ -1,5 +1,5 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
 import { windowHeight, windowWidth } from '../Utillity/utils'
 import Color from '../Assets/Utilities/Color'
@@ -8,8 +8,34 @@ import TextInputWithTitle from '../Components/TextInputWithTitle'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import CustomButton from '../Components/CustomButton'
 import CardComponent from '../Components/CardComponent'
-const Department = () => {
+import navigationService from '../navigationService'
+import { Get } from '../Axios/AxiosInterceptorFunction'
+import { useSelector } from 'react-redux'
+import { useIsFocused } from '@react-navigation/core'
 
+const Department = () => {
+    const isFocused = useIsFocused()
+    const [departments, setDepartments] = useState([])
+    console.log("🚀 ~ Department ~ departments:", departments)
+    const token = useSelector(state => state.authReducer.token);
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        getDepartments()
+    }, [isFocused])
+
+    const getDepartments = async () => {
+        const url = 'auth/department_list'
+        setLoading(true)
+        const response = await Get(url, token)
+        setLoading(false)
+        if (response?.data != undefined) {
+            setLoading(false)
+            setDepartments(response?.data?.data)
+        } else {
+            setLoading(false)
+        }
+    }
 
     const employee_list = [
         {
@@ -55,9 +81,10 @@ const Department = () => {
             designation: "supervisor",
         },
     ]
+
     return (
         <SafeAreaView style={styles.container}>
-            <Header hideUser={false} showBack={false} />
+            <Header hideUser={false} showBack={false} isRight onPressPlus={() => navigationService.navigate('AddDepartment')} />
             <View style={styles.main_view}>
                 <View style={styles.search_bar_view}>
                     <TextInputWithTitle
@@ -86,18 +113,24 @@ const Department = () => {
                         }}
                     />
                 </View>
-                <FlatList
-                    data={employee_list}
-                    keyExtractor={(item) => item?.id}
-                    renderItem={(({ item }) => {
-                        const nameInitial = (item?.name || ' ')[0]?.toUpperCase() || '?';
-                        return (
-                            <CardComponent data={item}
-                                image={nameInitial}
-                            />
-                        )
-                    })}
-                />
+                {loading ?
+                    <ActivityIndicator size="small"
+                        color={Color.themeBlue} style={{ marginTop: moderateScale(20, 0.6) }} /> :
+                    <FlatList
+                        data={departments}
+                        keyExtractor={(item) => item?.id}
+                        renderItem={(({ item }) => {
+                            const nameInitial = (item?.department_name || ' ')[0]?.toUpperCase() || '?';
+                            return (
+                                <CardComponent data={item}
+                                    image={nameInitial}
+                                    name={item?.department_name}
+                                    text={`Number of Employees ${item?.number_of_employees_in_depart}`}
+                                />
+                            )
+                        })}
+                    />
+                }
             </View>
         </SafeAreaView>
     )

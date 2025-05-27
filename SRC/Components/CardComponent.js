@@ -5,7 +5,8 @@ import Color from '../Assets/Utilities/Color'
 import { moderateScale } from 'react-native-size-matters'
 import CustomText from './CustomText'
 
-const CardComponent = ({ data, image }) => {
+const CardComponent = ({ data, image, name, text }) => {
+    console.log("🚀 ~ CardComponent ~ data:", data)
     return (
         <View style={styles.main_view}>
             <View style={styles.row_view}>
@@ -13,8 +14,8 @@ const CardComponent = ({ data, image }) => {
                     <CustomText style={styles.initialText}>{image}</CustomText>
                 </View>
                 <View>
-                    <CustomText style={styles.heading}>{data?.name}</CustomText>
-                    <CustomText style={styles.text}>{data?.designation}</CustomText>
+                    <CustomText style={styles.heading}>{name}</CustomText>
+                    <CustomText style={styles.text}>{text}</CustomText>
                 </View>
             </View>
         </View>

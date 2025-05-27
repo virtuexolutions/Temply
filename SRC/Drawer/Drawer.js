@@ -17,12 +17,12 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 import Foundation from 'react-native-vector-icons/Foundation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Icon } from 'native-base';
 
 const Drawer = React.memo(() => {
   const dispatch = useDispatch();
   const { user_type } = useSelector(state => state.authReducer);
-  console.log("🚀 ~ Drawer ~ user_type:", user_type)
   const [isModalVisible, setIsModalVisible] = useState(false);
   const userData = useSelector(state => state.commonReducer.userData);
 
@@ -46,6 +46,16 @@ const Drawer = React.memo(() => {
       },
       iconName: 'building',
       iconType: FontAwesome6
+    },
+    {
+      id: 2,
+      name: 'Tamplates',
+      onPress: () => {
+        // setIsModalVisible(true);
+        navigation.navigate('CompanyDetails');
+      },
+      iconName: 'filetext1',
+      iconType: AntDesign
     },
     {
       id: 3,

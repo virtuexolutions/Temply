@@ -25,6 +25,7 @@ import { setUserData, setUserType } from '../Store/slices/common';
 import { Post } from '../Axios/AxiosInterceptorFunction';
 import Header from '../Components/Header';
 import { mode } from 'native-base/lib/typescript/theme/tools';
+import dayjs from 'dayjs';
 
 const Dashboard = ({ navigation, route }) => {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const Dashboard = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={'Dashboard'} hideUser={false} showBack={false} />
+            <Header hideUser={false} showBack={false} />
             <View style={styles.main_view}>
                 <View style={styles.tab_view}>
                     <TouchableOpacity onPress={() => setStatus('Dashboard')} style={[styles.tab_sub_view, {

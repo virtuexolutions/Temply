@@ -17,8 +17,7 @@ import CustomText from './CustomText';
 import CustomImage from './CustomImage';
 const { height, width } = Dimensions.get('window');
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-
+import Foundation from "react-native-vector-icons/Foundation"
 import { useDispatch, useSelector } from 'react-redux';
 import { imageUrl } from '../Config';
 import { setUserLogout, setUserLogoutAuth } from '../Store/slices/auth';
@@ -52,6 +51,9 @@ const Header = props => {
     hideUser,
     height,
     style,
+    onPressPlus,
+    isRight,
+    isShadow = true
     // fromDrawer
   } = props;
 
@@ -94,7 +96,17 @@ const Header = props => {
           }.style && style,
           height && {
             height: height,
-          },
+          }, isShadow && {
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 11,
+            },
+            shadowOpacity: 0.55,
+            shadowRadius: 14.78,
+
+            elevation: 22,
+          }
         ]}
       >
         <View
@@ -133,7 +145,7 @@ const Header = props => {
                 name={'menu'}
                 as={Feather}
                 size={moderateScale(25, 0.3)}
-                color={Color.themeBlue}
+                color={headerColor ? Color.white : Color.themeBlue}
                 onPress={() => {
                   navigationN.toggleDrawer();
                   // navigationN.dispatch(DrawerActions.toggleDrawer())
@@ -146,7 +158,9 @@ const Header = props => {
           <CustomText
             style={{
               fontSize: moderateScale(18, 0.6),
-              color: color ? Color.black : Color.black,
+              color: color ? color : Color.black,
+              textAlign: 'center',
+              width: isRight ? '70%' : '90%',
             }}
             isBold>
             {title}
@@ -154,16 +168,23 @@ const Header = props => {
         ) : (
           <></>
         )}
-        <Icon
-          name={"logout"}
-          as={MaterialCommunityIcons}
-          size={moderateScale(24, 0.2)}
-          color={Color.black}
-          style={{ right: -135, top: 2 }}
-          onPress={() => {
-            dispatch(setUserLogoutAuth())
-          }}
-        />
+        {isRight &&
+          <TouchableOpacity onPress={props.onPressPlus} style={{
+            width: moderateScale(30, 0.6),
+            height: moderateScale(30, 0.6),
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Icon
+              name={"plus"}
+              as={Foundation}
+              size={moderateScale(24, 0.2)}
+              color={Color.themeBlue}
+              // style={{ right: -135, top: 2 }}
+              onPress={props.onPressPlus}
+            />
+          </TouchableOpacity>
+        }
       </View>
     </>
   );
@@ -207,23 +228,15 @@ const styles = ScaledSheet.create({
   header2: {
     width: windowWidth,
     // height: windowHeight * 0.13,
-    backgroundColor: '#F9F9F9',
+    // backgroundColor: '',
     // justifyContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: moderateScale(10, 0.3),
-    paddingVertical: moderateScale(20, 0.3),
+    paddingVertical: moderateScale(22, 0.3),
     alignItems: 'center',
     // backgroundColor: 'red',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 11,
-    },
-    shadowOpacity: 0.55,
-    shadowRadius: 14.78,
 
-    elevation: 22,
   },
   notificationCircle: {
     position: 'absolute',

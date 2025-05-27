@@ -156,7 +156,6 @@ const styles = ScaledSheet.create({
     borderRadius: moderateScale(5, 0.3),
     // paddingVertical: moderateScale(8, 0.3),
     paddingHorizontal: moderateScale(10, 0.3),
-
     //  elevation: 5,
     alignItems: 'center',
   },

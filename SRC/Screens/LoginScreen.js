@@ -36,8 +36,6 @@ const LoginScreen = ({ navigation, route }) => {
     const body = {
       email: email,
       password: password,
-      // photo:null,
-      role: user_type === 'Employee' ? 'user' : 'company'
     };
     console.log("🚀 ~ Login ~ body:", body)
     for (let key in body) {
@@ -140,21 +138,25 @@ const LoginScreen = ({ navigation, route }) => {
           Login()
         }}
       />
-      <CustomText style={{
-        fontSize: moderateScale(11, 0.3),
-        color: Color.darkbrown,
-        paddingTop: windowHeight * 0.05,
+      {user_type === 'Employee' ? <></>
+        :
+        <>
+          <CustomText style={{
+            fontSize: moderateScale(11, 0.3),
+            color: Color.darkbrown,
+            paddingTop: windowHeight * 0.05,
 
-      }}>Don’t have an accout ?</CustomText>
-      <TouchableOpacity activeOpacity={0.8}>
-        <CustomText onPress={() => {
-          navigation.navigate('SignupScreen')
-        }}
-          isBold style={{
-            fontSize: moderateScale(18, 0.3),
-            color: Color.blue,
-          }}>Sign Up</CustomText>
-      </TouchableOpacity>
+          }}>Don’t have an accout ?</CustomText>
+          <TouchableOpacity activeOpacity={0.8}>
+            <CustomText onPress={() => {
+              navigation.navigate('SignupScreen')
+            }}
+              isBold style={{
+                fontSize: moderateScale(18, 0.3),
+                color: Color.blue,
+              }}>Sign Up</CustomText>
+          </TouchableOpacity></>
+      }
     </SafeAreaView>
   );
 };

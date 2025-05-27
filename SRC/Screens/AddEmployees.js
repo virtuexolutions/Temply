@@ -1,5 +1,5 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
 import { windowHeight, windowWidth } from '../Utillity/utils'
 import Color from '../Assets/Utilities/Color'
@@ -8,7 +8,35 @@ import TextInputWithTitle from '../Components/TextInputWithTitle'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import CustomButton from '../Components/CustomButton'
 import CardComponent from '../Components/CardComponent'
+import navigationService from '../navigationService'
+import { Get } from '../Axios/AxiosInterceptorFunction'
+import { useSelector } from 'react-redux'
+import { useIsFocused } from '@react-navigation/core'
+import { date } from 'yup'
 const AddEmployees = () => {
+  const isFocused = useIsFocused()
+  const token = useSelector(state => state.authReducer.token);
+  const [employee, setEmployee] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  console.log("🚀 ~ AddEmployees ~ employee:", employee)
+  useEffect(() => {
+    getDepartments()
+  }, [isFocused])
+
+  const getDepartments = async () => {
+    const url = 'auth/employee_list'
+    setLoading(true)
+    const response = await Get(url, token)
+    setLoading(false)
+    if (response?.data != undefined) {
+      setLoading(false)
+      setEmployee(response?.data?.employee_list)
+    }
+    else {
+      setLoading(false)
+    }
+  }
 
 
   const employee_list = [
@@ -58,7 +86,7 @@ const AddEmployees = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header hideUser={false} showBack />
+      <Header hideUser={false} showBack isRight onPressPlus={() => navigationService.navigate('AddEmployeeDetails')} />
       <View style={styles.main_view}>
         <View style={styles.search_bar_view}>
           <TextInputWithTitle
@@ -78,6 +106,7 @@ const AddEmployees = () => {
           <CustomButton
             text={'Search'}
             width={windowWidth * 0.22}
+
             height={windowHeight * 0.055}
             borderRadius={moderateScale(10, 0.3)}
             textColor={Color.white}
@@ -87,18 +116,25 @@ const AddEmployees = () => {
             }}
           />
         </View>
-        <FlatList
-          data={employee_list}
-          keyExtractor={(item) => item?.id}
-          renderItem={(({ item }) => {
-            const nameInitial = (item?.name || ' ')[0]?.toUpperCase() || '?';
-            return (
-              <CardComponent data={item}
-                image={nameInitial}
-              />
-            )
-          })}
-        />
+        {
+          loading ? <ActivityIndicator size="small"
+            color={Color.themeBlue} style={{ marginTop: moderateScale(20, 0.6) }} /> :
+            <FlatList
+              data={employee}
+              keyExtractor={(item) => item?.id}
+              renderItem={(({ item }) => {
+                const nameInitial = (item?.detail?.full_name || ' ')[0]?.toUpperCase() || '?';
+                return (
+                  <CardComponent data={item}
+                    image={nameInitial}
+                    name={item?.detail?.full_name}
+                    text={item?.detail?.designation}
+                  />
+                )
+              })}
+            />
+        }
+
       </View>
     </SafeAreaView>
   )

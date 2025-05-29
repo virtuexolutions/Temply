@@ -15,22 +15,22 @@ import CustomText from '../Components/CustomText';
 import { moderateScale } from 'react-native-size-matters';
 import { Icon } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import CustomButton from '../Components/CustomButton';
 import navigationService from '../navigationService';
 import { useSelector } from 'react-redux';
 import CustomImage from '../Components/CustomImage';
 import ImagePickerModal from '../Components/ImagePickerModal';
-import { object } from 'yup';
 
 const EditCoverLetter = props => {
   const type = props?.route?.params?.type;
   console.log('🚀 EditCoverLetter ~ type:', type);
   const cardData = props?.route?.params?.data;
+  console.log("🚀 ~ cardData:", cardData)
   const tamplateType = props?.route?.params?.type;
   console.log("🚀 ~ tamplateType:", tamplateType)
   const token = useSelector(state => state.authReducer.token);
+
   const [personalDataTab, setPersonalDataTab] = useState(true);
   const [summary, setSummary] = useState(true);
   const [email, setEmail] = useState('');
@@ -51,10 +51,10 @@ const EditCoverLetter = props => {
   const [experience, setexperience] = useState(true);
   const [Certificate, setCertificate] = useState(true);
   const [managerName, setManagerName] = useState('');
-  const [companyName, setCompanyName] = useState('');
+  const [companyName, setCompanyName] = useState(userData?.name);
   const [companyAddress, setCompanyAddress] = useState('');
   const [subject, setSubject] = useState('');
-  const [managerEmail, setManagerEmail] = useState('');
+  const [managerEmail, setManagerEmail] = useState(userData?.email);
   const [startDate, setJobTitle] = useState('');
   const [positonName, setpositonName] = useState('');
   const [experiencePlaceName, setexperiencePlaceName] = useState('');
@@ -66,6 +66,7 @@ const EditCoverLetter = props => {
   const [image, setImage] = useState({});
   console.log('🚀 ~ image:', image);
   const userData = useSelector(state => state.commonReducer.userData);
+  console.log("🚀 ~ userData:", userData)
 
   const onPressConfirm = async () => {
     const data = {
@@ -85,6 +86,19 @@ const EditCoverLetter = props => {
       tamplate_image: null,
       tamplate_description: cardData?.description
     };
+    // const body = {
+    //   name: name,
+    //   phone: phone,
+    //   summary: summary,
+    //   date: date,
+    //   details: details,
+    //   managerName: managerName,
+    //   subject: subject,
+    //   email: userData?.email,
+    //   tamplate_title: cardData?.heading,
+    //   tamplate_image: null,
+    //   tamplate_description: cardData?.description
+    // };
     const body = {
       name: name,
       phone: phone,
@@ -110,6 +124,7 @@ const EditCoverLetter = props => {
       tamplate_image: null,
       tamplate_description: cardData?.description
     }
+
     tamplateType === 'companyEmail'
       ? navigationService.navigate('EmailTamplate2', { data: details })
       : type === 'email'
@@ -1029,7 +1044,6 @@ const EditCoverLetter = props => {
                       setText={setDate}
                       value={date}
                     />
-
                     {/* <CustomText isBold style={styles.text}>Certificate Place Name</CustomText>
                                 <TextInputWithTitle
                                     iconSize={moderateScale(20, 0.3)}
@@ -1130,14 +1144,25 @@ const EditCoverLetter = props => {
               tamplateType === 'companyEmail' || 'attendencepolicy'
                 ? navigationService.navigate('EditEmailTamplate2', {
                   data: {
-                    name: name,
-                    email: email,
-                    address: address,
-                    contact: phone,
-                    description: details,
-                    subject: subject,
-                    date: date,
-                    managerName: managerName,
+                    // name: name,
+                    // email: email,
+                    // address: address,
+                    // contact: phone,
+                    // description: details,
+                    // subject: subject,
+                    // date: date,
+                    // managerName: managerName,
+                    name: 'testinguser',
+                    email: 'testinguser@gmail.com',
+                    address: 'abc street',
+                    contact: '03187897',
+                    description: 'orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley',
+                    subject: 'Late Attendence',
+                    date: '02-04-15',
+                    managerName: 'hr Manager',
+                    tamplate_title: cardData?.heading,
+                    tamplate_description: cardData?.description,
+                    tamplate_type: cardData?.type
                   },
                 })
                 : onPressConfirm();

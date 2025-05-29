@@ -19,8 +19,6 @@ import { Rating } from 'react-native-ratings';
 import { useSelector } from 'react-redux';
 import navigationService from '../navigationService';
 import { useIsFocused } from '@react-navigation/core';
-import { Get } from '../Axios/AxiosInterceptorFunction';
-import { date } from 'yup';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -30,8 +28,6 @@ const Tamplates = () => {
     const token = useSelector(state => state.authReducer.token);
     console.log("🚀 ~ Tamplates ~ token:", token)
     const [loading, setLoading] = useState(false);
-    const [saveresumeData, setSaveResumeData] = useState([]);
-    const [emailData, setEmailData] = useState([]);
     const [dropDown, setDropDown] = useState(false);
     const [showCategory, setshowCategory] = useState('resume');
     const [selectedCategoty, setSelectedCategory] = useState({
@@ -39,6 +35,7 @@ const Tamplates = () => {
         text: 'email',
         subtext: 'tempaletes',
     });
+
     const category = [
         // {
         //     id: 1,
@@ -131,7 +128,8 @@ const Tamplates = () => {
                 'Land your dream job in the creative industries by using this creative resume template, which will make your application stand out.',
             image: require('../Assets/Images/email-temp.jpeg'),
             tamplateType: 'attendencepolicy',
-            type: 'attendencepolicy'
+            type: 'attendencepolicy',
+            price: 0
         },
     ];
     const survayForm = [
@@ -441,12 +439,12 @@ const Tamplates = () => {
                                                         }
                                                         ratingBackgroundColor={'white'}
                                                     />
-                                                    <CustomText
+                                                    <CustomText isBold
                                                         style={{
-                                                            fontSize: moderateScale(12, 0.2),
-                                                            color: Color.grey,
+                                                            fontSize: moderateScale(17, 0.2),
+                                                            color: Color.themeBlue,
                                                         }}>
-                                                        1/16
+                                                        {`$ ${item?.price}`}
                                                     </CustomText>
                                                 </View>
                                             </View>

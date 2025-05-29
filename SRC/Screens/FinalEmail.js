@@ -1,28 +1,21 @@
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
-  FlatList,
   I18nManager,
   ImageBackground,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import React, { useState } from 'react';
-import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
-import Header from '../Components/Header';
-import Color from '../Assets/Utilities/Color';
-import CustomText from '../Components/CustomText';
 import { moderateScale } from 'react-native-size-matters';
-import { Icon } from 'native-base';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Entypo from 'react-native-vector-icons/Entypo';
-import TextInputWithTitle from '../Components/TextInputWithTitle';
-import CustomButton from '../Components/CustomButton';
-import navigationService from '../navigationService';
-import { Post } from '../Axios/AxiosInterceptorFunction';
 import { useSelector } from 'react-redux';
+import Color from '../Assets/Utilities/Color';
+import { Post } from '../Axios/AxiosInterceptorFunction';
+import CustomButton from '../Components/CustomButton';
+import CustomText from '../Components/CustomText';
+import Header from '../Components/Header';
+import navigationService from '../navigationService';
+import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
 
 const FinalEmail = props => {
   const data = props?.route?.params?.data;

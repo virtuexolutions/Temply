@@ -1,34 +1,22 @@
+import dayjs from 'dayjs';
+import { Icon } from 'native-base';
+import React, { useState } from 'react';
 import {
-    ActivityIndicator,
     FlatList,
     SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
-    ToastAndroid,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import React, { useState } from 'react';
-import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
-import Color from '../Assets/Utilities/Color';
-import { Icon } from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { moderateScale } from 'react-native-size-matters';
-import navigationService from '../navigationService';
-import CustomText from '../Components/CustomText';
-import TextInputWithTitle from '../Components/TextInputWithTitle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { color } from 'native-base/lib/typescript/theme/styled-system';
-import CustomButton from '../Components/CustomButton';
-import { SetUserRole, setUserToken } from '../Store/slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserData, setUserType } from '../Store/slices/common';
-import { Post } from '../Axios/AxiosInterceptorFunction';
+import Color from '../Assets/Utilities/Color';
+import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
-import { mode } from 'native-base/lib/typescript/theme/tools';
-import { date } from 'yup';
-import dayjs from 'dayjs';
+import { windowHeight, windowWidth } from '../Utillity/utils';
 
 const HomeScreen = ({ navigation, route }) => {
     const dispatch = useDispatch();

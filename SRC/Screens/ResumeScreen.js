@@ -54,7 +54,7 @@ const ResumeScreen = props => {
               navigationService.navigate('ChecklistForm', { data: detailData, type: tamplateType, tamplateType: detailData?.templeteType });
             } else {
               navigationService.navigate('EditCoverLetter', {
-                data: data,
+                data: detailData,
                 type: detailData?.type,
                 tamplateType: tamplateType,
               });
@@ -77,7 +77,5 @@ const styles = StyleSheet.create({
   bg_container: {
     width: windowWidth,
     height: windowHeight,
-    // alignItems: 'left',
-    // paddingHorizontal: moderateScale(10, 0.6),
   },
 });

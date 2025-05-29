@@ -1,3 +1,6 @@
+import { useIsFocused } from '@react-navigation/core';
+import { Icon } from 'native-base';
+import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -5,26 +8,19 @@ import {
     ImageBackground,
     ScrollView,
     StyleSheet,
-    Text,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
-import Header from '../Components/Header';
-import Color from '../Assets/Utilities/Color';
-import CustomText from '../Components/CustomText';
 import { moderateScale } from 'react-native-size-matters';
-import { Icon } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Entypo from 'react-native-vector-icons/Entypo';
-import TextInputWithTitle from '../Components/TextInputWithTitle';
-import CustomButton from '../Components/CustomButton';
-import navigationService from '../navigationService';
-import { Get, Post } from '../Axios/AxiosInterceptorFunction';
 import { useSelector } from 'react-redux';
-import { useIsFocused } from '@react-navigation/core';
+import Color from '../Assets/Utilities/Color';
+import { Get } from '../Axios/AxiosInterceptorFunction';
 import CustomImage from '../Components/CustomImage';
+import CustomText from '../Components/CustomText';
+import Header from '../Components/Header';
+import navigationService from '../navigationService';
+import { windowHeight, windowWidth } from '../Utillity/utils';
 
 const SavedTemplates = () => {
     const isFocused = useIsFocused()
@@ -40,11 +36,11 @@ const SavedTemplates = () => {
     const [selectedCategoty, setSelectedCategory] = useState('resume')
     console.log("🚀 ~ SavedTemplates ~ selectedCategoty:", selectedCategoty)
     const category = [
-        {
-            id: 1,
-            text: 'resume',
-            subtext: 'tempaletes',
-        },
+        // {
+        //     id: 1,
+        //     text: 'resume',
+        //     subtext: 'tempaletes',
+        // },
         {
             id: 2,
             text: 'email',
@@ -68,7 +64,7 @@ const SavedTemplates = () => {
     ];
 
     useEffect(() => {
-        getResumeData();
+        // getResumeData();
         getMailData()
         getCoverLetterData()
         getCareerBlog()

@@ -3,47 +3,48 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { enableScreens } from 'react-native-screens';
-import { moderateScale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import Drawer from './Drawer/Drawer';
 import navigationService from './navigationService';
+import AddDepartment from './Screens/AddDepartment';
+import AddEmployeeDetails from './Screens/AddEmployeeDetails';
+import AddEmployees from './Screens/AddEmployees';
 import ChangePassword from './Screens/ChangePassword';
+import ChecklistForm from './Screens/ChecklistForm';
+import ChecklistScreen from './Screens/ChecklistScreen';
+import CheckOutScreen from './Screens/CheckOutScreen';
+import CompanyDetails from './Screens/CompanyDetails';
+import CustomerSurveyForm from './Screens/CustomerSurveyForm';
+import Dashboard from './Screens/Dashboard';
+import Department from './Screens/Department';
 import EditBlogPost from './Screens/EditBlogPost';
 import EditCoverLetter from './Screens/EditCoverLetter';
+import EditEmailTamplate2 from './Screens/EditEmailTamplate2';
 import EditResume from './Screens/EditResume';
+import EditSurveyForm from './Screens/EditSurveyForm';
+import EmailTamplate2 from './Screens/EmailTamplate2';
+import FeedBackForm from './Screens/FeedBackForm';
 import FinalBlogPost from './Screens/FinalBlogPost';
 import FinalCoverLetter from './Screens/FinalCoverLetter';
 import FinalEmail from './Screens/FinalEmail';
 import Home from './Screens/Home';
+import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
+import OnboardingScreen from './Screens/OnboardingScreen';
+import Payment from './Screens/Payment';
+import ProgressFeedback from './Screens/ProgressFeedback';
 import ResetPassword from './Screens/ResetPassword';
 import ResumeFinalScreen from './Screens/ResumeFinalScreen';
 import ResumeScreen from './Screens/ResumeScreen';
+import SavedTemplates from './Screens/SavedTemplates';
 import SignupScreen from './Screens/SignupScreen';
 import SplashScreen from './Screens/SplashScreen';
+import StartScreen from './Screens/StartScreen';
+import SurvaryForm from './Screens/SurvaryForm';
+import Tamplates from './Screens/Tamplates';
 import VerifyEmail from './Screens/VerifyEmail';
 import VerifyNumber from './Screens/VerifyNumber';
 import WalkThroughScreen from './Screens/WalkthroughScreen';
-import OnboardingScreen from './Screens/OnboardingScreen';
-import EditSurveyForm from './Screens/EditSurveyForm';
-import EmailTamplate2 from './Screens/EmailTamplate2';
-import CustomerSurveyForm from './Screens/CustomerSurveyForm';
-import FeedBackForm from './Screens/FeedBackForm';
-import ProgressFeedback from './Screens/ProgressFeedback';
-import ChecklistScreen from './Screens/ChecklistScreen';
-import ChecklistForm from './Screens/ChecklistForm';
-import SurvaryForm from './Screens/SurvaryForm';
-import EditEmailTamplate2 from './Screens/EditEmailTamplate2';
-import SavedTemplates from './Screens/SavedTemplates';
-import StartScreen from './Screens/StartScreen';
-import Dashboard from './Screens/Dashboard';
-import AddEmployees from './Screens/AddEmployees';
-import Department from './Screens/Department';
-import AddEmployeeDetails from './Screens/AddEmployeeDetails';
-import CompanyDetails from './Screens/CompanyDetails';
-import AddDepartment from './Screens/AddDepartment';
-import HomeScreen from './Screens/HomeScreen';
-import Tamplates from './Screens/Tamplates';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -67,7 +68,6 @@ const AppNavigator = () => {
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
-          // initialRouteName={'CompanyDetails'}
           screenOptions={{ headerShown: false }}>
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen
@@ -99,7 +99,6 @@ const AppNavigator = () => {
           <RootNav.Screen name="ResumeScreen" component={ResumeScreen} />
           <RootNav.Screen name="EditResume" component={EditResume} />
           <RootNav.Screen name="EditCoverLetter" component={EditCoverLetter} />
-          {/* <RootNav.Screen name="SurvaryForm" component={SurvaryForm} /> */}
           <RootNav.Screen name="EditSurveyForm" component={EditSurveyForm} />
           <RootNav.Screen name="EmailTamplate2" component={EmailTamplate2} />
           <RootNav.Screen name="AddEmployees" component={AddEmployees} />
@@ -111,13 +110,15 @@ const AppNavigator = () => {
             component={CustomerSurveyForm}
           />
           <RootNav.Screen name="FeedBackForm" component={FeedBackForm} />
+          <RootNav.Screen name="Payment" component={Payment} />
           <RootNav.Screen
             name="ProgressFeedback"
             component={ProgressFeedback}
           />
           <RootNav.Screen name="ChecklistScreen" component={ChecklistScreen} />
           <RootNav.Screen name="AddDepartment" component={AddDepartment} />
-
+          <RootNav.Screen name="Tamplates" component={Tamplates} />
+          <RootNav.Screen name="CheckOutScreen" component={CheckOutScreen} />
           <RootNav.Screen
             name="FinalCoverLetter"
             component={FinalCoverLetter}

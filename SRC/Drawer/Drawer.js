@@ -52,7 +52,7 @@ const Drawer = React.memo(() => {
       name: 'Tamplates',
       onPress: () => {
         // setIsModalVisible(true);
-        navigation.navigate('CompanyDetails');
+        navigation.navigate('Tamplates');
       },
       iconName: 'filetext1',
       iconType: AntDesign

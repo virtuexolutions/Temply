@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, I18nManager, ImageBackground, ScrollView, StyleSheet, View } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import { useSelector } from 'react-redux';
 import Color from '../Assets/Utilities/Color';
+import { Post } from '../Axios/AxiosInterceptorFunction';
 import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
 import navigationService from '../navigationService';
 import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
-import { color } from 'native-base/lib/typescript/theme/styled-system';
-import { Post } from '../Axios/AxiosInterceptorFunction';
-import { useSelector } from 'react-redux';
 
 const EditEmailTamplate2 = props => {
   const data = props?.route?.params?.data;
@@ -29,17 +28,12 @@ const EditEmailTamplate2 = props => {
       setLoading(false)
       navigationService.navigate('Home');
     }
-
   }
 
   const onPressSaveEmail = async () => {
-    const body = {
-      phone: data?.contact,
-      summary: data?.description,
-    }
     const url = 'auth/mail'
     setLoading(true)
-    const response = await Post(url, body, apiHeader(token))
+    const response = await Post(url, data, apiHeader(token))
     setLoading(false)
     console.log("🚀 ~ onPressSave ~ response:", response?.data)
     if (response?.data != undefined) {
@@ -47,6 +41,7 @@ const EditEmailTamplate2 = props => {
       navigationService.navigate('Home');
     }
   }
+
   return (
     <ImageBackground
       style={styles.bg_container}
@@ -64,7 +59,7 @@ const EditEmailTamplate2 = props => {
           <View
             style={{
               alignItems: 'flex-start',
-              width: windowWidth * 0.8,
+              width: windowWidth * 0.85,
             }}>
             <CustomText isBold style={{
               textTransform: 'capitalize',
@@ -131,7 +126,11 @@ const EditEmailTamplate2 = props => {
             // 
             // console.log('first', skills);
             // onPressConfirm();
-            onPressSave()
+            if (data?.tamplate_type === 'attendencepolicy') {
+              onPressSaveEmail()
+            } else {
+              onPressSave()
+            }
           }}
           width={windowWidth * 0.8}
           height={windowHeight * 0.06}
@@ -162,13 +161,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   border: {
-    width: windowWidth * 0.87,
+    width: windowWidth * 0.9,
     backgroundColor: '#d1e4e2',
     height: windowHeight * 0.025,
     alignSelf: 'center',
   },
   txt_con: {
-    width: windowWidth * 0.8,
+    width: windowWidth * 0.85,
     paddingVertical: moderateScale(20, 0.6),
     borderBottomWidth: 3.5,
     borderTopWidth: 3.5,

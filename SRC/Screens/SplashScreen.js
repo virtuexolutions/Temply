@@ -1,24 +1,17 @@
-import {AddIcon, View} from 'native-base';
+import { AddIcon, View } from 'native-base';
 import React from 'react';
-import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import { moderateScale, ScaledSheet } from 'react-native-size-matters';
+import { windowHeight, windowWidth } from '../Utillity/utils';
 import CustomImage from '../Components/CustomImage';
 import CustomText from '../Components/CustomText';
 import { ImageBackground, SafeAreaView } from 'react-native';
 import Color from '../Assets/Utilities/Color';
 
 const SplashScreen = () => {
-  // const backgroundImage = require('../Assets/Images/splash.gif');
+
   return (
-    <SafeAreaView >
-     <ImageBackground imageStyle={{
-      width:'100%',height:'100%'
-     }} style={styles.container} source={require('../Assets/Images/bluebgc.png')}>
-     <View style={styles.logoStyle}>
-      <CustomText style={styles.text}>Logo</CustomText>
-      <CustomText isBold style={styles.text}>Here</CustomText>
-     </View>
-     </ImageBackground>
+    <SafeAreaView style={styles.container}>
+      <CustomImage source={require('../Assets/Images/logo.png')} />
     </SafeAreaView>
   );
 };
@@ -31,15 +24,20 @@ const styles = ScaledSheet.create({
     width: windowWidth,
     alignItems: 'center',
   },
-  text:{
-    fontSize:moderateScale(30,0.3),
-    color:Color.white
+  text: {
+    fontSize: moderateScale(30, 0.3),
+    color: Color.white
   },
-  logoStyle:{
-    flexDirection:'row',
+  logoStyle: {
+    // flexDirection: 'row',
+    width: windowWidth * 0.8,
+    height: windowWidth * 0.3,
+    backgroundColor: "red"
+  },
+  image: {
+    width: '100%',
+    height: '100%'
   }
- 
-
 });
 
 export default SplashScreen;

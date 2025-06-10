@@ -13,6 +13,7 @@ import { Post } from '../Axios/AxiosInterceptorFunction';
 
 const OnboardingScreen = props => {
   const data = props?.route?.params?.data;
+  console.log("🚀 ~ data:", data)
   const data1 = props?.route?.params?.design_data;
   console.log('🚀 ~ data1:', data1?.templeteType);
   const token = useSelector(state => state.authReducer.token);

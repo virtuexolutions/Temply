@@ -116,7 +116,6 @@ const SurvaryForm = props => {
             <View style={styles.leftColumn}>
                 <CustomText style={styles.questionText}>{item.id}. {item.text}</CustomText>
             </View>
-
             <View style={styles.rightColumn}>
                 {item.type === 'yesno' ? (
                     <View style={styles.yesNoContainer}>

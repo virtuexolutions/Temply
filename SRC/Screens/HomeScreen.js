@@ -128,7 +128,7 @@ const HomeScreen = ({ navigation, route }) => {
                             borderBottomWidth: 2,
                             borderBottomColor: tab === 'all' ? Color.themeBlue : Color.white
                         }]}>
-                            <CustomText isBold={tab === 'all' ? true : false} style={{
+                            <CustomText style={{
                                 fontSize: moderateScale(15, 0.6)
                             }}>All Documents</CustomText>
                         </TouchableOpacity>
@@ -136,7 +136,7 @@ const HomeScreen = ({ navigation, route }) => {
                             borderBottomWidth: 2,
                             borderBottomColor: tab === 'my' ? Color.themeBlue : Color.white
                         }]}>
-                            <CustomText isBold={tab === 'my' ? true : false} style={{
+                            <CustomText style={{
                                 fontSize: moderateScale(15, 0.6)
                             }}>My Documents</CustomText>
                         </TouchableOpacity>

@@ -34,7 +34,7 @@ const ResumeScreen = props => {
             height: windowHeight * 0.7,
           }}>
           <CustomImage
-            source={data}
+            source={{ uri: data }}
             style={{
               width: '100%',
               height: '100%',
@@ -48,9 +48,9 @@ const ResumeScreen = props => {
           onPress={() => {
             if (category === 'resume') {
               navigationService.navigate('EditResume', { data: detailData });
-            } else if (category === 'career') {
+            } else if (category === 'career-blogs') {
               navigationService.navigate('EditBlogPost', { data: detailData });
-            } else if (category === 'survay') {
+            } else if (category === 'survey-form') {
               navigationService.navigate('ChecklistForm', { data: detailData, type: tamplateType, tamplateType: detailData?.templeteType });
             } else {
               navigationService.navigate('EditCoverLetter', {

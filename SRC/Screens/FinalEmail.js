@@ -20,8 +20,9 @@ import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
 const FinalEmail = props => {
   const data = props?.route?.params?.data;
   const fromHome = props?.route?.params?.fromHome;
-  console.log("🚀 ~ data:", data)
+  console.log("🚀FinalEmail ~ data:", data)
   const token = useSelector(state => state.authReducer.token);
+  console.log("🚀 ~ token:", token)
   const [loading, setLoading] = useState(false)
 
   const saveEmailData = async () => {
@@ -60,8 +61,7 @@ const FinalEmail = props => {
               ]}>
               {`  Dear ${data?.managerName}`}
             </CustomText>
-
-            <CustomText style={styles.per_text}>{data?.details.replace(/\. /g, ".\n\n")}</CustomText>
+            <CustomText style={styles.per_text}>{data?.description || data?.summary}</CustomText>
             <View
               style={[
                 styles.per_data,
@@ -90,7 +90,6 @@ const FinalEmail = props => {
               <CustomText style={styles.per_text}>{data?.phone}</CustomText>
             </View>
           </View>
-
           <CustomButton
             text={
               loading ?

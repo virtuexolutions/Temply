@@ -26,6 +26,7 @@ import { useSelector } from 'react-redux';
 const EditBlogPost = props => {
   const design_data = props?.route?.params?.type;
   const detailData = props?.route?.params?.data;
+  console.log("🚀 ~ detailData:", detailData)
   console.log(
     '🚀 ~ detaildesign_data?.type====================== :',
     design_data,
@@ -88,12 +89,13 @@ const EditBlogPost = props => {
       designation: designation,
       type: design_data
     };
-    design_data?.type == 'blog'
-      ? navigationService.navigate('FinalBlogPost', { data: data })
-      : navigationService.navigate('OnboardingScreen', {
-        data: onBoardData,
-        design_data: design_data,
-      });
+    navigationService.navigate(detailData?.key, { data: data, })
+    // design_data?.type == 'blog'
+    //   ? navigationService.navigate('FinalBlogPost', { data: data })
+    //   : navigationService.navigate('OnboardingScreen', {
+    //     data: onBoardData,
+    //     design_data: design_data,
+    //   });
   };
 
   return (

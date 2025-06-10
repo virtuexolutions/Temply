@@ -26,7 +26,7 @@ const EditCoverLetter = props => {
   const type = props?.route?.params?.type;
   console.log('🚀 EditCoverLetter ~ type:', type);
   const cardData = props?.route?.params?.data;
-  console.log("🚀 ~ cardData:", cardData)
+  console.log("EditCoverLetter🚀 ~ cardData:", cardData)
   const tamplateType = props?.route?.params?.type;
   console.log("🚀 ~ tamplateType:", tamplateType)
   const token = useSelector(state => state.authReducer.token);
@@ -69,6 +69,7 @@ const EditCoverLetter = props => {
   console.log("🚀 ~ userData:", userData)
 
   const onPressConfirm = async () => {
+    console.log('yaahaa a rha ha')
     const data = {
       name: name,
       email: email,
@@ -84,9 +85,10 @@ const EditCoverLetter = props => {
       date: date,
       tamplate_title: cardData?.heading,
       tamplate_image: null,
-      tamplate_description: cardData?.description
+      tamplate_description: cardData?.description,
+      template_id: cardData?.id
     };
-    // const body = {
+    // const body = {               
     //   name: name,
     //   phone: phone,
     //   summary: summary,
@@ -110,7 +112,8 @@ const EditCoverLetter = props => {
       email: userData?.email,
       tamplate_title: cardData?.heading,
       tamplate_image: null,
-      tamplate_description: cardData?.description
+      tamplate_description: cardData?.description,
+      template_id: cardData?.id
     };
     const details = {
       companyName: companyName,
@@ -122,14 +125,14 @@ const EditCoverLetter = props => {
       image: image,
       tamplate_title: cardData?.heading,
       tamplate_image: null,
-      tamplate_description: cardData?.description
+      tamplate_description: cardData?.description,
+      template_id: cardData?.id
     }
-
     tamplateType === 'companyEmail'
-      ? navigationService.navigate('EmailTamplate2', { data: details })
+      ? navigationService.navigate(cardData?.key, { data: details })
       : type === 'email'
-        ? navigationService.navigate('FinalEmail', { data: body })
-        : navigationService.navigate('FinalCoverLetter', { data: data });
+        ? navigationService.navigate(cardData?.key, { data: body })
+        : navigationService.navigate(cardData?.key, { data: data });
   };
 
 
@@ -138,7 +141,7 @@ const EditCoverLetter = props => {
       style={styles.bg_container}
       source={require('../Assets/Images/bg.png')}>
       <Header
-        title={type == 'email' ? 'edit email' : 'Edit cover letter'}
+        title={type == 'email' ? 'edit email' : 'Edit Email'}
         hideUser={true}
         showBack={true}
       />
@@ -1142,7 +1145,7 @@ const EditCoverLetter = props => {
             onPress={() => {
               // onPressConfirm();
               tamplateType === 'companyEmail' || 'attendencepolicy'
-                ? navigationService.navigate('EditEmailTamplate2', {
+                ? navigationService.navigate(cardData?.key, {
                   data: {
                     // name: name,
                     // email: email,
@@ -1162,7 +1165,8 @@ const EditCoverLetter = props => {
                     managerName: 'hr Manager',
                     tamplate_title: cardData?.heading,
                     tamplate_description: cardData?.description,
-                    tamplate_type: cardData?.type
+                    tamplate_type: cardData?.type,
+                    template_id: cardData?.id
                   },
                 })
                 : onPressConfirm();

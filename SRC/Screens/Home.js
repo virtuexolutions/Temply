@@ -31,20 +31,29 @@ const Home = () => {
   console.log("🚀 ~ Home ~ token:", token)
   const [loading, setLoading] = useState(false);
   const [saveresumeData, setSaveResumeData] = useState([]);
-  const [emailData, setEmailData] = useState([]);
+  const [tamplates, setTamplates] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [showCategory, setshowCategory] = useState('resume');
   const [selectedCategoty, setSelectedCategory] = useState({
-    id: 1,
-    text: 'resume',
+    id: 2,
+    text: 'email',
     subtext: 'tempaletes',
   });
+  console.log("🚀 ~ Home ~ selectedCategoty:", selectedCategoty)
+
+  useEffect(() => {
+    getTamplates()
+  }, [])
+
+
+  const getTamplates = async () => {
+    const url = 'auth/category-list'
+    const response = await Get(url, token)
+    console.log("🚀 ~ getTamplates ~ response:", response?.data?.data)
+    setTamplates(response?.data?.data)
+  }
+
   const category = [
-    {
-      id: 1,
-      text: 'resume',
-      subtext: 'tempaletes',
-    },
     {
       id: 2,
       text: 'email',
@@ -243,17 +252,18 @@ const Home = () => {
             height: windowHeight * 0.05,
           }}
           horizontal
-          data={category}
+          data={tamplates}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
+            console.log(item, 'itemmmmmmmmmmmmmmmmm')
             return (
               <TouchableOpacity
                 onPress={() => {
-                  setSelectedCategory(item);
+                  setSelectedCategory(item?.name);
                 }}
                 style={styles.category_con}>
-                <CustomText>{item?.text}</CustomText>
-                <CustomText>{item?.subtext}</CustomText>
+                <CustomText>{item?.name}</CustomText>
+                {/* <CustomText>{item?.subtext}</CustomText> */}
               </TouchableOpacity>
             );
           }}
@@ -391,7 +401,6 @@ const Home = () => {
                   return <View style={{ height: windowHeight * 0.2 }} />;
                 }}
                 renderItem={({ item, index }) => {
-                  console.log('================= >>> > >>>', item)
                   return (
                     <TouchableOpacity
                       onPress={() =>

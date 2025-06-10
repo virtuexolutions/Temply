@@ -2,7 +2,6 @@ import {
     ActivityIndicator,
     ImageBackground,
     StyleSheet,
-    Text,
     TouchableOpacity,
     View,
 } from 'react-native';
@@ -13,7 +12,7 @@ import { windowHeight, windowWidth } from '../Utillity/utils';
 import { moderateScale } from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
 import SearchContainer from '../Components/SearchContainer';
-import { FlatList, Icon, ScrollView } from 'native-base';
+import { FlatList, Icon } from 'native-base';
 import CustomImage from '../Components/CustomImage';
 import { Rating } from 'react-native-ratings';
 import { useSelector } from 'react-redux';
@@ -21,12 +20,13 @@ import navigationService from '../navigationService';
 import { useIsFocused } from '@react-navigation/core';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Get } from '../Axios/AxiosInterceptorFunction';
+import { baseUrl } from '../Config';
 
 const Tamplates = () => {
     const userData = useSelector(state => state.commonReducer.userData);
     const isFocused = useIsFocused();
     const token = useSelector(state => state.authReducer.token);
-    console.log("🚀 ~ Tamplates ~ token:", token)
     const [loading, setLoading] = useState(false);
     const [dropDown, setDropDown] = useState(false);
     const [showCategory, setshowCategory] = useState('resume');
@@ -35,32 +35,72 @@ const Tamplates = () => {
         text: 'email',
         subtext: 'tempaletes',
     });
+    const [tamplates, setTamplates] = useState([]);
+    console.log("🚀 ~ Tamplates ~ tamplates:", tamplates)
+    useEffect(() => {
+        getTamplates()
+    }, [selectedCategoty])
+
+
+    const getTamplates = async () => {
+        const url = 'auth/category-list';
+        setLoading(true)
+        const response = await Get(url, token);
+        const categories = response?.data?.data;
+        setLoading(false)
+
+        let matchedCategory = null;
+
+        switch (selectedCategoty) {
+            case 'cover-letter':
+                matchedCategory = categories.find(cat => cat.slug === 'cover-letter');
+                break;
+            case 'email':
+                matchedCategory = categories.find(cat => cat.slug === 'email');
+                break;
+            case 'survey-form':
+                matchedCategory = categories.find(cat => cat.slug === 'survey-form');
+                break;
+            case 'career-blogs':
+                matchedCategory = categories.find(cat => cat.slug === 'career-blogs');
+                break;
+            default:
+                matchedCategory = null;
+        }
+
+        if (matchedCategory) {
+            setLoading(false)
+            setTamplates(matchedCategory.templates || []);
+        } else {
+            setTamplates([]);
+        }
+    };
+
 
     const category = [
-        // {
-        //     id: 1,
-        //     text: 'resume',
-        //     subtext: 'tempaletes',
-        // },
         {
             id: 2,
             text: 'email',
             subtext: 'tempaletes',
+            key: 'email'
         },
         {
             id: 3,
             text: 'cover',
             subtext: 'letter',
+            key: 'cover-letter'
         },
         {
             id: 4,
             text: 'career',
             subtext: 'blog',
+            key: 'career-blogs'
         },
         {
             id: 5,
             text: 'survay',
             subtext: 'forms',
+            key: 'survey-form'
         },
     ];
     const resumeData = [
@@ -199,10 +239,8 @@ const Tamplates = () => {
                 <SearchContainer
                     width={windowWidth * 0.8}
                     height={moderateScale(50, 0.6)}
-                    // rightIcon={true}
                     placeHolder={'search ..'}
                     input={true}
-                // data=
                 />
                 <TouchableOpacity
                     onPress={() => navigationService.navigate('SavedTemplates')}
@@ -246,7 +284,7 @@ const Tamplates = () => {
                         return (
                             <TouchableOpacity
                                 onPress={() => {
-                                    setSelectedCategory(item);
+                                    setSelectedCategory(item?.key);
                                 }}
                                 style={styles.category_con}>
                                 <CustomText>{item?.text}</CustomText>
@@ -332,26 +370,6 @@ const Tamplates = () => {
                                 </View>
                             );
                         })}
-                        {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingHorizontal: moderateScale(10, 0.6),
-              }}>
-              <CustomText
-                onPress={() => {
-                  // setFilterPlaces('topRated')
-                  // findNearestMcDonalds()
-                }}
-                style={{
-                  fontSize: moderateScale(14, 0.6),
-                  color: Color.black,
-                  paddingHorizontal: moderateScale(5, 0.6),
-                  textTransform: 'capitalize'
-                }}>
-                top Rated
-              </CustomText>
-            </View> */}
                     </View>
                 )}
             </View>
@@ -371,32 +389,24 @@ const Tamplates = () => {
                         : (
                             <FlatList
                                 style={{
-                                    // width: '100%',
                                     height: '100%',
-                                    // backgroundColor:"red"
                                 }}
                                 showsVerticalScrollIndicator={false}
                                 keyExtractor={item => item.id}
-                                data={
-                                    selectedCategoty?.text === 'resume' ? resumeData :
-                                        selectedCategoty?.text === 'cover' ? coverletterData :
-                                            selectedCategoty?.text === 'career' ? careerBlogdata :
-                                                selectedCategoty?.text === 'survay' ? survayForm :
-                                                    cvdata
-                                }
+                                data={tamplates}
                                 ListFooterComponent={() => {
                                     return <View style={{ height: windowHeight * 0.2 }} />;
                                 }}
                                 renderItem={({ item, index }) => {
-                                    console.log('================= >>> > >>>', item)
+
                                     return (
                                         <TouchableOpacity
                                             onPress={() =>
                                                 navigationService.navigate('ResumeScreen', {
                                                     detailData: item,
-                                                    data: item?.image,
-                                                    type: selectedCategoty?.text,
-                                                    tamplateType: item?.tamplateType
+                                                    data: `${baseUrl}${item?.image}`,
+                                                    type: selectedCategoty,
+                                                    tamplateType: item?.type
                                                 })
                                             }
                                             style={styles.card}>
@@ -405,12 +415,12 @@ const Tamplates = () => {
                                                     onPress={() =>
                                                         navigationService.navigate('ResumeScreen', {
                                                             detailData: item,
-                                                            data: item?.image,
-                                                            type: selectedCategoty?.text,
-                                                            tamplateType: item?.tamplateType
+                                                            data: `${baseUrl}${item?.image}`,
+                                                            type: selectedCategoty,
+                                                            tamplateType: item?.type
                                                         })
                                                     }
-                                                    source={item?.image}
+                                                    source={{ uri: `${baseUrl}${item?.image}` }}
                                                     style={{
                                                         height: '100%',
                                                         width: '100%',
@@ -439,13 +449,6 @@ const Tamplates = () => {
                                                         }
                                                         ratingBackgroundColor={'white'}
                                                     />
-                                                    <CustomText isBold
-                                                        style={{
-                                                            fontSize: moderateScale(17, 0.2),
-                                                            color: Color.themeBlue,
-                                                        }}>
-                                                        {`$ ${item?.price}`}
-                                                    </CustomText>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>
@@ -465,8 +468,6 @@ const styles = StyleSheet.create({
     bg_container: {
         width: windowWidth,
         height: windowHeight,
-        // alignItems: 'left',
-        // paddingHorizontal: moderateScale(10, 0.6),
     },
     h1: {
         fontSize: moderateScale(25, 0.6),
@@ -481,7 +482,6 @@ const styles = StyleSheet.create({
     },
     text_con: {
         width: '95%',
-        // paddingVertical: moderateScale(10, 0.6),
         paddingHorizontal: moderateScale(10, 0.6),
     },
     h3: {
@@ -514,7 +514,6 @@ const styles = StyleSheet.create({
     card: {
         width: windowWidth * 0.95,
         backgroundColor: Color.white,
-        // height: windowHeight * 0.11,
         borderRadius: moderateScale(12, 0.6),
         flexDirection: 'row',
         gap: moderateScale(12, 0.3),
@@ -525,24 +524,18 @@ const styles = StyleSheet.create({
     card_image: {
         height: windowHeight * 0.11,
         width: windowWidth * 0.2,
-        // backgroundColor: 'red',
     },
     content: {
         width: '75%',
-        //  backgroundColor: Color.red,
-        // flexDirection:"column",
-        // overflow:'hidden'
     },
     heading: {
         fontSize: moderateScale(16, 0.3),
     },
     description: {
-        // width:"100%",
         fontSize: moderateScale(10, 0.2),
         color: Color.grey,
     },
     ratingView: {
-        // width:'100%',
         flexDirection: 'row',
         paddingHorizontal: moderateScale(4, 0.2),
         justifyContent: 'space-between',

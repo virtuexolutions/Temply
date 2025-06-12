@@ -35,6 +35,7 @@ const Tamplates = () => {
         text: 'email',
         subtext: 'tempaletes',
     });
+    console.log("🚀 ~ Tamplates ~ selectedCategoty:", selectedCategoty)
     const [tamplates, setTamplates] = useState([]);
     console.log("🚀 ~ Tamplates ~ tamplates:", tamplates)
     useEffect(() => {
@@ -286,7 +287,7 @@ const Tamplates = () => {
                                 onPress={() => {
                                     setSelectedCategory(item?.key);
                                 }}
-                                style={styles.category_con}>
+                                style={[styles.category_con, { backgroundColor: selectedCategoty === item?.key ? Color.darkBlue : Color.white }]}>
                                 <CustomText>{item?.text}</CustomText>
                                 <CustomText>{item?.subtext}</CustomText>
                             </TouchableOpacity>
@@ -294,7 +295,7 @@ const Tamplates = () => {
                     }}
                 />
             </View>
-            <View style={styles.row}>
+            <View style={[styles.row, { marginTop: moderateScale(10, 0.6) }]}>
                 <CustomText
                     isBold
                     style={[
@@ -303,7 +304,8 @@ const Tamplates = () => {
                             fontSize: moderateScale(15, 0.6),
                         },
                     ]}>
-                    {selectedCategoty?.text} {selectedCategoty?.subtext}
+                    {/* {selectedCategoty?.text} {selectedCategoty?.subtext} */}
+                    {selectedCategoty === ' survey-form' ? 'Survey Forms' : selectedCategoty === 'cover-letter' ? 'Cover Letter' : selectedCategoty === 'career-blogs' ? 'Career Blogs' : selectedCategoty === 'email' ? 'emails' : ''}
                 </CustomText>
                 {selectedCategoty?.text === 'Saved' ? (
                     <TouchableOpacity

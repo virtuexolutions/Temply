@@ -14,6 +14,7 @@ const FeedBackForm = props => {
     const data = props?.route?.params?.data;
     console.log("🚀FeedBackForm ~ data:", data)
     const [answers, setAnswers] = useState({});
+    console.log("🚀 ~ answers:", answers)
     const token = useSelector(state => state.authReducer.token);
     const [loading, setLoading] = useState(false)
     const handleSelect = (qIndex, option) => {
@@ -108,7 +109,7 @@ const FeedBackForm = props => {
                                         ))}
                                     </View>
                                 </View>
-                                {data?.skills || data?.question.map((item, index) => {
+                                {data?.skills.map((item, index) => {
                                     return (
                                         <View style={{
                                             flexDirection: 'row',

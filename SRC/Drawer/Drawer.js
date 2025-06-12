@@ -20,13 +20,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Icon } from 'native-base';
 
-const Drawer = React.memo(() => {
+const Drawer = React.memo((props) => {
+  const { navigation } = props;
   const dispatch = useDispatch();
   const { user_type } = useSelector(state => state.authReducer);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const userData = useSelector(state => state.commonReducer.userData);
-
-  const navigation = useNavigation();
   const adminData = [
     {
       id: 1,

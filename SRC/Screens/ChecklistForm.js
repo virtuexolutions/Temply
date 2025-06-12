@@ -55,38 +55,38 @@ const ChecklistForm = props => {
       tamplate_description: detailData?.description
     };
     console.log("🚀 ~ onPressConfirm ~ data:", data)
-
-    switch (data?.templeteType) {
-      case 'checklist':
-        navigationService.navigate('ChecklistScreen', {
-          data: data,
-          fromHome: false,
-        });
-        break;
-      case 'customerForm':
-        navigationService.navigate('CustomerSurveyForm', {
-          data: data,
-          fromHome: false,
-        });
-        break;
-      case 'feedbackForm':
-        navigationService.navigate('FeedBackForm', {
-          data: data,
-          fromHome: false,
-        });
-        break;
-      case 'progressForm':
-        navigationService.navigate('ProgressFeedback', {
-          data: data,
-          fromHome: false,
-        });
-        break;
-      default:
-        navigationService.navigate('SurvaryForm', {
-          data: data,
-          fromHome: false,
-        });
-    }
+    navigationService.navigate(detailData?.key, { data: data, fromHome: false })
+    // switch (data?.templeteType) {
+    //   case 'checklist':
+    //     navigationService.navigate('ChecklistScreen', {
+    //       data: data,
+    //       fromHome: false,
+    //     });
+    //     break;
+    //   case 'customerForm':
+    //     navigationService.navigate('CustomerSurveyForm', {
+    //       data: data,
+    //       fromHome: false,
+    //     });
+    //     break;
+    //   case 'feedbackForm':
+    //     navigationService.navigate('FeedBackForm', {
+    //       data: data,
+    //       fromHome: false,
+    //     });
+    //     break;
+    //   case 'progressForm':
+    //     navigationService.navigate('ProgressFeedback', {
+    //       data: data,
+    //       fromHome: false,
+    //     });
+    //     break;
+    //   default:
+    //     navigationService.navigate('SurvaryForm', {
+    //       data: data,
+    //       fromHome: false,
+    //     });
+    // }
   };
 
 
@@ -215,7 +215,8 @@ const ChecklistForm = props => {
                   company Logo :
                 </CustomText>
                 <TouchableOpacity
-                  onPress={() => setLogoImageModal(true)}
+                  // onPress={() => setLogoImageModal(true)}
+                  onPress={() => console.log('clickedddddddddddddddd')}
                   style={{
                     width: windowWidth * 0.3,
                     height: windowWidth * 0.3,

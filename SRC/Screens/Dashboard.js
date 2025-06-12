@@ -1,31 +1,25 @@
+import { Icon } from 'native-base';
+import React, { useState } from 'react';
 import {
-    ActivityIndicator,
     SafeAreaView,
     StyleSheet,
     Text,
-    ToastAndroid,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import React, { useState } from 'react';
-import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
-import Color from '../Assets/Utilities/Color';
-import { Icon } from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { PieChart } from 'react-native-gifted-charts';
 import { moderateScale } from 'react-native-size-matters';
-import navigationService from '../navigationService';
-import CustomText from '../Components/CustomText';
-import TextInputWithTitle from '../Components/TextInputWithTitle';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { color } from 'native-base/lib/typescript/theme/styled-system';
-import CustomButton from '../Components/CustomButton';
-import { SetUserRole, setUserToken } from '../Store/slices/auth';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Foundation from 'react-native-vector-icons/Foundation';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserData, setUserType } from '../Store/slices/common';
-import { Post } from '../Axios/AxiosInterceptorFunction';
+import Color from '../Assets/Utilities/Color';
+import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
-import { mode } from 'native-base/lib/typescript/theme/tools';
-import dayjs from 'dayjs';
+import navigationService from '../navigationService';
+import { windowHeight, windowWidth } from '../Utillity/utils';
 
 const Dashboard = ({ navigation, route }) => {
     const dispatch = useDispatch();
@@ -34,10 +28,13 @@ const Dashboard = ({ navigation, route }) => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('Dashboard')
-    console.log("🚀 ~ Dashboard ~ status:", status)
     const userData = useSelector(state => state.commonReducer.userData);
-    console.log("🚀 ~ Dashboard ~ userData:", userData)
-
+    const pieData = [
+        { value: 30, color: '#6366F1', text: '30' },
+        { value: 20, color: '#2DD4BF', text: '20' },
+        { value: 100, color: '#D1D5DB', text: '100' },
+        { value: 107, color: '#D946EF', text: '107' },
+    ];
 
     return (
         <SafeAreaView style={styles.container}>
@@ -72,33 +69,105 @@ const Dashboard = ({ navigation, route }) => {
                     elevation: 4,
                     marginTop: moderateScale(10, 0.6)
                 }} />
-                <View style={styles.sub_view}>
-                    <TouchableOpacity onPress={() => navigationService.navigate('AddEmployees')} style={styles.btn_view}>
-                        <CustomText isBold style={styles.heading}>100</CustomText>
-                        <CustomText style={styles.text}>Employees</CustomText>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigationService.navigate('Department')} style={[styles.btn_view, {
-                        backgroundColor: '#31C3BB'
-                    }]}>
-                        <CustomText isBold style={styles.heading}>100</CustomText>
-                        <CustomText style={styles.text}>Department</CustomText>
-                    </TouchableOpacity>
-                </View>
-                <View style={[styles.sub_view, {
-                    marginTop: moderateScale(15, 0.6)
-                }]}>
-                    <TouchableOpacity style={[styles.btn_view, {
-                        backgroundColor: '#557AFF'
-                    }]}>
-                        <CustomText isBold style={styles.heading}>30</CustomText>
-                        <CustomText style={styles.text}>categories</CustomText>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.btn_view, {
-                        backgroundColor: '#C131C3'
-                    }]}>
-                        <CustomText isBold style={styles.heading}>107</CustomText>
-                        <CustomText style={styles.text}>document</CustomText>
-                    </TouchableOpacity>
+                <View style={{
+                    paddingHorizontal: moderateScale(10, 0.6)
+                }}>
+                    {status === 'Dashboard' ? (
+                        <>
+                            <View style={styles.sub_view}>
+                                <TouchableOpacity onPress={() => navigationService.navigate('AddEmployees')} style={styles.btn_view}>
+                                    <CustomText isBold style={styles.heading}>100</CustomText>
+                                    <CustomText style={styles.text}>Employees</CustomText>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => navigationService.navigate('Department')} style={[styles.btn_view, {
+                                    backgroundColor: '#31C3BB'
+                                }]}>
+                                    <CustomText isBold style={styles.heading}>100</CustomText>
+                                    <CustomText style={styles.text}>Department</CustomText>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={[styles.sub_view, {
+                                marginTop: moderateScale(15, 0.6)
+                            }]}>
+                                <TouchableOpacity style={[styles.btn_view, {
+                                    backgroundColor: '#557AFF'
+                                }]}>
+                                    <CustomText isBold style={styles.heading}>30</CustomText>
+                                    <CustomText style={styles.text}>categories</CustomText>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.btn_view, {
+                                    backgroundColor: '#C131C3'
+                                }]}>
+                                    <CustomText isBold style={styles.heading}>107</CustomText>
+                                    <CustomText style={styles.text}>document</CustomText>
+                                </TouchableOpacity>
+                            </View>
+
+                        </>
+                    ) : (
+                        <>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: moderateScale(40, 0.6) }}>
+                                <PieChart
+                                    data={pieData}
+                                    donut
+                                    showText
+                                    textColor="white"
+                                    innerRadius={70}
+                                    radius={160}
+                                // centerLabelComponent={() => (
+                                //     <View style={{ alignItems: 'center' }}>
+                                //         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Total</Text>
+                                //         <Text style={{ fontSize: 20 }}>
+                                //             {pieData.reduce((sum, item) => sum + item.value, 0)}
+                                //         </Text>
+                                //     </View>
+                                // )}
+                                />
+                            </View>
+                            <View style={[styles.row_view, {
+                                marginTop: moderateScale(30, 0.6)
+                            }]}>
+                                <Icon name='team' as={AntDesign} size={moderateScale(30, 0.6)} color={'#6366F1'} />
+
+                                <CustomText style={[styles.graph_text, {
+                                    color: '#6366F1',
+                                    marginTop: moderateScale(10, 0.6),
+                                    marginLeft: moderateScale(10, 0.6)
+                                }]}>Number of Employees</CustomText>
+                            </View>
+                            <View style={[styles.row_view, {
+                                marginTop: moderateScale(10, 0.6)
+                            }]}>
+                                <Icon name='building' as={FontAwesome5} size={moderateScale(30, 0.6)} color={'#2DD4BF'} />
+                                <CustomText style={[styles.graph_text, {
+                                    color: '#2DD4BF',
+                                    marginTop: moderateScale(10, 0.6),
+                                    marginLeft: moderateScale(10, 0.6)
+                                }]}>Number of Department</CustomText>
+                            </View>
+                            <View style={[styles.row_view, {
+                                marginTop: moderateScale(10, 0.6)
+                            }]}>
+                                <Icon name='folder1' as={AntDesign} size={moderateScale(30, 0.6)} color={'#D1D5DB'} />
+                                <CustomText style={[styles.graph_text, {
+                                    color: '#D1D5DB',
+                                    marginTop: moderateScale(10, 0.6),
+                                    marginLeft: moderateScale(10, 0.6)
+                                }]}>Number of categories</CustomText>
+                            </View>
+                            <View style={[styles.row_view, {
+                                marginTop: moderateScale(10, 0.6)
+                            }]}>
+                                <Icon name='page-doc' as={Foundation} size={moderateScale(30, 0.6)} color={'#D946EF'} />
+                                <CustomText style={[styles.graph_text, {
+                                    color: '#D946EF',
+                                    marginTop: moderateScale(10, 0.6),
+                                    marginLeft: moderateScale(10, 0.6)
+                                }]}>Number of documents</CustomText>
+                            </View>
+                        </>
+                    )
+                    }
                 </View>
             </View>
         </SafeAreaView>
@@ -186,5 +255,13 @@ const styles = StyleSheet.create({
     text: {
         fontSize: moderateScale(15, 0.6),
         color: Color.white
+    },
+    row_view: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    graph_text: {
+        fontSize: moderateScale(15, 0.6)
     }
 });

@@ -109,7 +109,7 @@ const AppNavigator = () => {
             name="CustomerSurveyForm"
             component={CustomerSurveyForm}
           />
-          <RootNav.Screen name="FeedBackForm" component={FeedBackForm} />
+          <RootNav.Screen name="feedbackForm" component={FeedBackForm} />
           <RootNav.Screen name="Payment" component={Payment} />
           <RootNav.Screen
             name="ProgressFeedback"
@@ -117,7 +117,6 @@ const AppNavigator = () => {
           />
           <RootNav.Screen name="ChecklistScreen" component={ChecklistScreen} />
           <RootNav.Screen name="AddDepartment" component={AddDepartment} />
-          <RootNav.Screen name="Tamplates" component={Tamplates} />
           <RootNav.Screen name="CheckOutScreen" component={CheckOutScreen} />
           <RootNav.Screen
             name="FinalCoverLetter"

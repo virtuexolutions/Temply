@@ -71,31 +71,19 @@ const EditBlogPost = props => {
   console.log('🚀 ~ isImage:', isImage);
   const onPressConfirm = async () => {
     const data = {
-      image: image,
+      image: image?.uri,
       heading: heading,
       details: details,
       type: design_data,
       tamplate_title: detailData?.heading,
       tamplate_image: null,
       tamplate_description: detailData?.description,
-    };
-    const onBoardData = {
-      image: image?.uri,
-      heading: heading,
-      details: details,
       companyName: companyName,
       name: name,
       regards: bestRegards,
       designation: designation,
-      type: design_data
     };
     navigationService.navigate(detailData?.key, { data: data, })
-    // design_data?.type == 'blog'
-    //   ? navigationService.navigate('FinalBlogPost', { data: data })
-    //   : navigationService.navigate('OnboardingScreen', {
-    //     data: onBoardData,
-    //     design_data: design_data,
-    //   });
   };
 
   return (

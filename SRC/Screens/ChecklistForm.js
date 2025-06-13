@@ -94,7 +94,7 @@ const ChecklistForm = props => {
     <ImageBackground
       style={styles.bg_container}
       source={require('../Assets/Images/bg.png')}>
-      <Header title={'Edit '} hideUser={true} showBack={true} />
+      <Header title={'Edit'} hideUser={true} showBack={true} />
       <View style={styles.main_view}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {tamplateType === 'checklist' ? (
@@ -215,21 +215,42 @@ const ChecklistForm = props => {
                   company Logo :
                 </CustomText>
                 <TouchableOpacity
-                  // onPress={() => setLogoImageModal(true)}
-                  onPress={() => console.log('clickedddddddddddddddd')}
-                  style={{
-                    width: windowWidth * 0.3,
-                    height: windowWidth * 0.3,
-
-                    backgroundColor: Color.lightGrey,
-                    borderRadius: moderateScale(10, 0.6),
-                    justifyContent: 'center',
+                  onPress={() => {
+                    console.log(
+                      '======================= > >> >> >> > here in m',
+                    );
+                    setLogoImageModal(true);
                   }}
-                >
-                  <CustomImage
-                    style={{ width: '100%', height: '100%', }}
-                    source={{ uri: image?.uri }}
-                  />
+                  style={[
+                    styles.image_con,
+                    Object.keys(image).length == 0 && {
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    },
+                  ]}>
+                  {Object.keys(image).length > 0 ? (
+                    <CustomImage
+                      style={{
+                        height: '100%',
+                        width: '100%',
+                        backgroundColor: 'red',
+                      }}
+                      source={{ uri: image?.uri }}
+                    />
+                  ) : (
+                    <Icon
+                      onPress={() => {
+                        console.log(
+                          '======================= > >> >> >> > here in m',
+                        );
+                        setLogoImageModal(true);
+                      }}
+                      as={Entypo}
+                      name="camera"
+                      size={moderateScale(20, 0.6)}
+                      color={Color.themeDarkGray}
+                    />
+                  )}
                 </TouchableOpacity>
               </View>
               <CustomText isBold style={[styles.text, {
@@ -508,6 +529,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // alignItems: 'left',
     // paddingHorizontal: moderateScale(10, 0.6),
+  },
+  image_con: {
+    height: windowHeight * 0.08,
+    width: windowWidth * 0.2,
+    backgroundColor: Color.lightGrey,
+
+    borderRadius: moderateScale(10, 0.6),
+    marginVertical: moderateScale(5.6),
+    overflow: 'hidden',
   },
   main_view: {
     width: windowWidth,

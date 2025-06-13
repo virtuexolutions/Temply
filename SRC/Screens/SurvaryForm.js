@@ -15,6 +15,7 @@ import navigationService from '../navigationService'
 
 const SurvaryForm = props => {
     const data = props?.route?.params?.data;
+    console.log("🚀 ~ data:", data)
     const [answers, setAnswers] = useState({});
     console.log("🚀 ~ SurvaryForm ~ answers:", answers)
     const token = useSelector(state => state.authReducer.token);
@@ -114,7 +115,7 @@ const SurvaryForm = props => {
     const renderQuestion = ({ item }) => (
         <View style={styles.rowContainer}>
             <View style={styles.leftColumn}>
-                <CustomText style={styles.questionText}>{item.id}. {item.text}</CustomText>
+                <CustomText style={styles.questionText}>{item}</CustomText>
             </View>
             <View style={styles.rightColumn}>
                 {item.type === 'yesno' ? (
@@ -181,8 +182,8 @@ const SurvaryForm = props => {
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry...
                     </CustomText>
                     <FlatList
-                        data={questions}
-                        keyExtractor={item => item.id.toString()}
+                        data={data?.skills}
+                        // keyExtractor={item => item.()} 
                         renderItem={renderQuestion}
                         showsVerticalScrollIndicator={false}
                     />

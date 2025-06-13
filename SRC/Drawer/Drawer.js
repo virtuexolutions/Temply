@@ -60,7 +60,7 @@ const Drawer = React.memo((props) => {
       id: 3,
       name: 'Department',
       onPress: () => {
-        navigation.navigate('MyJourneys');
+        navigation.navigate('Department');
       },
       iconName: 'graph-horizontal',
       iconType: Foundation
@@ -69,7 +69,7 @@ const Drawer = React.memo((props) => {
       id: 4,
       name: 'Categories',
       onPress: () => {
-        navigation.navigate('History');
+        // navigation.navigate('AddEmployees');
       },
       iconName: 'folder',
       iconType: Foundation
@@ -78,7 +78,7 @@ const Drawer = React.memo((props) => {
       id: 4,
       name: 'Document',
       onPress: () => {
-        navigation.navigate('AddYourCar');
+        // navigation.navigate('AddYourCar');
       },
       iconName: 'document',
       iconType: Ionicons

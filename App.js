@@ -17,10 +17,8 @@ import {
   requestWritePermission,
 } from './SRC/Utillity/utils';
 import AppNavigator from './SRC/appNavigation';
-import ResetPassword from './SRC/Screens/ResetPassword';
 
 const App = () => {
-
 
   return (
 

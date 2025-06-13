@@ -45,10 +45,10 @@ const Tamplates = () => {
 
     const getTamplates = async () => {
         const url = 'auth/category-list';
-        setLoading(true)
+        setLoading(true);
         const response = await Get(url, token);
         const categories = response?.data?.data;
-        setLoading(false)
+        setLoading(false);
 
         let matchedCategory = null;
 
@@ -70,8 +70,16 @@ const Tamplates = () => {
         }
 
         if (matchedCategory) {
-            setLoading(false)
-            setTamplates(matchedCategory.templates || []);
+            let templates = matchedCategory.templates || [];
+
+            if (selectedCategoty === 'survey-form') {
+                templates = templates.filter(
+                    template =>
+                        template.key !== 'ProgressFeedback' &&
+                        template.key !== 'ChecklistScreen'
+                );
+            }
+            setTamplates(templates);
         } else {
             setTamplates([]);
         }

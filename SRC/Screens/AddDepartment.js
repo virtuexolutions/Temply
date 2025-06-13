@@ -46,8 +46,8 @@ const AddDepartment = () => {
         if (response != undefined) {
             setLoading(false)
             Platform.OS == 'android'
-                ? ToastAndroid.show('Your car is Updated', ToastAndroid.SHORT)
-                : Alert.alert('Your car is Updated');
+                ? ToastAndroid.show('Deparment added successfully', ToastAndroid.SHORT)
+                : Alert.alert('Deparment added successfully');
             navigationService.goBack();
         } else {
 

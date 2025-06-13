@@ -84,7 +84,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="VerifyEmail" component={VerifyEmail} />
           <RootNav.Screen name="FinalBlogPost" component={FinalBlogPost} />
           <RootNav.Screen name="ChecklistForm" component={ChecklistForm} />
-          <RootNav.Screen name="SurvaryForm" component={SurvaryForm} />
+          <RootNav.Screen name="SurveyForm" component={SurvaryForm} />
           <RootNav.Screen
             name="OnboardingScreen"
             component={OnboardingScreen}
@@ -154,6 +154,8 @@ export const MyDrawer = () => {
       <DrawerNavigation.Screen name="Dashboard" component={Dashboard} />
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
       <DrawerNavigation.Screen name="Tamplates" component={Tamplates} />
+      <DrawerNavigation.Screen name="Department" component={Department} />
+      <DrawerNavigation.Screen name="AddEmployees" component={AddEmployees} />
     </DrawerNavigation.Navigator>
   );
 };

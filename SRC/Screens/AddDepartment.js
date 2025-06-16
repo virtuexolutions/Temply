@@ -8,12 +8,10 @@ import TextInputWithTitle from '../Components/TextInputWithTitle'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import CustomButton from '../Components/CustomButton'
 import { Post } from '../Axios/AxiosInterceptorFunction'
 import { useSelector } from 'react-redux'
 import navigationService from '../navigationService'
-import { position } from 'native-base/lib/typescript/theme/styled-system'
 
 const AddDepartment = () => {
     const [fullName, setFullName] = useState('');
@@ -26,6 +24,7 @@ const AddDepartment = () => {
     const [lead_name, setLeadName] = useState('');
     const token = useSelector(state => state.authReducer.token);
     const [loading, setLoading] = useState(false)
+    const userData = useSelector(state => state.commonReducer.userData);
 
     const onPressSubmit = async () => {
         const url = 'auth/add_department'
@@ -36,6 +35,7 @@ const AddDepartment = () => {
             lead_email_address: email,
             lead_contact_number: phone1,
             number_of_employees_in_depart: numberOfEmployee,
+            company_id: userData?.company?.id
         }
         console.log("🚀 ~ onPressSubmit ~ body:", body)
         setLoading(true)
@@ -50,9 +50,7 @@ const AddDepartment = () => {
                 : Alert.alert('Deparment added successfully');
             navigationService.goBack();
         } else {
-
             setLoading(false)
-
         }
     }
 

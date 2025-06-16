@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../Components/Header'
 import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils'
@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux'
 
 const CompanyDetails = () => {
     const token = useSelector(state => state.authReducer.token);
+    console.log("🚀 ~ CompanyDetails ~ token:", token)
     const [showModal, setShowModal] = useState(false)
     const [image, setImage] = useState({})
     console.log("🚀 ~ CompanyDetails ~ image:", image)
@@ -44,12 +45,19 @@ const CompanyDetails = () => {
             business_phone_number: contact_number,
             website_url: website_url,
             company_address: company_address,
-            Company_logo: image?.uri,
+            company_logo: image?.uri,
             number_of_employees: number_of_employees,
             tax_identification_number: tax_verification_number,
         }
+        console.log("🚀 ~ onPressSubmit ~ body:", body)
         setLoading(true)
         const response = await Post(url, body, apiHeader(token))
+        console.log("🚀 ~ onPressSubmit ~ response:", response?.data)
+        if (response != undefined) {
+            Platform.OS == 'android'
+                ? ToastAndroid.show('Company added Successfully', ToastAndroid.SHORT)
+                : Alert.alert('Company added Successfully');
+        }
         setLoading(false)
     }
 
@@ -215,6 +223,7 @@ const CompanyDetails = () => {
                         marginTop={moderateScale(40, 0.6)}
                         onPress={() => {
                             // Login()
+                            onPressSubmit()
                         }}
                     />
                 </View>

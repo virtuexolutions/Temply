@@ -66,6 +66,15 @@ const Drawer = React.memo((props) => {
       iconType: Foundation
     },
     {
+      id: 3,
+      name: 'Add Details',
+      onPress: () => {
+        navigation.navigate('CompanyDetails');
+      },
+      iconName: 'graph-horizontal',
+      iconType: Foundation
+    },
+    {
       id: 4,
       name: 'Categories',
       onPress: () => {

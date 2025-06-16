@@ -27,6 +27,7 @@ const Tamplates = () => {
     const userData = useSelector(state => state.commonReducer.userData);
     const isFocused = useIsFocused();
     const token = useSelector(state => state.authReducer.token);
+    console.log("🚀 ~ Tamplates ~ token:", token)
     const [loading, setLoading] = useState(false);
     const [dropDown, setDropDown] = useState(false);
     const [showCategory, setshowCategory] = useState('resume');

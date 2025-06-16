@@ -19,6 +19,7 @@ const AddEmployees = () => {
   const token = useSelector(state => state.authReducer.token);
   const [employee, setEmployee] = useState([])
   const [loading, setLoading] = useState(false)
+  const userData = useSelector(state => state.commonReducer.userData);
 
   console.log("🚀 ~ AddEmployees ~ employee:", employee)
   useEffect(() => {
@@ -26,9 +27,10 @@ const AddEmployees = () => {
   }, [isFocused])
 
   const getDepartments = async () => {
-    const url = 'auth/employee_list'
+    const url = `auth/employee_list/${userData?.company?.id}`
     setLoading(true)
     const response = await Get(url, token)
+    console.log("🚀 ~ getDepartments ~ response:", response?.data)
     setLoading(false)
     if (response?.data != undefined) {
       setLoading(false)
@@ -129,8 +131,8 @@ const AddEmployees = () => {
                 return (
                   <CardComponent data={item}
                     image={nameInitial}
-                    name={item?.detail?.full_name}
-                    text={item?.detail?.designation}
+                    name={item?.full_name}
+                    text={item?.designation}
                   />
                 )
               })}

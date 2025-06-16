@@ -29,6 +29,7 @@ const Dashboard = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('Dashboard')
     const userData = useSelector(state => state.commonReducer.userData);
+    console.log("🚀 ~ Dashboard ~ userData:", userData)
     const pieData = [
         { value: 30, color: '#6366F1', text: '30' },
         { value: 20, color: '#2DD4BF', text: '20' },

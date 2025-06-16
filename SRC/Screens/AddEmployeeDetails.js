@@ -35,6 +35,8 @@ const AddEmployeeDetails = () => {
     const [departments, setDepartments] = useState({})
     const [selectedCabCategory, setSelectedCabCategory] = useState(null)
     console.log("🚀 ~ AddEmployeeDetails ~ selectedCabCategory:", selectedCabCategory)
+    const userData = useSelector(state => state.commonReducer.userData);
+    console.log("🚀 ~ AddEmployeeDetails ~ userData:", userData)
 
     useEffect(() => {
         getDepartments()
@@ -60,7 +62,9 @@ const AddEmployeeDetails = () => {
             designation: designation,
             joining_date: joining_date,
             salary: salary,
+            company_id: userData?.company?.id
         }
+        console.log("🚀 ~ onPressSubmit ~ body:", body)
         setLoading(true)
         const response = await Post(url, body, apiHeader(token))
         setLoading(false)

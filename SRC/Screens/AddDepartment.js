@@ -56,7 +56,7 @@ const AddDepartment = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header showBack hideUser={false} />
+            <Header showBack hideUser={false}  />
             <View style={styles.main_view}>
                 <TextInputWithTitle
                     title={"Enter Department Name : "}

@@ -1,4 +1,4 @@
-import { Alert, FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../Components/Header'
 import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils'
@@ -15,13 +15,16 @@ import CustomImage from '../Components/CustomImage'
 import { Icon } from 'native-base'
 import ImagePickerModal from '../Components/ImagePickerModal'
 import { Post } from '../Axios/AxiosInterceptorFunction'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import navigationService from '../navigationService'
+import { setUserData } from '../Store/slices/common'
 
 const CompanyDetails = () => {
+    const dispatch = useDispatch();
     const token = useSelector(state => state.authReducer.token);
     console.log("🚀 ~ CompanyDetails ~ token:", token)
     const [showModal, setShowModal] = useState(false)
-    const [image, setImage] = useState({})
+    const [image, setImage] = useState(null)
     console.log("🚀 ~ CompanyDetails ~ image:", image)
     const [company_name, setCompanyName] = useState('')
     const [bussiness_type, setBussinessType] = useState('')
@@ -33,6 +36,9 @@ const CompanyDetails = () => {
     const [number_of_employees, setNumberOfEmployees] = useState('')
     const [tax_verification_number, setVerificationNumber] = useState('')
     const [loading, setLoading] = useState(false)
+    const userData = useSelector(state => state.commonReducer.userData);
+    console.log("🚀 ~ CompanyDetails ~ userData:", userData)
+
     const onPressSubmit = async () => {
         const url = 'auth/add_company'
 
@@ -47,7 +53,7 @@ const CompanyDetails = () => {
             company_address: company_address,
             company_logo: image?.uri,
             number_of_employees: number_of_employees,
-            tax_identification_number: tax_verification_number,
+            tax_identification_number: 0,
         }
         console.log("🚀 ~ onPressSubmit ~ body:", body)
         setLoading(true)
@@ -57,6 +63,8 @@ const CompanyDetails = () => {
             Platform.OS == 'android'
                 ? ToastAndroid.show('Company added Successfully', ToastAndroid.SHORT)
                 : Alert.alert('Company added Successfully');
+            navigationService.navigate('MyDrawer')
+            dispatch(setUserData(response?.data?.user_info));
         }
         setLoading(false)
     }
@@ -70,9 +78,17 @@ const CompanyDetails = () => {
                         width: windowWidth * 0.6,
                         height: windowWidth * 0.3,
                         borderWidth: 1.5,
-                        borderColor: Color.themeBlue
+                        borderColor: Color.themeBlue,
                     }}>
-                        <CustomImage onPress={() => setShowModal(true)} source={require('../Assets/Images/no_image.jpg')} style={styles.image} />
+                        <CustomImage
+                            onPress={() => setShowModal(true)}
+                            source={
+                                !image || !image.uri
+                                    ? require('../Assets/Images/no_image.jpg')
+                                    : { uri: image.uri }
+                            }
+                            style={styles.image}
+                        />
                     </TouchableOpacity>
                     <TextInputWithTitle
                         title={"Enter Company Name : "}
@@ -198,7 +214,7 @@ const CompanyDetails = () => {
                         borderRadius={moderateScale(10, 0.6)}
                         borderColor={Color.themeBlue}
                     />
-                    <TextInputWithTitle
+                    {/* <TextInputWithTitle
                         title={"Enter tax indentification number"}
                         iconName={'work'}
                         iconType={MaterialIcons}
@@ -212,9 +228,9 @@ const CompanyDetails = () => {
                         border={1}
                         borderRadius={moderateScale(10, 0.6)}
                         borderColor={Color.themeBlue}
-                    />
+                    /> */}
                     <CustomButton
-                        text={'Submit'}
+                        text={loading ? <ActivityIndicator color={'white'} size={moderateScale(12, 0.2)} /> : 'Submit'}
                         width={windowWidth * 0.85}
                         height={windowHeight * 0.055}
                         borderRadius={moderateScale(10, 0.3)}

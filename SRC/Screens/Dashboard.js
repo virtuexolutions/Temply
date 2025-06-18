@@ -1,5 +1,5 @@
 import { Icon } from 'native-base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -20,22 +20,41 @@ import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
 import navigationService from '../navigationService';
 import { windowHeight, windowWidth } from '../Utillity/utils';
+import { Get, Post } from '../Axios/AxiosInterceptorFunction';
 
 const Dashboard = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const fromSignup = route?.params?.fromSignup;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [numberOfEmployees, setnumberOfEmployees] = useState(0);
+    const [numberOfDepartment, setnumberOfDepartment] = useState('');
+    console.log("🚀 ~ Dashboard ~ numberOfDepartment:", numberOfDepartment)
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('Dashboard')
     const userData = useSelector(state => state.commonReducer.userData);
+    const token = useSelector(state => state.authReducer.token);
+
     console.log("🚀 ~ Dashboard ~ userData:", userData)
     const pieData = [
-        { value: 30, color: '#6366F1', text: '30' },
-        { value: 20, color: '#2DD4BF', text: '20' },
-        { value: 100, color: '#D1D5DB', text: '100' },
-        { value: 107, color: '#D946EF', text: '107' },
+        { value: numberOfEmployees, color: '#6366F1', text: numberOfEmployees },
+        { value: numberOfDepartment, color: '#2DD4BF', text: numberOfDepartment },
+        { value: 0, color: '#D1D5DB', text: '0' },
+        { value: 0, color: '#D946EF', text: '0' },
     ];
+
+
+    useEffect(() => {
+        getDetails()
+    }, [])
+
+    const getDetails = async () => {
+        const url = 'auth/company_detail'
+        const response = await Get(url, token)
+        console.log("🚀 ~ getDetails ~ response:", response?.data)
+        if (response != undefined) {
+            setnumberOfDepartment(response?.data?.company_info?.company?.departments.length)
+            setnumberOfEmployees(response?.data?.company_info?.company?.employee.length)
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -77,29 +96,29 @@ const Dashboard = ({ navigation, route }) => {
                         <>
                             <View style={styles.sub_view}>
                                 <TouchableOpacity onPress={() => navigationService.navigate('AddEmployees')} style={styles.btn_view}>
-                                    <CustomText isBold style={styles.heading}>100</CustomText>
+                                    <CustomText isBold style={styles.heading}>{numberOfEmployees}</CustomText>
                                     <CustomText style={styles.text}>Employees</CustomText>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => navigationService.navigate('Department')} style={[styles.btn_view, {
                                     backgroundColor: '#31C3BB'
                                 }]}>
-                                    <CustomText isBold style={styles.heading}>100</CustomText>
+                                    <CustomText isBold style={styles.heading}>{numberOfDepartment}</CustomText>
                                     <CustomText style={styles.text}>Department</CustomText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[styles.sub_view, {
                                 marginTop: moderateScale(15, 0.6)
                             }]}>
-                                <TouchableOpacity style={[styles.btn_view, {
+                                <TouchableOpacity onPress={() => navigationService.navigate('Categories')} style={[styles.btn_view, {
                                     backgroundColor: '#557AFF'
                                 }]}>
-                                    <CustomText isBold style={styles.heading}>30</CustomText>
+                                    <CustomText isBold style={styles.heading}>0</CustomText>
                                     <CustomText style={styles.text}>categories</CustomText>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.btn_view, {
                                     backgroundColor: '#C131C3'
                                 }]}>
-                                    <CustomText isBold style={styles.heading}>107</CustomText>
+                                    <CustomText isBold style={styles.heading}>0</CustomText>
                                     <CustomText style={styles.text}>document</CustomText>
                                 </TouchableOpacity>
                             </View>
@@ -115,14 +134,6 @@ const Dashboard = ({ navigation, route }) => {
                                     textColor="white"
                                     innerRadius={70}
                                     radius={160}
-                                // centerLabelComponent={() => (
-                                //     <View style={{ alignItems: 'center' }}>
-                                //         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Total</Text>
-                                //         <Text style={{ fontSize: 20 }}>
-                                //             {pieData.reduce((sum, item) => sum + item.value, 0)}
-                                //         </Text>
-                                //     </View>
-                                // )}
                                 />
                             </View>
                             <View style={[styles.row_view, {

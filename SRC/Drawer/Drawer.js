@@ -31,7 +31,7 @@ const Drawer = React.memo((props) => {
       id: 1,
       name: 'Dashboard',
       onPress: () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('Dashboard');
       },
       iconName: 'table-cells-large',
       iconType: FontAwesome6

@@ -81,7 +81,6 @@ const SavedTemplates = () => {
             setEmailData(response?.data?.data)
         }
     }
-
     const getResumeData = async () => {
         const url = 'auth/resumes'
         setLoading(true)

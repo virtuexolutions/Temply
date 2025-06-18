@@ -12,71 +12,74 @@ import navigationService from '../navigationService'
 import { Get } from '../Axios/AxiosInterceptorFunction'
 import { useSelector } from 'react-redux'
 import { useIsFocused } from '@react-navigation/core'
+import { date } from 'yup'
 import CustomText from '../Components/CustomText'
 
-const Department = () => {
+const Categories = () => {
     const isFocused = useIsFocused()
-    const [departments, setDepartments] = useState([])
-    console.log("🚀 ~ Department ~ departments:", departments)
     const token = useSelector(state => state.authReducer.token);
-    console.log("🚀 ~ Department ~ token:", token)
+    const [employee, setEmployee] = useState([])
     const [loading, setLoading] = useState(false)
+    const userData = useSelector(state => state.commonReducer.userData);
 
+    console.log("🚀 ~ Categories ~ employee:", employee)
     useEffect(() => {
         getDepartments()
     }, [isFocused])
 
     const getDepartments = async () => {
-        const url = 'auth/department_list'
+        const url = `auth/employee_list/${userData?.company?.id}`
         setLoading(true)
         const response = await Get(url, token)
         console.log("🚀 ~ getDepartments ~ response:", response?.data)
         setLoading(false)
         if (response?.data != undefined) {
             setLoading(false)
-            setDepartments(response?.data?.data)
-        } else {
+            setEmployee(response?.data?.employee_list)
+        }
+        else {
             setLoading(false)
         }
     }
 
+
     const employee_list = [
         {
             id: 1,
-            name: 'Designers',
+            name: 'Adrian',
             designation: "supervisor",
         },
         {
             id: 2,
-            name: 'Sales',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 3,
-            name: 'Designers',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 4,
-            name: 'Sales',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 5,
-            name: 'Designers',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 6,
-            name: 'Sales',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 7,
-            name: 'Designers',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 8,
-            name: 'Sales',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 9,
-            name: 'Designers',
+            name: 'Adrian',
             designation: "supervisor",
         }, {
             id: 10,
@@ -87,7 +90,7 @@ const Department = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header hideUser={false} showBack={false} isRight onPressPlus={() => navigationService.navigate('AddDepartment')} rightText={'Add Department'} />
+            <Header hideUser={false} showBack isRight onPressPlus={() => navigationService.navigate('AddEmployeeDetails')} rightText={'Add Categories'} />
             <View style={styles.main_view}>
                 <View style={styles.search_bar_view}>
                     <TextInputWithTitle
@@ -96,7 +99,7 @@ const Department = () => {
                         color={Color.veryLightGray}
                         // setText={setEmail}
                         // value={email}
-                        placeholder={'Search Department'}
+                        placeholder={'Search Categories'}
                         placeholderColor={Color.veryLightGray}
                         viewWidth={0.7}
                         viewHeight={0.055}
@@ -107,6 +110,7 @@ const Department = () => {
                     <CustomButton
                         text={'Search'}
                         width={windowWidth * 0.22}
+
                         height={windowHeight * 0.055}
                         borderRadius={moderateScale(10, 0.3)}
                         textColor={Color.white}
@@ -116,31 +120,32 @@ const Department = () => {
                         }}
                     />
                 </View>
-                {loading ?
-                    <ActivityIndicator size="small"
+                {
+                    loading ? <ActivityIndicator size="small"
                         color={Color.themeBlue} style={{ marginTop: moderateScale(20, 0.6) }} /> :
-                    <FlatList
-                        data={departments}
-                        keyExtractor={(item) => item?.id}
-                        ListEmptyComponent={<CustomText style={{ textAlign: 'center', marginTop: moderateScale(20, 0.6), color: Color.red }}>no Data found</CustomText>}
-                        renderItem={(({ item }) => {
-                            const nameInitial = (item?.department_name || ' ')[0]?.toUpperCase() || '?';
-                            return (
-                                <CardComponent data={item}
-                                    image={nameInitial}
-                                    name={item?.department_name}
-                                    text={`Number of Employees ${item?.number_of_employees_in_depart}`}
-                                />
-                            )
-                        })}
-                    />
+                        <FlatList
+                            data={employee}
+                            keyExtractor={(item) => item?.id}
+                            ListEmptyComponent={<CustomText style={{ textAlign: 'center', marginTop: moderateScale(20, 0.6), color: Color.red }}>no Data found</CustomText>}
+                            renderItem={(({ item }) => {
+                                const nameInitial = (item?.detail?.full_name || ' ')[0]?.toUpperCase() || '?';
+                                return (
+                                    <CardComponent data={item}
+                                        image={nameInitial}
+                                        name={item?.full_name}
+                                        text={item?.designation}
+                                    />
+                                )
+                            })}
+                        />
                 }
+
             </View>
         </SafeAreaView>
     )
 }
 
-export default Department
+export default Categories
 
 const styles = StyleSheet.create({
     container: {

@@ -45,6 +45,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
     setIsLoading(true);
     const response = await Post(url, body, apiHeader());
+    console.log("🚀 ~ Login ~ response:", response?.data?.user_info)
     setIsLoading(false);
     if (response != undefined) {
       dispatch(setUserData(response?.data?.user_info));

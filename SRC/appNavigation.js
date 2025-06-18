@@ -45,6 +45,7 @@ import Tamplates from './Screens/Tamplates';
 import VerifyEmail from './Screens/VerifyEmail';
 import VerifyNumber from './Screens/VerifyNumber';
 import WalkThroughScreen from './Screens/WalkthroughScreen';
+import Categories from './Screens/Categories';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -55,14 +56,19 @@ const AppNavigator = () => {
   const user_type = useSelector(state => state.authReducer.role)
   const RootNav = createNativeStackNavigator();
   const RootNavLogged = createNativeStackNavigator();
+  const userData = useSelector(state => state.commonReducer.userData);
+  console.log("🚀 ~ AppNavigator ~ userData:", userData)
+  console.log("🚀 ~ AppNavigatorContainer ~ userData?.company:", userData?.company === null)
 
   const AppNavigatorContainer = () => {
     const firstScreen =
-      walkThrough == false
+      walkThrough === false
         ? 'WalkthroughScreen'
-        : token == null
+        : !token
           ? 'StartScreen'
-          : 'MyDrawer'
+          : !userData?.company || Object.keys(userData.company).length < 1
+            ? 'CompanyDetails'
+            : 'MyDrawer';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
@@ -105,6 +111,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="Department" component={Department} />
           <RootNav.Screen name="CompanyDetails" component={CompanyDetails} />
           <RootNav.Screen name="AddEmployeeDetails" component={AddEmployeeDetails} />
+          <RootNav.Screen name="Categories" component={Categories} />
           <RootNav.Screen
             name="CustomerSurveyForm"
             component={CustomerSurveyForm}

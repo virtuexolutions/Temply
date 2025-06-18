@@ -159,7 +159,7 @@ const SignupScreen = ({ navigation }) => {
           }}
         /> */}
         <CustomButton
-          text={'Create'}
+          text={isLoading ? <ActivityIndicator color={'white'} size={moderateScale(12, 0.2)} /> : 'Create'}
           textColor={Color.white}
           onPress={() => {
             signUp()

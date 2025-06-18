@@ -23,6 +23,7 @@ const styles = ScaledSheet.create({
     height: windowHeight,
     width: windowWidth,
     alignItems: 'center',
+    backgroundColor: Color.white
   },
   text: {
     fontSize: moderateScale(30, 0.3),

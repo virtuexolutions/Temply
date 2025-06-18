@@ -53,7 +53,8 @@ const Header = props => {
     style,
     onPressPlus,
     isRight,
-    isShadow = true
+    isShadow = true,
+    rightText
     // fromDrawer
   } = props;
 
@@ -170,11 +171,17 @@ const Header = props => {
         )}
         {isRight &&
           <TouchableOpacity onPress={props.onPressPlus} style={{
-            width: moderateScale(30, 0.6),
-            height: moderateScale(30, 0.6),
+            // width: moderateScale(0, 0.6),
+            // height: moderateScale(30, 0.6),
             justifyContent: 'center',
             alignItems: 'center',
+            flexDirection: 'row'
           }}>
+            <CustomText style={{
+              fontSize: moderateScale(12, 0.6),
+              marginRight: moderateScale(12, 0.6),
+              color: Color.darkGray
+            }}>{rightText}</CustomText>
             <Icon
               name={"plus"}
               as={Foundation}

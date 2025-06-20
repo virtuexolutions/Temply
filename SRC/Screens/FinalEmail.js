@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   I18nManager,
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
+  ToastAndroid,
   View
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
@@ -34,8 +37,12 @@ const FinalEmail = props => {
     if (response?.data != undefined) {
       setLoading(false)
       navigationService.navigate('Home')
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Saved SuccessFully', ToastAndroid.SHORT)
+        : Alert.alert(' Saved SuccessFully');
     }
   }
+
   return (
     <ImageBackground
       style={styles.bg_container}

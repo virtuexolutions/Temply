@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, ImageBackground, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, ImageBackground, Platform, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
@@ -36,6 +36,9 @@ const OnboardingScreen = props => {
     if (response?.data != undefined) {
       setLoading(false)
       navigationService.navigate('Home')
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Tamplate Saved SuccessFully', ToastAndroid.SHORT)
+        : Alert.alert('Tamplate Saved SuccessFully');
     }
   }
 
@@ -104,10 +107,10 @@ const OnboardingScreen = props => {
               {data?.regards}
             </CustomText>
 
-            <View style={styles.con}>
+            {/* <View style={styles.con}>
               <View style={styles.sec_line}></View>
               <CustomText style={styles.h6_text}>Mr. james Gordon</CustomText>
-            </View>
+            </View> */}
           </ImageBackground>
         )}
         <CustomButton

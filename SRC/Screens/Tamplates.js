@@ -43,48 +43,59 @@ const Tamplates = () => {
         getTamplates()
     }, [selectedCategoty])
 
-
     const getTamplates = async () => {
         const url = 'auth/category-list';
         setLoading(true);
-        const response = await Get(url, token);
-        const categories = response?.data?.data;
-        setLoading(false);
 
-        let matchedCategory = null;
+        try {
+            const response = await Get(url, token);
+            const categories = response?.data?.data;
+            setLoading(false);
 
-        switch (selectedCategoty) {
-            case 'cover-letter':
-                matchedCategory = categories.find(cat => cat.slug === 'cover-letter');
-                break;
-            case 'email':
-                matchedCategory = categories.find(cat => cat.slug === 'email');
-                break;
-            case 'survey-form':
-                matchedCategory = categories.find(cat => cat.slug === 'survey-form');
-                break;
-            case 'career-blogs':
-                matchedCategory = categories.find(cat => cat.slug === 'career-blogs');
-                break;
-            default:
-                matchedCategory = null;
-        }
+            let matchedCategory = null;
 
-        if (matchedCategory) {
-            let templates = matchedCategory.templates || [];
-
-            if (selectedCategoty === 'survey-form') {
-                templates = templates.filter(
-                    template =>
-                        template.key !== 'ProgressFeedback' &&
-                        template.key !== 'ChecklistScreen'
-                );
+            switch (selectedCategoty) {
+                case 'cover-letter':
+                    matchedCategory = categories.find(cat => cat.slug === 'cover-letter');
+                    break;
+                case 'email':
+                    matchedCategory = categories.find(cat => cat.slug === 'email');
+                    break;
+                case 'survey-form':
+                    matchedCategory = categories.find(cat => cat.slug === 'survey-form');
+                    break;
+                case 'career-blogs':
+                    matchedCategory = categories.find(cat => cat.slug === 'career-blogs');
+                    break;
+                default:
+                    matchedCategory = null;
             }
-            setTamplates(templates);
-        } else {
-            setTamplates([]);
+
+            if (matchedCategory) {
+                let templates = matchedCategory.templates || [];
+
+                if (selectedCategoty === 'survey-form') {
+                    templates = templates.filter(
+                        template =>
+                            template.key !== 'ProgressFeedback' &&
+                            template.key !== 'ChecklistScreen'
+                    );
+                }
+
+                templates = templates.filter(
+                    template => template.id !== 2 && template.id !== 3
+                );
+
+                setTamplates(templates);
+            } else {
+                setTamplates([]);
+            }
+        } catch (error) {
+            setLoading(false);
+            console.error('Error fetching templates:', error);
         }
     };
+
 
 
     const category = [

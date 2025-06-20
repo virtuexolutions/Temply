@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
+  ToastAndroid,
   View
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
@@ -13,16 +17,26 @@ import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
 import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
+import navigationService from '../navigationService';
 
 const FinalCoverLetter = props => {
   const data = props?.route?.params?.data;
   console.log("🚀 ~ data:", data)
   const token = useSelector(state => state.authReducer.token);
+  const [loading, setLoading] = useState(false)
 
   const onPressSave = async () => {
     const url = 'auth/cover-letter'
     const response = await Post(url, data, apiHeader(token))
     console.log("🚀 ~ onPressSave ~ response:", response?.data)
+    setLoading(false)
+    if (response?.data != undefined) {
+      setLoading(false)
+      navigationService.navigate('Home')
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Tamplate Saved SuccessFully', ToastAndroid.SHORT)
+        : Alert.alert('Tamplate Saved SuccessFully');
+    }
   }
 
   return (
@@ -118,7 +132,9 @@ const FinalCoverLetter = props => {
             </View>
           </ImageBackground>
           <CustomButton
-            text={'confirm'}
+            text={loading ? <ActivityIndicator style={styles.indicatorStyle}
+              size="small"
+              color={Color.white} /> : 'confirm'}
             textColor={Color.darkBlue}
             onPress={() => {
               // navigationService.navigate('Home');

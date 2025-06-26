@@ -140,7 +140,6 @@ const Dashboard = ({ navigation, route }) => {
                                 marginTop: moderateScale(30, 0.6)
                             }]}>
                                 <Icon name='team' as={AntDesign} size={moderateScale(30, 0.6)} color={'#6366F1'} />
-
                                 <CustomText style={[styles.graph_text, {
                                     color: '#6366F1',
                                     marginTop: moderateScale(10, 0.6),

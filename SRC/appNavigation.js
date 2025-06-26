@@ -54,6 +54,7 @@ const AppNavigator = () => {
   const token = useSelector(state => state.authReducer.token);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
   const user_type = useSelector(state => state.authReducer.role)
+  console.log("🚀 ~ AppNavigator ~ user_type:", user_type)
   const RootNav = createNativeStackNavigator();
   const RootNavLogged = createNativeStackNavigator();
   const userData = useSelector(state => state.commonReducer.userData);
@@ -66,7 +67,7 @@ const AppNavigator = () => {
         ? 'WalkthroughScreen'
         : !token
           ? 'StartScreen'
-          : !userData?.company || Object.keys(userData.company).length < 1
+          : user_type === 'Company' && (!userData?.company || Object.keys(userData?.company || {}).length < 1)
             ? 'CompanyDetails'
             : 'MyDrawer';
 
@@ -151,7 +152,6 @@ export const MyDrawer = () => {
     <DrawerNavigation.Navigator
       drawerContent={props => <Drawer {...props} />}
       initialRouteName={user_type === 'Company' ? 'Dashboard' : 'HomeScreen'}
-      // initialRouteName='Tamplates'
       screenOptions={{
         headerShown: false,
         drawerStyle: {

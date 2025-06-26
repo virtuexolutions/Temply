@@ -129,42 +129,7 @@ const SavedTemplates = () => {
 
     const onPressCard = (data) => {
         console.log("🚀 ~ onPressCard ~ data:", data)
-        navigationService.navigate(data?.template?.key, { data: data, fromHome: false, })
-        // if (selectedCategoty === 'Survay') {
-        //     switch (data?.type) {
-        //         case 'checklist':
-        //             navigationService.navigate('ChecklistScreen', {
-        //                 data: data,
-        //                 fromHome: false,
-        //             });
-        //             break;
-        //         case 'customerForm':
-        //             navigationService.navigate('CustomerSurveyForm', {
-        //                 data: data,
-        //                 fromHome: false,
-        //             });
-        //             break;
-        //         case 'feedbackForm':
-        //             navigationService.navigate('FeedBackForm', {
-        //                 data: data,
-        //                 fromHome: false,
-        //             });
-        //             break;
-        //         case 'progressForm':
-        //             navigationService.navigate('ProgressFeedback', {
-        //                 data: data,
-        //                 fromHome: false,
-        //             });
-        //             break;
-        //         default:
-        //             navigationService.navigate('SurvaryForm', {
-        //                 data: data,
-        //                 fromHome: false,
-        //             });
-        //     }
-        // } else if (selectedCategoty === 'career') {
-
-        // }
+        navigationService.navigate(data?.template?.key, { data: data, fromHome: false, fromSave: true, })
     }
     return (
         <ImageBackground

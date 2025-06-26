@@ -1,31 +1,23 @@
-import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'native-base';
+import React, { useState } from 'react';
 import {
-  View,
-  Platform,
+  Alert,
   Dimensions,
   TouchableOpacity,
-  ToastAndroid,
-  Alert,
+  View
 } from 'react-native';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
+import Foundation from "react-native-vector-icons/Foundation";
+import { useDispatch, useSelector } from 'react-redux';
 import Color from '../Assets/Utilities/Color';
 import { windowHeight, windowWidth } from '../Utillity/utils';
-import CustomText from './CustomText';
-import CustomImage from './CustomImage';
-const { height, width } = Dimensions.get('window');
-import Feather from 'react-native-vector-icons/Feather';
-import Foundation from "react-native-vector-icons/Foundation"
-import { useDispatch, useSelector } from 'react-redux';
-import { imageUrl } from '../Config';
-import { setUserLogout, setUserLogoutAuth } from '../Store/slices/auth';
-import LinearGradient from 'react-native-linear-gradient';
-import { setUserLogOut } from '../Store/slices/common';
 import navigationService from '../navigationService';
 import CustomStatusBar from './CustomStatusBar';
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import CustomText from './CustomText';
+const { height, width } = Dimensions.get('window');
 
 const Header = props => {
   const dispatch = useDispatch();

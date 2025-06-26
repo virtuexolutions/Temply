@@ -24,7 +24,7 @@ import ImagePickerModal from '../Components/ImagePickerModal';
 
 const EditCoverLetter = props => {
   const type = props?.route?.params?.type;
-  console.log('🚀 EditCoverLetter ~ type:', type);
+  console.log('🚀 EditCoverLetter ~ type yhi ho:', type);
   const cardData = props?.route?.params?.data;
   console.log("EditCoverLetter🚀 ~ cardData:", cardData)
   const tamplateType = props?.route?.params?.type;
@@ -526,21 +526,6 @@ const EditCoverLetter = props => {
                           placeholder={'Details'}
                           placeholderColor={Color.grey}
                           viewWidth={0.84}
-                          inputHeight={0.15}
-                          viewHeight={0.15}
-                          marginTop={moderateScale(10, 0.3)}
-                          style={styles.text_input}
-                          backgroundColor={Color.lightGrey}
-                          setText={setDetails}
-                          value={details}
-                          multiline
-                        /> */}
-                        <TextInputWithTitle
-                          iconSize={moderateScale(20, 0.3)}
-                          color={Color.blue}
-                          placeholder={'Details'}
-                          placeholderColor={Color.grey}
-                          viewWidth={0.84}
                           inputHeight={windowHeight * 0.14}
                           viewHeight={0.15}
                           marginTop={moderateScale(10, 0.3)}
@@ -549,7 +534,7 @@ const EditCoverLetter = props => {
                           setText={setDetails}
                           value={details}
                           multiline
-                        />
+                        /> */}
                       </>
                     )}
                   </View>
@@ -856,7 +841,7 @@ const EditCoverLetter = props => {
                       placeholder={'Details'}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
-                      // inputHeight={windowHeight * 0.07}
+                      inputHeight={windowHeight * 0.15}
                       viewHeight={0.15}
                       marginTop={moderateScale(10, 0.3)}
                       style={styles.text_input}
@@ -868,7 +853,6 @@ const EditCoverLetter = props => {
                   </>
                 )}
               </View>
-
               <View
                 style={[
                   styles.btn_view,
@@ -876,7 +860,7 @@ const EditCoverLetter = props => {
                     height:
                       companyInfo === true
                         ? windowHeight * 0.11
-                        : windowHeight * 0.5,
+                        : windowHeight * 0.55,
                     marginTop: moderateScale(15, 0.6),
                   },
                 ]}>

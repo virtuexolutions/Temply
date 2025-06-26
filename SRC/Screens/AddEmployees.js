@@ -109,7 +109,6 @@ const AddEmployees = () => {
           <CustomButton
             text={'Search'}
             width={windowWidth * 0.22}
-
             height={windowHeight * 0.055}
             borderRadius={moderateScale(10, 0.3)}
             textColor={Color.white}

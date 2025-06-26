@@ -19,14 +19,18 @@ import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
 import navigationService from '../navigationService';
 import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
+import ShareEmployeeModal from '../Components/ShareEmployeeModal';
 
 const FinalEmail = props => {
   const data = props?.route?.params?.data;
+  const fromSave = props?.route?.params?.fromSave;
+  console.log("🚀 ~ fromSave:", fromSave)
   const fromHome = props?.route?.params?.fromHome;
-  console.log("🚀FinalEmail ~ data:", data)
+  console.log("🚀FinalEmail  🚀FinalEmail🚀FinalEmail~ data:", data)
   const token = useSelector(state => state.authReducer.token);
   console.log("🚀 ~ token:", token)
   const [loading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const saveEmailData = async () => {
     const url = 'auth/mail'
@@ -47,12 +51,11 @@ const FinalEmail = props => {
     <ImageBackground
       style={styles.bg_container}
       source={require('../Assets/Images/bg.png')}>
-      <Header title={'Edit cover letter'} hideUser={true} showBack={true} />
+      <Header title={fromSave === true ? '' : 'Edit cover letter'} hideUser={true} showBack={true} />
       <View style={styles.main_view}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.letter_bg}>
             <View style={styles.titlecontainer}>
-              {/* <CustomText style={styles.title}>pamela miller</CustomText> */}
               <CustomText isBold style={styles.title2}>
                 {data?.subject}
               </CustomText>
@@ -97,27 +100,51 @@ const FinalEmail = props => {
               <CustomText style={styles.per_text}>{data?.phone}</CustomText>
             </View>
           </View>
-          <CustomButton
-            text={
-              loading ?
-                <ActivityIndicator
-                  size="small"
-                  style={styles.indicatorStyle
-                  }
-                  color={Color.darkBlue}
-                /> : fromHome ? 'Go Back' : 'Save'}
-            textColor={Color.darkBlue}
-            onPress={() => {
-              fromHome ? navigationService.navigate('Home') :
-                saveEmailData()
-            }}
-            width={windowWidth * 0.8}
-            height={windowHeight * 0.06}
-            borderRadius={moderateScale(20, 0.3)}
-            bgColor={Color.white}
-            marginTop={moderateScale(20, 0.6)}
-          />
+
+          {fromSave === true ?
+            (
+              <CustomButton
+                text={
+                  loading ?
+                    <ActivityIndicator
+                      size="small"
+                      style={styles.indicatorStyle
+                      }
+                      color={Color.darkBlue}
+                    /> : 'Share'}
+                textColor={Color.darkBlue}
+                onPress={() => setShowModal(true)}
+                width={windowWidth * 0.8}
+                height={windowHeight * 0.06}
+                borderRadius={moderateScale(20, 0.3)}
+                bgColor={Color.white}
+                marginTop={moderateScale(20, 0.6)}
+              />
+            ) : (
+              <CustomButton
+                text={
+                  loading ?
+                    <ActivityIndicator
+                      size="small"
+                      style={styles.indicatorStyle
+                      }
+                      color={Color.darkBlue}
+                    /> : fromHome ? 'Go Back' : 'Save'}
+                textColor={Color.darkBlue}
+                onPress={() => {
+                  fromHome ? navigationService.navigate('Home') :
+                    saveEmailData()
+                }}
+                width={windowWidth * 0.8}
+                height={windowHeight * 0.06}
+                borderRadius={moderateScale(20, 0.3)}
+                bgColor={Color.white}
+                marginTop={moderateScale(20, 0.6)}
+              />
+            )
+          }
         </ScrollView>
+        <ShareEmployeeModal show={showModal} setShow={setShowModal} />
       </View>
     </ImageBackground>
   );

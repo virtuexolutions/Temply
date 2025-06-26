@@ -48,7 +48,7 @@ const AddDepartment = () => {
             Platform.OS == 'android'
                 ? ToastAndroid.show('Deparment added successfully', ToastAndroid.SHORT)
                 : Alert.alert('Deparment added successfully');
-            navigationService.goBack();
+            navigationService.navigate('Department');
         } else {
             setLoading(false)
         }
@@ -56,7 +56,7 @@ const AddDepartment = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header showBack hideUser={false}  />
+            <Header showBack hideUser={false} />
             <View style={styles.main_view}>
                 <TextInputWithTitle
                     title={"Enter Department Name : "}
@@ -65,17 +65,17 @@ const AddDepartment = () => {
                     color={Color.veryLightGray}
                     setText={setFullName}
                     value={fullName}
-                    placeholder={'Department Name'}
+                    placeholder={'Department Name'} 
                     placeholderColor={Color.veryLightGray}
                     viewWidth={0.9}
                     viewHeight={0.060}
                     border={1}
-                    borderRadius={moderateScale(10, 0.6)}
+                    borderRadius={moderateScale(10, 0.6)}   
                     borderColor={Color.themeBlue}
                 />
                 <TextInputWithTitle
                     title={"Enter Department Type : "}
-                    iconName={'building'}
+                    iconName={'building'}  
                     iconType={FontAwesome5}
                     color={Color.veryLightGray}
                     setText={setDepartmentType}

@@ -131,6 +131,7 @@ const SavedTemplates = () => {
         console.log("🚀 ~ onPressCard ~ data:", data)
         navigationService.navigate(data?.template?.key, { data: data, fromHome: false, fromSave: true, })
     }
+    
     return (
         <ImageBackground
             style={styles.bg_container}

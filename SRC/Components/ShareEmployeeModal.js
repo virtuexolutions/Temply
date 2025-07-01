@@ -1,25 +1,29 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Platform, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-native-modal';
-import { windowHeight, windowWidth } from '../Utillity/utils';
+import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
 import { moderateScale } from 'react-native-size-matters';
 import CustomText from './CustomText';
 import { useIsFocused } from '@react-navigation/core';
-import { Get } from '../Axios/AxiosInterceptorFunction';
+import { Get, Post } from '../Axios/AxiosInterceptorFunction';
 import { useSelector } from 'react-redux';
 import { Icon } from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo'
 import DropDown from './DropDown';
+import CustomButton from './CustomButton';
 const ShareEmployeeModal = props => {
-    let { show, setShow } = props;
+    let { show, setShow, template_id } = props;
     const isFocused = useIsFocused()
     const token = useSelector(state => state.authReducer.token);
+    console.log("🚀 ~ token:", token)
     const [employee, setEmployee] = useState([])
     console.log("🚀 ~ employee:", employee)
     const [loading, setLoading] = useState(false)
+    const [share_loading, setShareLoading] = useState(false)
     const userData = useSelector(state => state.commonReducer.userData);
     const [selectedEmployees, setSelectedEmployees] = useState([]);
+    console.log("🚀 ~ selectedEmployees:", selectedEmployees)
     const [departments, setDepartments] = useState({})
     const [selectedCabCategory, setSelectedCabCategory] = useState(null)
     console.log("🚀 ~ selectedCabCategory:", selectedCabCategory)
@@ -86,6 +90,27 @@ const ShareEmployeeModal = props => {
         }
     };
 
+
+    const SendTamplate = async () => {
+        const url = 'auth/template_assign'
+        setShareLoading(true)
+        const data = {
+            template_id: template_id,
+            employee_id: selectedEmployees,
+            form: 0,
+        }
+        console.log("🚀 ~ SendTamplate ~ data:", data)
+        const response = await Post(url, data, apiHeader(token))
+        console.log("🚀 ~ SendTamplate ~ response:", response?.data)
+        setShareLoading(false)
+        if (response?.data != undefined) {
+            setShareLoading(false)
+            Platform.OS == 'android'
+                ? ToastAndroid.show('Send Successfully', ToastAndroid.SHORT)
+                : Alert.alert(' Send SuccessFully');
+        }
+    }
+
     return (
         <Modal
             isVisible={show}
@@ -135,6 +160,29 @@ const ShareEmployeeModal = props => {
                         </View>
                     );
                 })}
+
+                <CustomButton
+                    onPress={() => SendTamplate()}
+                    text={share_loading ?
+                        <ActivityIndicator size={'small'} color={Color.white} /> :
+                        'Send'
+                    }
+                    fontSize={moderateScale(12, 0.3)}
+                    textColor={Color.white}
+                    borderRadius={moderateScale(30, 0.3)}
+                    width={windowWidth * 0.8}
+                    height={windowHeight * 0.065}
+                    marginTop={moderateScale(20, 0.3)}
+                    bgColor={
+                        Color.themeBlue
+                    }
+                    isBold
+                    elevation
+                    style={{
+                        position: 'absolute',
+                        bottom: 10
+                    }}
+                />
             </View>
         </Modal>
     )

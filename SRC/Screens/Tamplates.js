@@ -291,6 +291,7 @@ const Tamplates = () => {
                     paddingHorizontal: moderateScale(10, 0.6),
                 }}>
                 <FlatList
+                    data={category}
                     contentContainerStyle={{
                         flexDirection: 'row',
                     }}
@@ -299,7 +300,6 @@ const Tamplates = () => {
                         height: windowHeight * 0.05,
                     }}
                     horizontal
-                    data={category}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item, index }) => {
                         return (

@@ -6,7 +6,6 @@ import { moderateScale } from 'react-native-size-matters'
 import CustomText from './CustomText'
 
 const CardComponent = ({ data, image, name, text }) => {
-    console.log("🚀 ~ CardComponent ~ data:", data)
     return (
         <View style={styles.main_view}>
             <View style={styles.row_view}>

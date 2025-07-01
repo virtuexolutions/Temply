@@ -46,6 +46,7 @@ import VerifyEmail from './Screens/VerifyEmail';
 import VerifyNumber from './Screens/VerifyNumber';
 import WalkThroughScreen from './Screens/WalkthroughScreen';
 import Categories from './Screens/Categories';
+import Documents from './Screens/Documents';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -110,6 +111,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="EmailTamplate2" component={EmailTamplate2} />
           <RootNav.Screen name="AddEmployees" component={AddEmployees} />
           <RootNav.Screen name="Department" component={Department} />
+          <RootNav.Screen name="Documents" component={Documents} />
           <RootNav.Screen name="CompanyDetails" component={CompanyDetails} />
           <RootNav.Screen name="AddEmployeeDetails" component={AddEmployeeDetails} />
           <RootNav.Screen name="Categories" component={Categories} />

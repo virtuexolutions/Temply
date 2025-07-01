@@ -71,7 +71,9 @@ const FinalEmail = props => {
               ]}>
               {`  Dear ${data?.managerName}`}
             </CustomText>
-            <CustomText style={styles.per_text}>{data?.description || data?.summary}</CustomText>
+            <CustomText style={styles.per_text}>
+              {data?.description || data?.summary || data?.template?.description || 'No description found'}
+            </CustomText>
             <View
               style={[
                 styles.per_data,
@@ -144,7 +146,7 @@ const FinalEmail = props => {
             )
           }
         </ScrollView>
-        <ShareEmployeeModal show={showModal} setShow={setShowModal} />
+        <ShareEmployeeModal show={showModal} setShow={setShowModal} template_id={data?.template_id} />
       </View>
     </ImageBackground>
   );

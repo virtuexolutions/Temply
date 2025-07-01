@@ -151,7 +151,7 @@ const Header = props => {
           <CustomText
             style={{
               fontSize: moderateScale(18, 0.6),
-              color: color ? color : Color.black,
+              color: color ? color : Color.themeBlue,
               textAlign: 'center',
               width: isRight ? '70%' : '90%',
             }}

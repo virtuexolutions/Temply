@@ -32,6 +32,7 @@ const Dashboard = ({ navigation, route }) => {
     const [status, setStatus] = useState('Dashboard')
     const userData = useSelector(state => state.commonReducer.userData);
     const token = useSelector(state => state.authReducer.token);
+    console.log("🚀 ~ Dashboard ~ token:", token)
 
     console.log("🚀 ~ Dashboard ~ userData:", userData)
     const pieData = [
@@ -115,7 +116,7 @@ const Dashboard = ({ navigation, route }) => {
                                     <CustomText isBold style={styles.heading}>0</CustomText>
                                     <CustomText style={styles.text}>categories</CustomText>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.btn_view, {
+                                <TouchableOpacity onPress={() => navigationService.navigate('Documents')} style={[styles.btn_view, {
                                     backgroundColor: '#C131C3'
                                 }]}>
                                     <CustomText isBold style={styles.heading}>0</CustomText>

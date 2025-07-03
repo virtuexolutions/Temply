@@ -17,6 +17,7 @@ import { Post } from '../Axios/AxiosInterceptorFunction';
 import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
+
 import navigationService from '../navigationService';
 import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
 import ShareEmployeeModal from '../Components/ShareEmployeeModal';
@@ -31,6 +32,7 @@ const FinalEmail = props => {
   console.log("🚀 ~ token:", token)
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const user_type = useSelector(state => state.authReducer.role)
 
   const saveEmailData = async () => {
     const url = 'auth/mail'
@@ -66,13 +68,13 @@ const FinalEmail = props => {
                 styles.per_text,
                 {
                   paddingVertical: moderateScale(10, 0.6),
-                  // backgroundColor :'red'
                 },
               ]}>
               {`  Dear ${data?.managerName}`}
             </CustomText>
             <CustomText style={styles.per_text}>
-              {data?.description || data?.summary || data?.template?.description || 'No description found'}
+              {/* {data?.description || data?.summary || data?.details} */}
+              {data?.details}
             </CustomText>
             <View
               style={[
@@ -102,51 +104,56 @@ const FinalEmail = props => {
               <CustomText style={styles.per_text}>{data?.phone}</CustomText>
             </View>
           </View>
-
-          {fromSave === true ?
-            (
-              <CustomButton
-                text={
-                  loading ?
-                    <ActivityIndicator
-                      size="small"
-                      style={styles.indicatorStyle
-                      }
-                      color={Color.darkBlue}
-                    /> : 'Share'}
-                textColor={Color.darkBlue}
-                onPress={() => setShowModal(true)}
-                width={windowWidth * 0.8}
-                height={windowHeight * 0.06}
-                borderRadius={moderateScale(20, 0.3)}
-                bgColor={Color.white}
-                marginTop={moderateScale(20, 0.6)}
-              />
-            ) : (
-              <CustomButton
-                text={
-                  loading ?
-                    <ActivityIndicator
-                      size="small"
-                      style={styles.indicatorStyle
-                      }
-                      color={Color.darkBlue}
-                    /> : fromHome ? 'Go Back' : 'Save'}
-                textColor={Color.darkBlue}
-                onPress={() => {
-                  fromHome ? navigationService.navigate('Home') :
-                    saveEmailData()
-                }}
-                width={windowWidth * 0.8}
-                height={windowHeight * 0.06}
-                borderRadius={moderateScale(20, 0.3)}
-                bgColor={Color.white}
-                marginTop={moderateScale(20, 0.6)}
-              />
-            )
+          {user_type === 'Company' && <>
+            {fromSave === true ?
+              (
+                <CustomButton
+                  text={
+                    loading ?
+                      <ActivityIndicator
+                        size="small"
+                        style={styles.indicatorStyle
+                        }
+                        color={Color.darkBlue}
+                      /> : 'Share'}
+                  textColor={Color.darkBlue}
+                  onPress={() => setShowModal(true)}
+                  width={windowWidth * 0.8}
+                  height={windowHeight * 0.06}
+                  borderRadius={moderateScale(20, 0.3)}
+                  bgColor={Color.white}
+                  marginTop={moderateScale(20, 0.6)}
+                />
+              ) : (
+                <CustomButton
+                  text={
+                    loading ?
+                      <ActivityIndicator
+                        size="small"
+                        style={styles.indicatorStyle
+                        }
+                        color={Color.darkBlue}
+                      /> : fromHome ? 'Go Back' : 'Save'}
+                  textColor={Color.darkBlue}
+                  onPress={() => {
+                    fromHome ? navigationService.navigate('Home') :
+                      saveEmailData()
+                  }}
+                  width={windowWidth * 0.8}
+                  height={windowHeight * 0.06}
+                  borderRadius={moderateScale(20, 0.3)}
+                  bgColor={Color.white}
+                  marginTop={moderateScale(20, 0.6)}
+                />
+              )
+            }
+          </>
           }
         </ScrollView>
-        <ShareEmployeeModal show={showModal} setShow={setShowModal} template_id={data?.template_id} />
+        {
+          user_type === 'Company' &&
+          <ShareEmployeeModal show={showModal} setShow={setShowModal} template_id={data?.id} />
+        }
       </View>
     </ImageBackground>
   );
@@ -206,6 +213,6 @@ const styles = StyleSheet.create({
   per_text: {
     textTransform: 'capitalize',
     fontSize: moderateScale(11, 0.6),
-    // color: Color.darkGray,
+    color: Color.darkGray,
   },
 });

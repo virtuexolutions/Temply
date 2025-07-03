@@ -15,6 +15,9 @@ import { useSelector } from 'react-redux'
 
 const EditResume = props => {
     const token = useSelector(state => state.authReducer.token);
+    const userData = useSelector(state => state.commonReducer.userData);
+    console.log("🚀 ~ userData:", userData)
+
     console.log("🚀 ~ EditResume ~ token:", token)
     const detailData = props?.route?.params?.data;
     console.log("🚀 ~ EditResume data:", detailData)
@@ -109,13 +112,13 @@ const EditResume = props => {
                         }}>
                             <View>
                                 <CustomText isBold style={styles.btn_txt}>Personal Data</CustomText>
-                                <CustomText style={styles.btn_sub_txt}>Complete your personal Data make your resume even better</CustomText>
+                                <CustomText style={styles.btn_sub_txt}>Complete your personal Data make your Tamplates even better</CustomText>
                             </View>
                             <Icon name='down' onPress={() => setPersonalDataTab(!personalDataTab)} as={AntDesign} color={Color.black} size={moderateScale(18, 0.6)} />
                         </View>
                         {personalDataTab === false &&
                             <>
-                                <CustomText isBold style={styles.text}>Name :</CustomText>
+                                <CustomText isBold style={styles.text}>Namess :</CustomText>
                                 <TextInputWithTitle
                                     iconSize={moderateScale(20, 0.3)}
                                     color={Color.blue}

@@ -18,6 +18,7 @@ import navigationService from '../navigationService'
 import DropDown from '../Components/DropDown'
 import { useIsFocused } from '@react-navigation/core'
 import CustomText from '../Components/CustomText'
+import FormWrapper from '../Components/FormWrapper'
 
 const AddEmployeeDetails = () => {
     const isFocused = useIsFocused()
@@ -31,6 +32,7 @@ const AddEmployeeDetails = () => {
     const [joining_date, setJoiningDate] = useState('');
     const [salary, setSalary] = useState(0);
     const token = useSelector(state => state.authReducer.token);
+    console.log("🚀 ~ AddEmployeeDetails ~ token:", token)
     const [loading, setLoading] = useState(false)
     const [departments, setDepartments] = useState({})
     const [selectedCabCategory, setSelectedCabCategory] = useState(null)
@@ -85,133 +87,136 @@ const AddEmployeeDetails = () => {
                 styles.scrollView
             }>
                 <View style={styles.main_view}>
-                    <TextInputWithTitle
-                        title={"Enter Employee's Full Name : "}
-                        iconName={'person'}
-                        iconType={Ionicons}
-                        color={Color.veryLightGray}
-                        setText={setFullName}
-                        value={fullName}
-                        placeholder={'Full Name'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.9}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
+                    <FormWrapper>
 
-                    <TextInputWithTitle
-                        title={"Enter Employee's Email Address : "}
-                        iconName={'mail'}
-                        iconType={Ionicons}
-                        color={Color.veryLightGray}
-                        setText={setEmail}
-                        value={email}
-                        placeholder={'Email Address'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.9}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
+                        <TextInputWithTitle
+                            title={"Enter Employee's Full Name : "}
+                            iconName={'person'}
+                            iconType={Ionicons}
+                            color={Color.veryLightGray}
+                            setText={setFullName}
+                            value={fullName}
+                            placeholder={'Full Name'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.9}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
 
-                    <TextInputWithTitle
-                        title={"Enter Employee's Password : "}
-                        iconName={'lock'}
-                        iconType={Feather}
-                        color={Color.veryLightGray}
-                        setText={setPassword}
-                        value={password}
-                        placeholder={'password'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.9}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
+                        <TextInputWithTitle
+                            title={"Enter Employee's Email Address : "}
+                            iconName={'mail'}
+                            iconType={Ionicons}
+                            color={Color.veryLightGray}
+                            setText={setEmail}
+                            value={email}
+                            placeholder={'Email Address'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.9}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
 
-
-                    <TextInputWithTitle
-                        title={"Enter Employee's Phone Number : "}
-                        iconName={'phone'}
-                        iconType={Feather}
-                        color={Color.veryLightGray}
-                        setText={setPhone1}
-                        value={phone1}
-                        placeholder={'Phone Number'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.9}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
+                        <TextInputWithTitle
+                            title={"Enter Employee's Password : "}
+                            iconName={'lock'}
+                            iconType={Feather}
+                            color={Color.veryLightGray}
+                            setText={setPassword}
+                            value={password}
+                            placeholder={'password'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.9}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
 
 
-                    <TextInputWithTitle
-                        title={"Enter Employee's Salary : "}
-                        iconName={'money'}
-                        iconType={FontAwesome}
-                        color={Color.veryLightGray}
-                        setText={setSalary}
-                        value={salary}
-                        placeholder={'salary'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.9}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
+                        <TextInputWithTitle
+                            title={"Enter Employee's Phone Number : "}
+                            iconName={'phone'}
+                            iconType={Feather}
+                            color={Color.veryLightGray}
+                            setText={setPhone1}
+                            value={phone1}
+                            placeholder={'Phone Number'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.9}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
 
-                    <TextInputWithTitle
-                        title={"Enter Joing Date : "}
-                        iconName={'date'}
-                        iconType={Fontisto}
-                        color={Color.veryLightGray}
-                        setText={setJoiningDate}
-                        value={joining_date}
-                        placeholder={'joining date '}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.9}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
 
-                    <TextInputWithTitle
-                        title={"Enter Designation Name : "}
-                        iconName={'work'}
-                        iconType={MaterialIcons}
-                        color={Color.veryLightGray}
-                        setText={setDesignation}
-                        value={designation}
-                        placeholder={'Designation Name'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.9}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <CustomText isBold
-                        style={[
-                            {
-                                color: Color.black,
-                                fontSize: moderateScale(15, 0.3),
-                                marginBottom: moderateScale(5, 0.3),
-                                width: windowWidth,
-                                paddingHorizontal: moderateScale(10, 0.6),
-                                marginTop: moderateScale(10, 0.3),
-                                textAlign: 'left'
-                            },
-                        ]}>
-                        select department
-                    </CustomText>
+                        <TextInputWithTitle
+                            title={"Enter Employee's Salary : "}
+                            iconName={'money'}
+                            iconType={FontAwesome}
+                            color={Color.veryLightGray}
+                            setText={setSalary}
+                            value={salary}
+                            placeholder={'salary'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.9}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+
+                        <TextInputWithTitle
+                            title={"Enter Joing Date : "}
+                            iconName={'date'}
+                            iconType={Fontisto}
+                            color={Color.veryLightGray}
+                            setText={setJoiningDate}
+                            value={joining_date}
+                            placeholder={'joining date '}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.9}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+
+                        <TextInputWithTitle
+                            title={"Enter Designation Name : "}
+                            iconName={'work'}
+                            iconType={MaterialIcons}
+                            color={Color.veryLightGray}
+                            setText={setDesignation}
+                            value={designation}
+                            placeholder={'Designation Name'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.9}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        <CustomText isBold
+                            style={[
+                                {
+                                    color: Color.black,
+                                    fontSize: moderateScale(15, 0.3),
+                                    marginBottom: moderateScale(5, 0.3),
+                                    width: windowWidth,
+                                    paddingHorizontal: moderateScale(10, 0.6),
+                                    marginTop: moderateScale(10, 0.3),
+                                    textAlign: 'left'
+                                },
+                            ]}>
+                            select department
+                        </CustomText>
+                    </FormWrapper>
                     <DropDown
                         array={departments}
                         data={selectedCabCategory}

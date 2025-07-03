@@ -96,8 +96,6 @@ const Tamplates = () => {
         }
     };
 
-
-
     const category = [
         {
             id: 2,
@@ -258,12 +256,12 @@ const Tamplates = () => {
                     alignItems: 'center',
                 }}>
                 <SearchContainer
-                    width={windowWidth * 0.8}
+                    width={windowWidth * 0.95}
                     height={moderateScale(50, 0.6)}
                     placeHolder={'search ..'}
                     input={true}
                 />
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={() => navigationService.navigate('SavedTemplates')}
                     style={{
                         width: windowWidth * 0.12,
@@ -280,7 +278,7 @@ const Tamplates = () => {
                         color={Color.darkBlue}
                         style={{ alignSelf: 'center' }}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
             <CustomText style={styles.h3}>What do you need</CustomText>

@@ -92,6 +92,7 @@ const AddEmployees = () => {
       <Header hideUser={false} showBack isRight onPressPlus={() => navigationService.navigate('AddEmployeeDetails')} />
       <View style={styles.main_view}>
         <View style={styles.search_bar_view}>
+          
           <TextInputWithTitle
             iconName={'search1'}
             iconType={AntDesign}

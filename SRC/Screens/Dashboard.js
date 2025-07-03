@@ -26,7 +26,9 @@ const Dashboard = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const fromSignup = route?.params?.fromSignup;
     const [numberOfEmployees, setnumberOfEmployees] = useState(0);
-    const [numberOfDepartment, setnumberOfDepartment] = useState('');
+    const [numberOfDepartment, setnumberOfDepartment] = useState(0);
+    const [numberOfDocuments, setnumberOfDocuments] = useState(0);
+    console.log("🚀 ~ Dashboard ~ numberOfDocuments:", numberOfDocuments)
     console.log("🚀 ~ Dashboard ~ numberOfDepartment:", numberOfDepartment)
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('Dashboard')
@@ -38,8 +40,8 @@ const Dashboard = ({ navigation, route }) => {
     const pieData = [
         { value: numberOfEmployees, color: '#6366F1', text: numberOfEmployees },
         { value: numberOfDepartment, color: '#2DD4BF', text: numberOfDepartment },
-        { value: 0, color: '#D1D5DB', text: '0' },
-        { value: 0, color: '#D946EF', text: '0' },
+        { value: numberOfDocuments, color: '#D1D5DB', text: '0' },
+        { value: numberOfDocuments, color: '#D946EF', text: '0' },
     ];
 
 
@@ -50,10 +52,11 @@ const Dashboard = ({ navigation, route }) => {
     const getDetails = async () => {
         const url = 'auth/company_detail'
         const response = await Get(url, token)
-        console.log("🚀 ~ getDetails ~ response:", response?.data)
+        console.log("🚀 ~ getDetails ~ response:", response?.data?.company_info)
         if (response != undefined) {
-            setnumberOfDepartment(response?.data?.company_info?.company?.departments.length)
-            setnumberOfEmployees(response?.data?.company_info?.company?.employee.length)
+            setnumberOfDepartment(response?.data?.company_info?.departments.length)
+            setnumberOfEmployees(response?.data?.company_info?.employee.length)
+            setnumberOfDocuments(response?.data?.company_info?.save_template?.mail?.length)
         }
     }
 
@@ -113,13 +116,13 @@ const Dashboard = ({ navigation, route }) => {
                                 <TouchableOpacity onPress={() => navigationService.navigate('Categories')} style={[styles.btn_view, {
                                     backgroundColor: '#557AFF'
                                 }]}>
-                                    <CustomText isBold style={styles.heading}>0</CustomText>
+                                    <CustomText isBold style={styles.heading}>{numberOfDocuments}</CustomText>
                                     <CustomText style={styles.text}>categories</CustomText>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => navigationService.navigate('Documents')} style={[styles.btn_view, {
                                     backgroundColor: '#C131C3'
                                 }]}>
-                                    <CustomText isBold style={styles.heading}>0</CustomText>
+                                    <CustomText isBold style={styles.heading}>{numberOfDocuments}</CustomText>
                                     <CustomText style={styles.text}>document</CustomText>
                                 </TouchableOpacity>
                             </View>

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Icon } from 'native-base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     FlatList,
     SafeAreaView,
@@ -11,25 +11,34 @@ import {
     View
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { useDispatch, useSelector } from 'react-redux';
 import Color from '../Assets/Utilities/Color';
 import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
 import { windowHeight, windowWidth } from '../Utillity/utils';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import 'dayjs/locale/en'; // or your preferred locale
+import { Get } from '../Axios/AxiosInterceptorFunction';
+import CustomImage from '../Components/CustomImage';
+import { baseUrl } from '../Config';
+import navigationService from '../navigationService';
+
 
 const HomeScreen = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const fromSignup = route?.params?.fromSignup;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [status, setStatus] = useState('HomeScreen')
-    console.log("🚀 ~ HomeScreen ~ status:", status)
     const userData = useSelector(state => state.commonReducer.userData);
     console.log("🚀 ~ HomeScreen ~ userData:", userData)
-    const [selectedDate, setSelectedDate] = useState(dayjs());
-    const [tab, setTab] = useState('my');
+    dayjs.extend(advancedFormat);
+    dayjs.locale('en');
+    const todayFormatted = dayjs().format('dddd , D MMMM YYYY');
+    console.log(todayFormatted);
+    const [loading, setLoading] = useState(false)
+    const [docs, setDocs] = useState([])
+    console.log("🚀 ~ HomeScreen ~ docs:", docs)
+    const token = useSelector(state => state.authReducer.token);
+    console.log("🚀 ~ HomeScreen ~ token:", token)
 
     const documents = [
         {
@@ -41,7 +50,7 @@ const HomeScreen = ({ navigation, route }) => {
         },
         {
             id: '2',
-            title: 'Monthly Survey',
+            title: 'select_date_textly Survey',
             date: '2025-05-25',
             status: 'seen',
             assignedTo: 'me',
@@ -54,138 +63,96 @@ const HomeScreen = ({ navigation, route }) => {
             assignedTo: 'everyone',
         },
     ];
-    const today = dayjs();
-    console.log("🚀 ~ HomeScreen ~ today:", today)
-    const daysInMonth = [];
+    useEffect(() => {
+        getDocs()
+    }, [])
 
-    for (let i = 0; i < today.date(); i++) {
-        daysInMonth.push(today.subtract(i, 'day'));
+
+    const getDocs = async () => {
+        const url = `auth/employee/${userData?.employee_detail?.id}`
+        setLoading(true)
+        const response = await Get(url, token)
+        console.log("🚀 ~ getDepartments ~ responsdde:", response?.data)
+        setLoading(false)
+        if (response?.data != undefined) {
+            setLoading(false)
+            setDocs(response?.data?.employee_info?.template_assigns)
+        }
+        else {
+            setLoading(false)
+        }
     }
 
-    const filteredDocs = documents.filter(doc =>
-        dayjs(doc.date).isSame(selectedDate, 'day') &&
-        (tab === 'all' || doc.assignedTo === 'me')
-    );
+
+    const onPressCard = async (data) => {
+        console.log("🚀 ~ onPressCard ~ data:", data)
+        navigationService.navigate(data?.assignable?.template?.key, { data: data?.assignable, fromSave: true })
+    }
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header_view}>
                 <Header isShadow={false} hideUser={false} showBack={false} headerColor={Color.themeBlue} />
-                <View style={styles.heading_sub_view}>
-                    <CustomText style={styles.welcomeText}>{`Hello ${userData?.detail?.full_name}`}</CustomText>
-                    <CustomText style={styles.heading}>{userData?.detail?.designation}</CustomText>
-                    <View style={[styles.row_view, {
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start'
-                    }]}>
-                        <View style={styles.row_view}>
-                            <CustomText style={styles.subtextStyle}>
-                                {selectedDate.format('MMMM')}
-                            </CustomText>
-                            <Icon name='down'
-                                as={AntDesign}
-                                size={moderateScale(18, 0.3)}
-                                color={Color.white}
-                                style={{
-                                    marginLeft: moderateScale(4, 0.6)
-                                }}
-                            />
-                        </View>
-                        <View style={styles.calender_view}>
-                            <CustomText isBold style={styles.date}>{selectedDate.format('DD')}</CustomText>
-                            <CustomText style={styles.month}>{selectedDate.format('MMMM')}</CustomText>
-                        </View>
-                    </View>
-                    <ScrollView style={{
-                        marginTop: moderateScale(20, 0.6),
-                        width: windowWidth * 0.96
-                    }} horizontal showsHorizontalScrollIndicator={false}>
-                        {daysInMonth.map((date, index) => (
-                            <TouchableOpacity
-                                key={index}
-                                style={[styles.calender_view, {
-                                    marginTop: moderateScale(20, 0.6),
-                                    marginRight: 8,
-                                    alignItems: 'center',
-                                    backgroundColor: date.isSame(selectedDate, 'day') ? '#097f9f' : '#c0effc',
-                                }]}
-                                onPress={() => setSelectedDate(date)}
-                            >
-                                <CustomText isBold style={{ color: date.isSame(selectedDate, 'day') ? 'white' : 'black' }}>
-                                    {date.format('DD')}
-                                </CustomText>
-                                <CustomText style={{ fontSize: 10, color: date.isSame(selectedDate, 'day') ? 'white' : 'black' }}>{date.format('ddd')}</CustomText>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View>
                 <View style={styles.main_view}>
-                    <View style={[styles.row_view, {
-                        justifyContent: 'space-between',
-                        marginTop: moderateScale(15, 0.6)
-                    }]}>
-                        <TouchableOpacity onPress={() => setTab('all')} style={[styles.btn_view, {
-                            borderBottomWidth: 2,
-                            borderBottomColor: tab === 'all' ? Color.themeBlue : Color.white
-                        }]}>
-                            <CustomText style={{
-                                fontSize: moderateScale(15, 0.6)
-                            }}>All Documents</CustomText>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setTab('my')} style={[styles.btn_view, {
-                            borderBottomWidth: 2,
-                            borderBottomColor: tab === 'my' ? Color.themeBlue : Color.white
-                        }]}>
-                            <CustomText style={{
-                                fontSize: moderateScale(15, 0.6)
-                            }}>My Documents</CustomText>
-                        </TouchableOpacity>
+                    <CustomText style={styles.welcomeText}>{`Hello ${userData?.employee_detail?.full_name}`}</CustomText>
+                    <CustomText style={styles.heading}>{userData?.department[0]?.department_name}</CustomText>
+                    <CustomText isBold style={styles.date}>{todayFormatted}</CustomText>
+                    <View style={styles.select_date_view}>
+                        <View style={styles.icon_view}>
+                            <Icon name='calendar' as={Entypo} size={moderateScale(25, 0.3)}
+                                color={Color.themeBlue} />
+                        </View>
+                        <CustomText style={styles.select_date_text}>Choose Date</CustomText>
+                        <Icon name='chevron-right' as={Entypo} size={moderateScale(25, 0.3)}
+                            color={Color.white} />
                     </View>
-                    <FlatList
-                        data={filteredDocs}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) => (
-                            <View
-                                style={{
-                                    backgroundColor: 'white',
-                                    padding: 16,
-                                    marginVertical: 8,
-                                    borderRadius: 12,
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    shadowColor: '#000',
-                                    shadowOpacity: 0.1,
-                                    shadowOffset: { width: 0, height: 2 },
-                                    shadowRadius: 4,
-                                    elevation: 2,
-                                    marginTop: moderateScale(15, 0.6)
-                                }}
-                            >
-                                <View>
-                                    <Text style={{ fontSize: 16, fontWeight: '600' }}>{item.title}</Text>
-                                    <Text style={{ color: '#718096', fontSize: 12 }}>
-                                        {dayjs(item.date).format('DD MMM YYYY')}
-                                    </Text>
-                                </View>
-                                {item.status === 'new' && (
-                                    <View
-                                        style={{
-                                            backgroundColor: '#38A169',
-                                            paddingVertical: 4,
-                                            paddingHorizontal: 8,
-                                            borderRadius: 10,
-                                        }}
-                                    >
-                                        <Text style={{ color: 'white', fontSize: 10 }}>NEW</Text>
-                                    </View>
-                                )}
-                            </View>
-                        )}
-                    />
                 </View>
             </View>
-
+            <View style={styles.main_view}>
+                <View style={styles.text_view}>
+                    <CustomText style={[styles.date, { color: Color.themeBlue, top: 0 }]} isBold>Documents</CustomText>
+                    <CustomText style={styles.des}>see All</CustomText>
+                </View>
+                <FlatList
+                    data={docs}
+                    keyExtractor={(item, index) => item?.id?.toString() || index.toString()}
+                    ListEmptyComponent={
+                        <CustomText style={styles.noDataText}>No Documents Found</CustomText>
+                    }
+                    renderItem={({ item }) => {
+                        console.log("🚀 ~ Documents ~ item:", item?.assignable?.template?.image)
+                        return (
+                            <TouchableOpacity
+                                onPress={() =>
+                                    onPressCard(item)
+                                }
+                                style={styles.card}>
+                                <View style={[styles.card_image]}>
+                                    <CustomImage
+                                        source={{ uri: `${baseUrl}${item?.assignable?.template?.image}` }}
+                                        style={{
+                                            height: '100%',
+                                            width: '100%',
+                                            borderRadius: moderateScale(4, 0.6),
+                                        }}
+                                    />
+                                </View>
+                                <View style={{ marginLeft: moderateScale(10, 0.6) }}>
+                                    <CustomText style={styles.list_heading}>
+                                        {item?.assignable?.subject}
+                                    </CustomText>
+                                    <CustomText numberOfLines={1} style={styles.list_description}>
+                                        {item?.assignable?.tamplate_description}
+                                    </CustomText>
+                                    <CustomText numberOfLines={1} style={styles.card_date}>
+                                        {item?.assignable?.date}
+                                    </CustomText>
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    }}
+                />
+            </View>
         </SafeAreaView>
     );
 };
@@ -202,6 +169,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: moderateScale(10, 0.6),
         // justifyContent : 'center'
+    },
+    des: {
+        fontSize: moderateScale(12, 0.6),
+        color: Color.veryLightGray
     },
     main_view: {
         paddingVertical: moderateScale(10, 0.6),
@@ -274,6 +245,7 @@ const styles = StyleSheet.create({
         width: windowWidth,
         height: windowHeight * 0.35,
         backgroundColor: Color.themeBlue,
+        borderBottomLeftRadius: moderateScale(25, 0.6)
     },
     calender_view: {
         width: moderateScale(45, 0.6),
@@ -284,11 +256,73 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     date: {
-        fontSize: moderateScale(17, 0.6),
-        color: Color.themeBlue
+        fontSize: moderateScale(18, 0.6),
+        color: Color.white,
+        top: -15
     },
-    month: {
+    card_date: {
+        fontSize: moderateScale(10, 0.6),
+        color: Color.themeBlue,
+        width: '70%',
+        textAlign:'right'
+    },
+    select_date_text: {
+        fontSize: moderateScale(14, 0.6),
+        color: Color.white,
+        width: '75%'
+    },
+    select_date_view: {
+        width: windowWidth * 0.9,
+        height: windowWidth * 0.13,
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: moderateScale(10, 0.6),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: moderateScale(10, 0.6),
+        marginTop: moderateScale(15, 0.6)
+    },
+    icon_view: {
+        width: windowWidth * 0.10,
+        height: windowWidth * 0.10,
+        backgroundColor: Color.white,
+        borderRadius: windowWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text_view: {
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: windowWidth * 0.9
+    },
+    card: {
+        width: windowWidth * 0.95,
+        backgroundColor: Color.lightGrey,
+        height: windowWidth * 0.20,
+        borderRadius: moderateScale(10, 0.6),
+        justifyContent: 'flex-start',
+        alignItems: 'center', paddingHorizontal: moderateScale(5, 0.6),
+        flexDirection: 'row',
+        marginBottom: moderateScale(10, 0.6),
+        marginTop: moderateScale(10, 0.6)
+    },
+    card_image: {
+        height: windowHeight * 0.07,
+        width: windowWidth * 0.2,
+        borderRadius: moderateScale(10, 0.6),
+    },
+    list_description: {
         fontSize: moderateScale(11, 0.6),
         color: Color.veryLightGray
+    },
+    list_heading: {
+        fontSize: moderateScale(14, 0.6),
+        color: Color.grey
+    },
+    noDataText: {
+        color: Color.red,
+        textAlign: 'center',
+        marginTop: moderateScale(20, 0.6)
     }
 });

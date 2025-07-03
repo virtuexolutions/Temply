@@ -221,7 +221,8 @@ const styles = StyleSheet.create({
         borderRadius: moderateScale(10, 0.6),
         justifyContent: 'flex-start',
         alignItems: 'center', paddingHorizontal: moderateScale(5, 0.6),
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: moderateScale(10, 0.6)
     },
     card_image: {
         height: windowHeight * 0.07,

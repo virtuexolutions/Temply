@@ -32,7 +32,7 @@ const EditCoverLetter = props => {
   const token = useSelector(state => state.authReducer.token);
 
   const [personalDataTab, setPersonalDataTab] = useState(true);
-  const [summary, setSummary] = useState(true);
+  const [summary, setSummary] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -51,7 +51,7 @@ const EditCoverLetter = props => {
   const [experience, setexperience] = useState(true);
   const [Certificate, setCertificate] = useState(true);
   const [managerName, setManagerName] = useState('');
-  const [companyName, setCompanyName] = useState(userData?.name);
+  const [companyName, setCompanyName] = useState(userData?.company_name);
   const [companyAddress, setCompanyAddress] = useState('');
   const [subject, setSubject] = useState('');
   const [managerEmail, setManagerEmail] = useState(userData?.email);
@@ -88,19 +88,6 @@ const EditCoverLetter = props => {
       tamplate_description: cardData?.description,
       template_id: cardData?.id
     };
-    // const body = {               
-    //   name: name,
-    //   phone: phone,
-    //   summary: summary,
-    //   date: date,
-    //   details: details,
-    //   managerName: managerName,
-    //   subject: subject,
-    //   email: userData?.email,
-    //   tamplate_title: cardData?.heading,
-    //   tamplate_image: null,
-    //   tamplate_description: cardData?.description
-    // };
     const body = {
       name: name,
       phone: phone,
@@ -195,7 +182,7 @@ const EditCoverLetter = props => {
                   <TextInputWithTitle
                     iconSize={moderateScale(20, 0.3)}
                     color={Color.blue}
-                    placeholder={'Enter your company name '}
+                    placeholder={userData?.company?.company_name}
                     placeholderColor={Color.grey}
                     viewWidth={0.84}
                     marginTop={moderateScale(10, 0.3)}
@@ -675,7 +662,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={'Enter your full name '}
+                      placeholder={"Enter Employee's name "}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}
@@ -690,7 +677,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={'Enter your email '}
+                      placeholder={'Enter Employee email '}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}
@@ -705,7 +692,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={'Enter your Address '}
+                      placeholder={'Enter Employee Address '}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}
@@ -777,7 +764,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={'Enter your Phone Number'}
+                      placeholder={'Enter Employee Phone Number'}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}
@@ -859,8 +846,8 @@ const EditCoverLetter = props => {
                   {
                     height:
                       companyInfo === true
-                        ? windowHeight * 0.11
-                        : windowHeight * 0.55,
+                        ? windowHeight * 0.10
+                        : windowHeight * 0.4,
                     marginTop: moderateScale(15, 0.6),
                   },
                 ]}>
@@ -916,7 +903,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={'Enter company name '}
+                      placeholder={userData?.company?.company_name}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}
@@ -924,6 +911,7 @@ const EditCoverLetter = props => {
                       backgroundColor={Color.lightGrey}
                       setText={setCompanyName}
                       value={companyName}
+                      disable
                     />
                     <CustomText isBold style={styles.text}>
                       company address
@@ -931,7 +919,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={'Enter address '}
+                      placeholder={userData?.company?.company_address}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}
@@ -939,8 +927,9 @@ const EditCoverLetter = props => {
                       backgroundColor={Color.lightGrey}
                       setText={setCompanyAddress}
                       value={companyAddress}
+                      disable
                     />
-                    <CustomText isBold style={styles.text}>
+                    {/* <CustomText isBold style={styles.text}>
                       city
                     </CustomText>
                     <TextInputWithTitle
@@ -954,7 +943,7 @@ const EditCoverLetter = props => {
                       backgroundColor={Color.lightGrey}
                       setText={setCompanyCity}
                       value={companyCity}
-                    />
+                    /> */}
                   </>
                 )}
               </View>
@@ -1131,25 +1120,20 @@ const EditCoverLetter = props => {
               tamplateType === 'companyEmail' || 'attendencepolicy'
                 ? navigationService.navigate(cardData?.key, {
                   data: {
-                    // name: name,
-                    // email: email,
-                    // address: address,
-                    // contact: phone,
-                    // description: details,
-                    // subject: subject,
-                    // date: date,
-                    // managerName: managerName,
-                    name: 'testinguser',
-                    email: 'testinguser@gmail.com',
-                    address: 'abc street',
-                    contact: '03187897',
-                    description: 'orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley',
-                    subject: 'Late Attendence',
-                    date: '02-04-15',
-                    managerName: 'hr Manager',
+                    name: name,
+                    email: email,
+                    month: month,
+                    summary: '',
+                    address: address,
+                    details: details,
+                    managerName: managerName,
+                    companyName: companyName,
+                    companyAddress: companyAddress,
+                    subject: subject,
+                    date: date,
                     tamplate_title: cardData?.heading,
+                    tamplate_image: null,
                     tamplate_description: cardData?.description,
-                    tamplate_type: cardData?.type,
                     template_id: cardData?.id
                   },
                 })

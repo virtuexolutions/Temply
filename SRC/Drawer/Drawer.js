@@ -15,17 +15,21 @@ import { setUserToken } from '../Store/slices/auth';
 // import ReferFriendModal from '../Screens/ReferFriendScreen'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 import Foundation from 'react-native-vector-icons/Foundation'
+import Entypo from 'react-native-vector-icons/Entypo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Icon } from 'native-base';
 
 const Drawer = React.memo((props) => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const { user_type } = useSelector(state => state.authReducer);
+  const user_type = useSelector(state => state.authReducer.role)
+  console.log("🚀 ~ Drawer ~ user_type:", user_type)
   const [isModalVisible, setIsModalVisible] = useState(false);
   const userData = useSelector(state => state.commonReducer.userData);
+  console.log("🚀 ~ Drawer ~ userData user_type:", user_type, userData)
   const adminData = [
     {
       id: 1,
@@ -94,6 +98,73 @@ const Drawer = React.memo((props) => {
     },
   ];
 
+  const employeeDrawerData = [
+    {
+      id: 1,
+      name: 'Home',
+      onPress: () => {
+        navigation.navigate('HomeScreen');
+      },
+      iconName: 'home',
+      iconType: Entypo
+    },
+    {
+      id: 2,
+      name: 'Profile Details',
+      onPress: () => {
+        // setIsModalVisible(true);
+        // navigation.navigate('CompanyDetails');
+      },
+      iconName: 'person',
+      iconType: MaterialIcons
+    },
+    {
+      id: 3,
+      name: 'Documents',
+      onPress: () => {
+        // setIsModalVisible(true);
+        // navigation.navigate('Tamplates');
+      },
+      iconName: 'filetext1',
+      iconType: AntDesign
+    },
+    {
+      id: 3,
+      name: 'Notifications ',
+      onPress: () => {
+        // navigation.navigate('Department');
+      },
+      iconName: 'notifications',
+      iconType: MaterialIcons
+    },
+    {
+      id: 3,
+      name: 'Settings',
+      onPress: () => {
+        // navigation.navigate('CompanyDetails');
+      },
+      iconName: 'settings',
+      iconType: MaterialIcons
+    },
+    // {
+    //   id: 4,
+    //   name: 'Categories',
+    //   onPress: () => {
+    //     // navigation.navigate('AddEmployees');
+    //   },
+    //   iconName: 'folder',
+    //   iconType: Foundation
+    // },
+    // {
+    //   id: 4,
+    //   name: 'Document',
+    //   onPress: () => {
+    //     // navigation.navigate('AddYourCar');
+    //   },
+    //   iconName: 'document',
+    //   iconType: Ionicons
+    // },
+  ];
   return (
     <ScreenBoiler
       statusBarBackgroundColor={Color.themeBlue}
@@ -117,7 +188,7 @@ const Drawer = React.memo((props) => {
           height: '60%',
           marginTop: moderateScale(30, 0.6)
         }}>
-        {adminData.map((item, index) => (
+        {(user_type === 'Company' ? adminData : employeeDrawerData).map((item, index) => (
           <>
             <TouchableOpacity
               key={item.id}

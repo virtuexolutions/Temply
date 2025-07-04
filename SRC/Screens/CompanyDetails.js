@@ -18,6 +18,7 @@ import { Post } from '../Axios/AxiosInterceptorFunction'
 import { useDispatch, useSelector } from 'react-redux'
 import navigationService from '../navigationService'
 import { setUserData } from '../Store/slices/common'
+import FormWrapper from '../Components/FormWrapper'
 
 const CompanyDetails = () => {
     const dispatch = useDispatch();
@@ -74,147 +75,148 @@ const CompanyDetails = () => {
             <Header showBack hideUser={false} title={'Add Company Details'} />
             <ScrollView showsVerticalScrollIndicator={false} >
                 <View style={styles.main_view}>
-                    <TouchableOpacity onPress={() => setShowModal(true)} style={{
-                        width: windowWidth * 0.6,
-                        height: windowWidth * 0.3,
-                        borderWidth: 1.5,
-                        borderColor: Color.themeBlue,
-                    }}>
-                        <CustomImage
-                            onPress={() => setShowModal(true)}
-                            source={
-                                !image || !image.uri
-                                    ? require('../Assets/Images/no_image.jpg')
-                                    : { uri: image.uri }
-                            }
-                            style={styles.image}
+                    <FormWrapper>
+                        <TouchableOpacity onPress={() => setShowModal(true)} style={{
+                            width: windowWidth * 0.6,
+                            height: windowWidth * 0.3,
+                            borderWidth: 1.5,
+                            borderColor: Color.themeBlue,
+                        }}>
+                            <CustomImage
+                                onPress={() => setShowModal(true)}
+                                source={
+                                    !image || !image.uri
+                                        ? require('../Assets/Images/no_image.jpg')
+                                        : { uri: image.uri }
+                                }
+                                style={styles.image}
+                            />
+                        </TouchableOpacity>
+                        <TextInputWithTitle
+                            title={"Enter Company Name : "}
+                            iconName={'person'}
+                            iconType={Ionicons}
+                            color={Color.veryLightGray}
+                            setText={setCompanyName}
+                            value={company_name}
+                            placeholder={'company Name'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
                         />
-                    </TouchableOpacity>
-                    <TextInputWithTitle
-                        title={"Enter Company Name : "}
-                        iconName={'person'}
-                        iconType={Ionicons}
-                        color={Color.veryLightGray}
-                        setText={setCompanyName}
-                        value={company_name}
-                        placeholder={'company Name'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <TextInputWithTitle
-                        title={"Enter Bussiness Type: "}
-                        // iconName={'mail'}
-                        // iconType={Ionicons}
-                        iconName={'work'}
-                        iconType={MaterialIcons}
-                        color={Color.veryLightGray}
-                        setText={setBussinessType}
-                        value={bussiness_type}
-                        placeholder={'Email bussiness type'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <TextInputWithTitle
-                        title={"Enter Industry: "}
-                        iconName={'building'}
-                        iconType={FontAwesome5}
-                        color={Color.veryLightGray}
-                        setText={setIndustry}
-                        value={industry}
-                        placeholder={'industry'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
+                        <TextInputWithTitle
+                            title={"Enter Bussiness Type: "}
+                            // iconName={'mail'}
+                            // iconType={Ionicons}
+                            iconName={'work'}
+                            iconType={MaterialIcons}
+                            color={Color.veryLightGray}
+                            setText={setBussinessType}
+                            value={bussiness_type}
+                            placeholder={'Email bussiness type'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        <TextInputWithTitle
+                            title={"Enter Industry: "}
+                            iconName={'building'}
+                            iconType={FontAwesome5}
+                            color={Color.veryLightGray}
+                            setText={setIndustry}
+                            value={industry}
+                            placeholder={'industry'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
 
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <TextInputWithTitle
-                        title={"Enter Company contact Number : "}
-                        iconName={'phone'}
-                        iconType={Feather}
-                        color={Color.veryLightGray}
-                        setText={setCoontactNumber}
-                        value={contact_number}
-                        placeholder={'company contact Number'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <TextInputWithTitle
-                        title={"Enter Bussiness Email Address : "}
-                        iconName={'mail'}
-                        iconType={Ionicons}
-                        color={Color.veryLightGray}
-                        setText={setEmail}
-                        value={email}
-                        placeholder={'email address'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <TextInputWithTitle
-                        title={"enter website url"}
-                        iconName={'work'}
-                        iconType={MaterialIcons}
-                        color={Color.veryLightGray}
-                        setText={setWebsiteUrl}
-                        value={website_url}
-                        placeholder={'website url'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <TextInputWithTitle
-                        title={"enter company Address "}
-                        iconName={'work'}
-                        iconType={MaterialIcons}
-                        color={Color.veryLightGray}
-                        setText={setCompanyAddress}
-                        value={company_address}
-                        placeholder={'company address'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        <TextInputWithTitle
+                            title={"Enter Company contact Number : "}
+                            iconName={'phone'}
+                            iconType={Feather}
+                            color={Color.veryLightGray}
+                            setText={setCoontactNumber}
+                            value={contact_number}
+                            placeholder={'company contact Number'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        <TextInputWithTitle
+                            title={"Enter Bussiness Email Address : "}
+                            iconName={'mail'}
+                            iconType={Ionicons}
+                            color={Color.veryLightGray}
+                            setText={setEmail}
+                            value={email}
+                            placeholder={'email address'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        <TextInputWithTitle
+                            title={"enter website url"}
+                            iconName={'work'}
+                            iconType={MaterialIcons}
+                            color={Color.veryLightGray}
+                            setText={setWebsiteUrl}
+                            value={website_url}
+                            placeholder={'website url'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        <TextInputWithTitle
+                            title={"enter company Address "}
+                            iconName={'work'}
+                            iconType={MaterialIcons}
+                            color={Color.veryLightGray}
+                            setText={setCompanyAddress}
+                            value={company_address}
+                            placeholder={'company address'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
 
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    <TextInputWithTitle
-                        title={"enter Number of employees"}
-                        iconName={'work'}
-                        iconType={MaterialIcons}
-                        color={Color.veryLightGray}
-                        setText={setNumberOfEmployees}
-                        value={number_of_employees}
-                        placeholder={'number of employees'}
-                        placeholderColor={Color.veryLightGray}
-                        viewWidth={0.85}
-                        viewHeight={0.060}
-                        border={1}
-                        borderRadius={moderateScale(10, 0.6)}
-                        borderColor={Color.themeBlue}
-                    />
-                    {/* <TextInputWithTitle
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        <TextInputWithTitle
+                            title={"enter Number of employees"}
+                            iconName={'work'}
+                            iconType={MaterialIcons}
+                            color={Color.veryLightGray}
+                            setText={setNumberOfEmployees}
+                            value={number_of_employees}
+                            placeholder={'number of employees'}
+                            placeholderColor={Color.veryLightGray}
+                            viewWidth={0.85}
+                            viewHeight={0.060}
+                            border={1}
+                            borderRadius={moderateScale(10, 0.6)}
+                            borderColor={Color.themeBlue}
+                        />
+                        {/* <TextInputWithTitle
                         title={"Enter tax indentification number"}
                         iconName={'work'}
                         iconType={MaterialIcons}
@@ -229,19 +231,20 @@ const CompanyDetails = () => {
                         borderRadius={moderateScale(10, 0.6)}
                         borderColor={Color.themeBlue}
                     /> */}
-                    <CustomButton
-                        text={loading ? <ActivityIndicator color={'white'} size={moderateScale(12, 0.2)} /> : 'Submit'}
-                        width={windowWidth * 0.85}
-                        height={windowHeight * 0.055}
-                        borderRadius={moderateScale(10, 0.3)}
-                        textColor={Color.white}
-                        bgColor={Color.themeBlue}
-                        marginTop={moderateScale(40, 0.6)}
-                        onPress={() => {
-                            // Login()
-                            onPressSubmit()
-                        }}
-                    />
+                        <CustomButton
+                            text={loading ? <ActivityIndicator color={'white'} size={moderateScale(12, 0.2)} /> : 'Submit'}
+                            width={windowWidth * 0.85}
+                            height={windowHeight * 0.055}
+                            borderRadius={moderateScale(10, 0.3)}
+                            textColor={Color.white}
+                            bgColor={Color.themeBlue}
+                            marginTop={moderateScale(40, 0.6)}
+                            onPress={() => {
+                                // Login()
+                                onPressSubmit()
+                            }}
+                        />
+                    </FormWrapper>
                 </View>
             </ScrollView>
             <ImagePickerModal

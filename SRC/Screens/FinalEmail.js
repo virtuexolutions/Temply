@@ -42,7 +42,6 @@ const FinalEmail = props => {
     setLoading(false)
     if (response?.data != undefined) {
       setLoading(false)
-      navigationService.navigate('Home')
       Platform.OS == 'android'
         ? ToastAndroid.show('Saved SuccessFully', ToastAndroid.SHORT)
         : Alert.alert(' Saved SuccessFully');

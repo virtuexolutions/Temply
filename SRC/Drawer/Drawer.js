@@ -1,26 +1,21 @@
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { Icon } from 'native-base';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Foundation from 'react-native-vector-icons/Foundation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useDispatch, useSelector } from 'react-redux';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
 import CustomText from '../Components/CustomText';
 import ScreenBoiler from '../Components/ScreenBoiler';
+import { setUserLogoutAuth } from '../Store/slices/auth';
 import { windowHeight, windowWidth } from '../Utillity/utils';
-import navigationService from '../navigationService';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserLogOut } from '../Store/slices/common';
-import { setUserLogoutAuth, SetUserRole } from '../Store/slices/auth';
-import { setUserToken } from '../Store/slices/auth';
-// import ReferFriendModal from '../Screens/ReferFriendScreen'
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
-import Foundation from 'react-native-vector-icons/Foundation'
-import Entypo from 'react-native-vector-icons/Entypo'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { Icon } from 'native-base';
 
 const Drawer = React.memo((props) => {
   const { navigation } = props;
@@ -54,7 +49,6 @@ const Drawer = React.memo((props) => {
       id: 2,
       name: 'Tamplates',
       onPress: () => {
-        // setIsModalVisible(true);
         navigation.navigate('Tamplates');
       },
       iconName: 'filetext1',
@@ -70,19 +64,9 @@ const Drawer = React.memo((props) => {
       iconType: Foundation
     },
     {
-      id: 3,
-      name: 'Add Details',
-      onPress: () => {
-        navigation.navigate('CompanyDetails');
-      },
-      iconName: 'graph-horizontal',
-      iconType: Foundation
-    },
-    {
       id: 4,
       name: 'Categories',
       onPress: () => {
-        // navigation.navigate('AddEmployees');
       },
       iconName: 'folder',
       iconType: Foundation
@@ -91,7 +75,7 @@ const Drawer = React.memo((props) => {
       id: 4,
       name: 'Document',
       onPress: () => {
-        // navigation.navigate('AddYourCar');
+        navigation.navigate('Documents');
       },
       iconName: 'document',
       iconType: Ionicons
@@ -113,7 +97,7 @@ const Drawer = React.memo((props) => {
       name: 'Profile Details',
       onPress: () => {
         // setIsModalVisible(true);
-        // navigation.navigate('CompanyDetails');
+        navigation.navigate('ProfileDetails');
       },
       iconName: 'person',
       iconType: MaterialIcons
@@ -177,7 +161,7 @@ const Drawer = React.memo((props) => {
           borderRadius: windowWidth,
           marginTop: moderateScale(16, 0.6)
         }}>
-          <CustomImage source={require('../Assets/Images/dummyman5.png')} style={styles.image} />
+          <CustomImage source={require('../Assets/Images/no_image.jpg')} style={styles.image} />
         </View>
         <CustomText style={styles.heading_text}>{userData?.name}</CustomText>
         <CustomText style={styles.heading_text}>{userData?.email}</CustomText>

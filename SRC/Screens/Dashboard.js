@@ -21,9 +21,12 @@ import Header from '../Components/Header';
 import navigationService from '../navigationService';
 import { windowHeight, windowWidth } from '../Utillity/utils';
 import { Get, Post } from '../Axios/AxiosInterceptorFunction';
+import { useIsFocused } from '@react-navigation/core';
 
 const Dashboard = ({ navigation, route }) => {
     const dispatch = useDispatch();
+    const isFocused = useIsFocused()
+
     const fromSignup = route?.params?.fromSignup;
     const [numberOfEmployees, setnumberOfEmployees] = useState(0);
     const [numberOfDepartment, setnumberOfDepartment] = useState(0);
@@ -47,7 +50,7 @@ const Dashboard = ({ navigation, route }) => {
 
     useEffect(() => {
         getDetails()
-    }, [])
+    }, [isFocused])
 
     const getDetails = async () => {
         const url = 'auth/company_detail'

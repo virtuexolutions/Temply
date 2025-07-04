@@ -98,7 +98,7 @@ const ShareEmployeeModal = props => {
             assignable_id: template_id,
             employee_id: selectedEmployees,
             form: 0,
-            assignable_type: 'email'
+            assignable_type: 'mail'
         }
         console.log("🚀 ~ SendTamplate ~ data:", data)
         const response = await Post(url, data, apiHeader(token))

@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { Icon } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import {
+    ActivityIndicator,
     FlatList,
     SafeAreaView,
     ScrollView,
@@ -113,45 +114,49 @@ const HomeScreen = ({ navigation, route }) => {
                     <CustomText style={[styles.date, { color: Color.themeBlue, top: 0 }]} isBold>Documents</CustomText>
                     <CustomText style={styles.des}>see All</CustomText>
                 </View>
-                <FlatList
-                    data={docs}
-                    keyExtractor={(item, index) => item?.id?.toString() || index.toString()}
-                    ListEmptyComponent={
-                        <CustomText style={styles.noDataText}>No Documents Found</CustomText>
-                    }
-                    renderItem={({ item }) => {
-                        console.log("🚀 ~ Documents ~ item:", item?.assignable?.template?.image)
-                        return (
-                            <TouchableOpacity
-                                onPress={() =>
-                                    onPressCard(item)
-                                }
-                                style={styles.card}>
-                                <View style={[styles.card_image]}>
-                                    <CustomImage
-                                        source={{ uri: `${baseUrl}${item?.assignable?.template?.image}` }}
-                                        style={{
-                                            height: '100%',
-                                            width: '100%',
-                                            borderRadius: moderateScale(4, 0.6),
-                                        }}
-                                    />
-                                </View>
-                                <View style={{ marginLeft: moderateScale(10, 0.6) }}>
-                                    <CustomText style={styles.list_heading}>
-                                        {item?.assignable?.subject}
-                                    </CustomText>
-                                    <CustomText numberOfLines={1} style={styles.list_description}>
-                                        {item?.assignable?.tamplate_description}
-                                    </CustomText>
-                                    <CustomText numberOfLines={1} style={styles.card_date}>
-                                        {item?.assignable?.date}
-                                    </CustomText>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    }}
-                />
+                {loading ? <ActivityIndicator size={'small'} color={Color.themeBlue} style={{ marginTop: moderateScale(10, 0.6) }} /> : (
+                    <FlatList
+                        data={docs}
+                        keyExtractor={(item, index) => item?.id?.toString() || index.toString()}
+                        ListEmptyComponent={
+                            <CustomText style={styles.noDataText}>No Documents Found</CustomText>
+                        }
+                        renderItem={({ item }) => {
+                            console.log("🚀 ~ Documents ~ item:", item?.assignable?.template?.image)
+                            return (
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        onPressCard(item)
+                                    }
+                                    style={styles.card}>
+                                    <View style={[styles.card_image]}>
+                                        <CustomImage
+                                            source={{ uri: `${baseUrl}${item?.assignable?.template?.image}` }}
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                borderRadius: moderateScale(4, 0.6),
+                                            }}
+                                        />
+                                    </View>
+                                    <View style={{ marginLeft: moderateScale(10, 0.6) }}>
+                                        <CustomText style={styles.list_heading}>
+                                            {item?.assignable?.subject}
+                                        </CustomText>
+                                        <CustomText numberOfLines={1} style={styles.list_description}>
+                                            {item?.assignable?.tamplate_description}
+                                        </CustomText>
+                                        <CustomText numberOfLines={1} style={styles.card_date}>
+                                            {item?.assignable?.date}
+                                        </CustomText>
+                                    </View>
+                                </TouchableOpacity>
+                            );
+                        }}
+                    />
+                )
+
+                }
             </View>
         </SafeAreaView>
     );
@@ -264,7 +269,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(10, 0.6),
         color: Color.themeBlue,
         width: '70%',
-        textAlign:'right'
+        textAlign: 'right'
     },
     select_date_text: {
         fontSize: moderateScale(14, 0.6),

@@ -47,6 +47,7 @@ import VerifyNumber from './Screens/VerifyNumber';
 import WalkThroughScreen from './Screens/WalkthroughScreen';
 import Categories from './Screens/Categories';
 import Documents from './Screens/Documents';
+import ProfileDetails from './Screens/ProfileDetails';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -60,7 +61,7 @@ const AppNavigator = () => {
   const RootNavLogged = createNativeStackNavigator();
   const userData = useSelector(state => state.commonReducer.userData);
   console.log("🚀 ~ AppNavigator ~ userData:", userData)
-  console.log("🚀 ~ AppNavigatorContainer ~ userData?.company:", userData?.company === null)
+  console.log("🚀 ~ AppNavigatorContainer ~ userData?.company:", userData)
 
   const AppNavigatorContainer = () => {
     const firstScreen =
@@ -165,6 +166,7 @@ export const MyDrawer = () => {
       <DrawerNavigation.Screen name="Tamplates" component={Tamplates} />
       <DrawerNavigation.Screen name="Department" component={Department} />
       <DrawerNavigation.Screen name="AddEmployees" component={AddEmployees} />
+      <DrawerNavigation.Screen name="ProfileDetails" component={ProfileDetails} />
     </DrawerNavigation.Navigator>
   );
 };

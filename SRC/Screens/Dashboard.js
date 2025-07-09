@@ -47,7 +47,6 @@ const Dashboard = ({ navigation, route }) => {
         { value: numberOfDocuments, color: '#D946EF', text: '0' },
     ];
 
-
     useEffect(() => {
         getDetails()
     }, [isFocused])
@@ -55,11 +54,11 @@ const Dashboard = ({ navigation, route }) => {
     const getDetails = async () => {
         const url = 'auth/company_detail'
         const response = await Get(url, token)
-        console.log("🚀 ~ getDetails ~ response:", response?.data?.company_info)
+        console.log("🚀 ~ getDetails ~ response:", response?.data?.company_detail)
         if (response != undefined) {
-            setnumberOfDepartment(response?.data?.company_info?.departments.length)
-            setnumberOfEmployees(response?.data?.company_info?.employee.length)
-            setnumberOfDocuments(response?.data?.company_info?.save_template?.mail?.length)
+            setnumberOfDepartment(response?.data?.company_detail?.departments.length)
+            setnumberOfEmployees(response?.data?.company_detail?.employee.length)
+            setnumberOfDocuments(response?.data?.company_detail?.save_template?.mail?.length)
         }
     }
 

@@ -282,7 +282,7 @@ const Tamplates = () => {
             </View>
 
             <CustomText style={styles.h3}>What do you need</CustomText>
-            <View
+            <View                     
                 style={{
                     width: '100%',
                     height: windowHeight * 0.1,
@@ -306,8 +306,8 @@ const Tamplates = () => {
                                     setSelectedCategory(item?.key);
                                 }}
                                 style={[styles.category_con, { backgroundColor: selectedCategoty === item?.key ? Color.darkBlue : Color.white }]}>
-                                <CustomText>{item?.text}</CustomText>
-                                <CustomText>{item?.subtext}</CustomText>
+                                <CustomText style={{ color: selectedCategoty === item?.key ? Color.white : Color.darkBlue }}>{item?.text}</CustomText>
+                                <CustomText style={{ color: selectedCategoty === item?.key ? Color.white : Color.darkBlue }}>{item?.subtext}</CustomText>
                             </TouchableOpacity>
                         );
                     }}
@@ -355,7 +355,7 @@ const Tamplates = () => {
                 {dropDown && (
                     <View style={styles.con}>
                         {category.map(item => {
-                            return (
+                            return ( 
                                 <View
                                     style={{
                                         flexDirection: 'row',

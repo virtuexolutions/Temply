@@ -59,7 +59,7 @@ const CompanyDetails = () => {
         console.log("🚀 ~ onPressSubmit ~ body:", body)
         setLoading(true)
         const response = await Post(url, body, apiHeader(token))
-        console.log("🚀 ~ onPressSubmit ~ response:", response?.data)
+        console.log("🚀 CompanyDetails ~ onPressSubmit ~ response:", response?.data)
         if (response != undefined) {
             Platform.OS == 'android'
                 ? ToastAndroid.show('Company added Successfully', ToastAndroid.SHORT)

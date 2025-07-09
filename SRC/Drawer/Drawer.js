@@ -113,7 +113,7 @@ const Drawer = React.memo((props) => {
       iconType: AntDesign
     },
     {
-      id: 3,
+      id: 4,
       name: 'Notifications ',
       onPress: () => {
         // navigation.navigate('Department');
@@ -122,7 +122,7 @@ const Drawer = React.memo((props) => {
       iconType: MaterialIcons
     },
     {
-      id: 3,
+      id: 5,
       name: 'Settings',
       onPress: () => {
         // navigation.navigate('CompanyDetails');
@@ -130,24 +130,15 @@ const Drawer = React.memo((props) => {
       iconName: 'settings',
       iconType: MaterialIcons
     },
-    // {
-    //   id: 4,
-    //   name: 'Categories',
-    //   onPress: () => {
-    //     // navigation.navigate('AddEmployees');
-    //   },
-    //   iconName: 'folder',
-    //   iconType: Foundation
-    // },
-    // {
-    //   id: 4,
-    //   name: 'Document',
-    //   onPress: () => {
-    //     // navigation.navigate('AddYourCar');
-    //   },
-    //   iconName: 'document',
-    //   iconType: Ionicons
-    // },
+    {
+      id: 6,
+      name: 'Wallet',
+      onPress: () => {
+        navigation.navigate('Ewallet');
+      },
+      iconName: 'folder',
+      iconType: Foundation
+    },
   ];
   return (
     <ScreenBoiler

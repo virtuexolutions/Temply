@@ -35,7 +35,7 @@ const AddDepartment = () => {
             lead_email_address: email,
             lead_contact_number: phone1,
             number_of_employees_in_depart: numberOfEmployee,
-            company_id: userData?.company?.id
+            company_id: userData?.company_detail?.id
         }
         console.log("🚀 ~ onPressSubmit ~ body:", body)
         setLoading(true)

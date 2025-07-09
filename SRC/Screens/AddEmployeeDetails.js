@@ -64,17 +64,19 @@ const AddEmployeeDetails = () => {
             designation: designation,
             joining_date: joining_date,
             salary: salary,
-            company_id: userData?.company?.id
+            company_id: userData?.company_detail?.id
         }
         console.log("🚀 ~ onPressSubmit ~ body:", body)
         setLoading(true)
         const response = await Post(url, body, apiHeader(token))
+        console.log("🚀 ~ onPressSubmit ~ response:", response?.data)
         setLoading(false)
         if (response != undefined) {
             setLoading(false)
             Platform.OS == 'android'
                 ? ToastAndroid.show('Employee Added SuccessFully', ToastAndroid.SHORT)
                 : Alert.alert('Employee Added SuccessFully');
+            navigationService.navigate('AddEmployees');
         } else {
             setLoading(false)
         }

@@ -22,6 +22,7 @@ const ShareEmployeeModal = props => {
     const [loading, setLoading] = useState(false)
     const [share_loading, setShareLoading] = useState(false)
     const userData = useSelector(state => state.commonReducer.userData);
+    console.log("🚀 ~ userData:", userData)
     const [selectedEmployees, setSelectedEmployees] = useState([]);
     console.log("🚀 ~ selectedEmployees:", selectedEmployees)
     const [departments, setDepartments] = useState({})
@@ -46,8 +47,9 @@ const ShareEmployeeModal = props => {
     }, [selectedCabCategory, employee]);
 
     const getEmployees = async () => {
-        const url = `auth/employee_list/${userData?.company?.id}`
+        const url = `auth/employee_list/${userData?.company_detail?.id}`
         setLoading(true)
+        console.log("🚀 ~ getEmployees ~ url:", url)
         const response = await Get(url, token)
         console.log("🚀 ~ getDepartments ~ response:", response?.data)
         setLoading(false)
@@ -106,6 +108,7 @@ const ShareEmployeeModal = props => {
         setShareLoading(false)
         if (response?.data != undefined) {
             setShareLoading(false)
+            setShow(false)
             Platform.OS == 'android'
                 ? ToastAndroid.show('Send Successfully', ToastAndroid.SHORT)
                 : Alert.alert(' Send SuccessFully');

@@ -139,7 +139,7 @@ const HomeScreen = ({ navigation, route }) => {
                                             }}
                                         />
                                     </View>
-                                    <View style={{ marginLeft: moderateScale(10, 0.6) }}>
+                                    <View style={{ marginLeft: moderateScale(10, 0.6), marginTop: moderateScale(10, 0.6), width: '70%' }}>
                                         <CustomText style={styles.list_heading}>
                                             {item?.assignable?.subject}
                                         </CustomText>
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     card_date: {
         fontSize: moderateScale(10, 0.6),
         color: Color.themeBlue,
-        width: '70%',
+        width: '100%',
         textAlign: 'right'
     },
     select_date_text: {
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     card: {
         width: windowWidth * 0.95,
         backgroundColor: Color.lightGrey,
-        height: windowWidth * 0.20,
+        height: windowWidth * 0.25,
         borderRadius: moderateScale(10, 0.6),
         justifyContent: 'flex-start',
         alignItems: 'center', paddingHorizontal: moderateScale(5, 0.6),
@@ -313,17 +313,17 @@ const styles = StyleSheet.create({
         marginTop: moderateScale(10, 0.6)
     },
     card_image: {
-        height: windowHeight * 0.07,
+        height: windowHeight * 0.10,
         width: windowWidth * 0.2,
         borderRadius: moderateScale(10, 0.6),
     },
     list_description: {
         fontSize: moderateScale(11, 0.6),
-        color: Color.veryLightGray
+        color: Color.veryLightGray,
     },
     list_heading: {
-        fontSize: moderateScale(14, 0.6),
-        color: Color.grey
+        fontSize: moderateScale(12, 0.6),
+        color: Color.grey,
     },
     noDataText: {
         color: Color.red,

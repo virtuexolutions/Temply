@@ -48,6 +48,9 @@ import WalkThroughScreen from './Screens/WalkthroughScreen';
 import Categories from './Screens/Categories';
 import Documents from './Screens/Documents';
 import ProfileDetails from './Screens/ProfileDetails';
+import CompanyNavigator from './navigators/CompanyNavigator';
+import EmployeeNavigator from './navigators/EmployeeNavigator';
+import LoggedInScreen from './Screens/LoggedInScreen';
 // import SurvaryForm from './Screens/SurvaryForm';
 // import EditSurveyForm from './Screens/EditSurveyForm';
 
@@ -69,7 +72,7 @@ const AppNavigator = () => {
         ? 'WalkthroughScreen'
         : !token
           ? 'StartScreen'
-          : user_type === 'Company' && (!userData?.company || Object.keys(userData?.company || {}).length < 1)
+          : user_type === 'Company' && (!userData?.company_detail || Object.keys(userData?.company_detail || {}).length < 1)
             ? 'CompanyDetails'
             : 'MyDrawer';
 
@@ -78,7 +81,7 @@ const AppNavigator = () => {
         <RootNav.Navigator
           initialRouteName={firstScreen}
           screenOptions={{ headerShown: false }}>
-          <RootNav.Screen name="MyDrawer" component={MyDrawer} />
+          <RootNav.Screen name="MyDrawer" component={user_type === 'Company' ? CompanyNavigator : EmployeeNavigator} />
           <RootNav.Screen
             name="WalkthroughScreen"
             component={WalkThroughScreen}
@@ -94,6 +97,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="FinalBlogPost" component={FinalBlogPost} />
           <RootNav.Screen name="ChecklistForm" component={ChecklistForm} />
           <RootNav.Screen name="SurveyForm" component={SurvaryForm} />
+          <RootNav.Screen name="LoggedInScreen" component={LoggedInScreen} />
           <RootNav.Screen
             name="OnboardingScreen"
             component={OnboardingScreen}
@@ -146,29 +150,29 @@ const AppNavigator = () => {
   return <AppNavigatorContainer />;
 };
 
-export const MyDrawer = () => {
-  const DrawerNavigation = createDrawerNavigator();
-  const firstScreen = 'HomeScreen';
-  const user_type = useSelector(state => state.authReducer.role)
-  console.log("🚀 ~ MyDrawer ~ user_type:", user_type)
-  return (
-    <DrawerNavigation.Navigator
-      drawerContent={props => <Drawer {...props} />}
-      initialRouteName={user_type === 'Company' ? 'Dashboard' : 'HomeScreen'}
-      screenOptions={{
-        headerShown: false,
-        drawerStyle: {
-          width: '70%',
-        },
-      }}>
-      <DrawerNavigation.Screen name="Dashboard" component={Dashboard} />
-      <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
-      <DrawerNavigation.Screen name="Tamplates" component={Tamplates} />
-      <DrawerNavigation.Screen name="Department" component={Department} />
-      <DrawerNavigation.Screen name="AddEmployees" component={AddEmployees} />
-      <DrawerNavigation.Screen name="ProfileDetails" component={ProfileDetails} />
-    </DrawerNavigation.Navigator>
-  );
-};
+// export const MyDrawer = () => {
+//   const DrawerNavigation = createDrawerNavigator();
+//   const firstScreen = 'HomeScreen';
+//   const user_type = useSelector(state => state.authReducer.role)
+//   console.log("🚀 ~ MyDrawer ~ user_type:", user_type)
+//   return (
+//     <DrawerNavigation.Navigator
+//       drawerContent={props => <Drawer {...props} />}
+//       initialRouteName={user_type === 'Company' ? 'Dashboard' : 'HomeScreen'}
+//       screenOptions={{
+//         headerShown: false,
+//         drawerStyle: {
+//           width: '70%',
+//         },
+//       }}>
+//       <DrawerNavigation.Screen name="Dashboard" component={Dashboard} />
+//       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
+//       <DrawerNavigation.Screen name="Tamplates" component={Tamplates} />
+//       <DrawerNavigation.Screen name="Department" component={Department} />
+//       <DrawerNavigation.Screen name="AddEmployees" component={AddEmployees} />
+//       <DrawerNavigation.Screen name="ProfileDetails" component={ProfileDetails} />
+//     </DrawerNavigation.Navigator>
+//   );
+// };
 
 export default AppNavigator;

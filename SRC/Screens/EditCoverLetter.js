@@ -32,7 +32,7 @@ const EditCoverLetter = props => {
   const token = useSelector(state => state.authReducer.token);
 
   const [personalDataTab, setPersonalDataTab] = useState(true);
-  const [summary, setSummary] = useState('');
+  const [summary, setSummary] = useState(true);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -74,7 +74,7 @@ const EditCoverLetter = props => {
       name: name,
       email: email,
       month: month,
-      summary: summary,
+      summary: details,
       address: address,
       details: details,
       phone: phone,
@@ -91,7 +91,7 @@ const EditCoverLetter = props => {
     const body = {
       name: name,
       phone: phone,
-      summary: summary,
+      summary: details,
       date: date,
       details: details,
       managerName: managerName,
@@ -182,7 +182,7 @@ const EditCoverLetter = props => {
                   <TextInputWithTitle
                     iconSize={moderateScale(20, 0.3)}
                     color={Color.blue}
-                    placeholder={userData?.company?.company_name}
+                    placeholder={userData?.company_detail?.company_name}
                     placeholderColor={Color.grey}
                     viewWidth={0.84}
                     marginTop={moderateScale(10, 0.3)}
@@ -507,21 +507,6 @@ const EditCoverLetter = props => {
                         <CustomText isBold style={styles.text}>
                           Summary :
                         </CustomText>
-                        {/* <TextInputWithTitle
-                          iconSize={moderateScale(20, 0.3)}
-                          color={Color.blue}
-                          placeholder={'Details'}
-                          placeholderColor={Color.grey}
-                          viewWidth={0.84}
-                          inputHeight={windowHeight * 0.14}
-                          viewHeight={0.15}
-                          marginTop={moderateScale(10, 0.3)}
-                          style={styles.text_input}
-                          backgroundColor={Color.lightGrey}
-                          setText={setDetails}
-                          value={details}
-                          multiline
-                        /> */}
                       </>
                     )}
                   </View>
@@ -903,7 +888,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={userData?.company?.company_name}
+                      placeholder={userData?.company_detail?.company_name}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}
@@ -919,7 +904,7 @@ const EditCoverLetter = props => {
                     <TextInputWithTitle
                       iconSize={moderateScale(20, 0.3)}
                       color={Color.blue}
-                      placeholder={userData?.company?.company_address}
+                      placeholder={userData?.company_detail?.company_address}
                       placeholderColor={Color.grey}
                       viewWidth={0.84}
                       marginTop={moderateScale(10, 0.3)}

@@ -18,6 +18,7 @@ const AddEmployees = () => {
   const isFocused = useIsFocused()
   const token = useSelector(state => state.authReducer.token);
   const [employee, setEmployee] = useState([])
+  console.log("🚀 ~ AddEmployees ~ employee:", employee)
   const [loading, setLoading] = useState(false)
   const userData = useSelector(state => state.commonReducer.userData);
 
@@ -27,7 +28,7 @@ const AddEmployees = () => {
   }, [isFocused])
 
   const getDepartments = async () => {
-    const url = `auth/employee_list/${userData?.company?.id}`
+    const url = `auth/employee_list/${userData?.company_detail?.id}`
     setLoading(true)
     const response = await Get(url, token)
     console.log("🚀 ~ getDepartments ~ response:", response?.data)
@@ -92,7 +93,7 @@ const AddEmployees = () => {
       <Header hideUser={false} showBack isRight onPressPlus={() => navigationService.navigate('AddEmployeeDetails')} />
       <View style={styles.main_view}>
         <View style={styles.search_bar_view}>
-          
+
           <TextInputWithTitle
             iconName={'search1'}
             iconType={AntDesign}

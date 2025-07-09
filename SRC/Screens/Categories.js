@@ -28,7 +28,7 @@ const Categories = () => {
     }, [isFocused])
 
     const getDepartments = async () => {
-        const url = `auth/employee_list/${userData?.company?.id}`
+        const url = `auth/employee_list/${userData?.company_detail?.id}`
         setLoading(true)
         const response = await Get(url, token)
         console.log("🚀 ~ getDepartments ~ response:", response?.data)
